@@ -5,3 +5,58 @@
 The Ripcord RPC client has a very simple API, but it allows you to extensively configure how it works.
 
 = Details =
+
+A very basic example:
+
+{{{
+<?php
+    require_once('ripcord.php');
+    $client = new Ripcord_Client( 'http://www.moviemeter.nl/ws' );
+    $score = $client->film->getScore( 'e3dee9d19a8c3af7c92f9067d2945b59', 500 );
+?>
+}}}
+
+This creates a new client for the moviemeter.nl webservice and accesses the rpc method 'film.getScore' on it. The namespace 'film' is automatically mapped to $client->film.
+
+Some XML-RPC servers support 'system.multiCall'. This allows you to call multiple methods using only one HTTP request. The ripcord client supports this with the following syntax:
+
+{{{
+<?php
+
+    $client->system->multiCall(
+        $client->film->getScore( 'e3dee9d19a8c3af7c92f9067d2945b59', 500 )->bind($score),
+        $client->system->listMethods()->bind($methods)
+    );
+
+?>
+}}}
+
+In the above example both 'film.getScore' and 'system.listMethods' are called. The results are returned in $score and $methods.
+
+An alternative syntax, without binding variables to the results automatically is:
+
+{{{
+<?php
+
+    $result = $client->system->multiCall( array(
+        "score" => $client->film->getScore( 'e3dee9d19a8c3af7c92f9067d2945b59', 500 ),
+        "methods" => $client->system->listMethods()
+    ) );
+
+?>
+}}}
+
+After which $result is an array containing the results of each call linked to the key used in the array.
+
+==Using a different transport layer==
+
+The Ripcord RPC Client uses PHP streams to connect to the remote server. In some cases this may not work, e.g. when your PHP has been configured not to allow fopen to access remote urls. In that case you may want to use CURL instead. Ripcorde provides an alternative transport class which uses CURL. You use it like this:
+
+{{{
+<?php
+    
+    $transport = new Ripcord_Transport_CURL();
+    $client = ripcord::xmlrpcClient( $url, array( "transport" => $transport ) );
+
+?>
+}}}
