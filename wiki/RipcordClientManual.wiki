@@ -74,3 +74,36 @@ You can also use this method to add custom headers or cookies to the rpc request
 
 ?>
 }}}
+
+== Exceptions and Faults ==
+
+The Ripcord client by default returns XMLRPC faults as a Fault array. You can check if a result is a fault like this:
+
+{{{
+<?php
+
+    $result = $client->nonExistingMethod();
+    if (ripcord::isFault($result)) {
+        $errorMessage = $result['faultMessage'];
+        $errorCode = $result['faultCode'];
+    }
+
+?>
+}}}
+
+But checking each and every one of your RPC calls can be a pain, so with a simple switch the ripcord client will throw an exception whenever a RPC fault is received:
+
+{{{
+<?php
+
+    $client->_throwExceptions = true;
+    try {
+        $result = $client->nonExistingMethod();
+
+    } catch( Ripcord_Exception $e ) {
+        $errorMessage = $e->getMessage();
+        $errorCode = $e->getCode();
+    }
+
+?>
+}}}
