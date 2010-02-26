@@ -1,0 +1,7 @@
+#summary How to use the Ripcord RPC Client
+
+= Introduction =
+
+The Ripcord RPC client has a very simple API, but it allows you to extensively configure how it works.
+
+= Details =
