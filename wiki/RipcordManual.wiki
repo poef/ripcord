@@ -16,6 +16,8 @@ To create a simple xmlrpc client do something like this:
 ?>
 }}}
 
+See the RipcordClientManual for more information.
+
 To create a simple xmlrpc server do something like this:
 
 {{{
@@ -31,3 +33,5 @@ To create a simple xmlrpc server do something like this:
     $server->run();
 ?>
 }}}
+
+See the RipcordServerManual for more information.
