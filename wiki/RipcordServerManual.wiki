@@ -1,0 +1,46 @@
+#summary How to use the Ripcord RPC Server
+
+= Introduction =
+
+The Ripcord RPC Server is very easy to use, but still allows you to extensively configure it.
+
+= Details =
+
+A very simple Ripcord RPC server looks like this:
+
+{{{
+<?php
+    require_once('ripcord.php');
+    class myTest {
+        /**
+         * This method will return 'Bar'.
+         */
+        public function Foo() {
+            return 'Bar';
+        }
+    }
+    $test = new MyTest();
+    $server = ripcord::server( $test );
+    $server->run();
+?>
+}}}
+
+This will automatically implement a XML-RPC, SOAP 1.1 and Simple RPC server. In addition it will auto document itself if you browse to its URL. The method Foo will be listed, including the description in the doc comments above it. Warning: if you use a cache like APC you may lose the descriptions, since APC removes comments.
+
+If you need to support namespaced methods, you can do something like this:
+
+{{{
+<?php
+
+    $test = new MyTest();
+    $test2 = new MySecondTest();
+    $server = ripcord::server( array( 
+        'test' => $test,
+        'test2' => $test
+    ) );
+    $server->run();
+
+?>
+}}}
+
+This will add the public methods from MyTest to the rpc server within the namespace 'test', and the methods from MySecondTest in the namespace 'test2'. So the ripcord server would now publish, among others, the 'test.Foo' method.
