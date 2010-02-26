@@ -60,3 +60,17 @@ The Ripcord RPC Client uses PHP streams to connect to the remote server. In some
 
 ?>
 }}}
+
+Any CURL options can be passed through the constructor of Ripcord_Transport_CURL as an array.
+
+You can also use this method to add custom headers or cookies to the rpc request, e.g.:
+
+{{{
+<?php
+
+    $transport = new Ripcord_Transport_Stream( array(
+        'header' => "Cookie: foo=bar\r\n"
+    ) );
+
+?>
+}}}
