@@ -35,3 +35,5 @@ To create a simple xmlrpc server do something like this:
 }}}
 
 See the RipcordServerManual for more information.
+
+The full API documentation is available at [http://auke.muze.nl/ripcord_docs/] for now.
