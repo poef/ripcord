@@ -11,7 +11,7 @@ A very basic example:
 {{{
 <?php
     require_once('ripcord.php');
-    $client = new Ripcord_Client( 'http://www.moviemeter.nl/ws' );
+    $client = ripcord::client( 'http://www.moviemeter.nl/ws' );
     $score = $client->film->getScore( 'e3dee9d19a8c3af7c92f9067d2945b59', 500 );
 ?>
 }}}
