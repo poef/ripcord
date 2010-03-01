@@ -249,7 +249,7 @@ class Ripcord_Server
 				}
 			}
 			$docOptions['version'] = $options['version'] ? $options['version'] : $this->outputOptions['version'];
-			$this->documentor = new Documentor( $docOptions );
+			$this->documentor = new Ripcord_Documentor( $docOptions );
 		}
 		xmlrpc_server_register_introspection_callback( $this->xmlrpc, array( $this->documentor, 'getIntrospectionXML') );
 		if ( isset($options) ) 
@@ -445,7 +445,7 @@ class Ripcord_Server
  * This interface defines the minimum methods any documentor needs to implement.
  */
 interface Ripcord_Documentor_Interface {
-	public function __construct( $options );
+	public function __construct( $options = null );
 	public function setMethodData( $methods );
 	public function handle ( $rpcServer );
 	public function getIntrospectionXML();
@@ -595,7 +595,7 @@ class Ripcord_Documentor implements Ripcord_Documentor_Interface
 		{
 			foreach ($this->methods as $method => $methodData )
 			{
-				if ( is_array( $methodData['call'] )
+				if ( is_array( $methodData['call'] ) )
 				{
 					$reflection = new ReflectionMethod( 
 						get_class( $methodData['call'][0] ), 
