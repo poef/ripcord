@@ -1,0 +1,339 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+  <html xmlns="http://www.w3.org/1999/xhtml">
+		<head>
+			<!-- template designed by Marco Von Ballmoos -->
+			<title>Docs For Class Ripcord_Server</title>
+			<link rel="stylesheet" href="../media/stylesheet.css" />
+			<meta http-equiv='Content-Type' content='text/html; charset=iso-8859-1'/>
+		</head>
+		<body>
+			<div class="page-body">			
+<h2 class="class-name">Class Ripcord_Server</h2>
+
+<a name="sec-description"></a>
+<div class="info-box">
+	<div class="info-box-title">Description</div>
+	<div class="nav-bar">
+					<span class="disabled">Description</span> |
+															<a href="#sec-method-summary">Methods</a> (<a href="#sec-methods">details</a>)
+						
+					</div>
+	<div class="info-box-body">
+        		<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">This class implements the Ripcord server. It is an OO wrapper around PHP's XML-RPC methods, with some added features.</p>
+<p class="description"><p>You can create an XML-RPC (or Simple RPC or a simple SOAP 1.1) server by defining a class with public methods and passing  an object (or array of objects) of this class to the constructor of Ripcord_Server. Then simply call the run() method.</p><p>A basic example:  <div class="src-code"><ol><li><div class="src-line">&nbsp;<span class="src-php">&lt;?php</span></div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;<span class="src-var">$myObject&nbsp;</span>=&nbsp;<span class="src-key">new&nbsp;</span><span class="src-id">MyClass</span><span class="src-sym">(</span><span class="src-sym">)</span><span class="src-sym">;</span></div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;<span class="src-var">$server&nbsp;</span>=&nbsp;<span class="src-key">new&nbsp;</span><span class="src-id"><a href="../Ripcord/Ripcord_Server.html">Ripcord_Server</a></span><span class="src-sym">(&nbsp;</span><span class="src-var">$myObject&nbsp;</span><span class="src-sym">)</span><span class="src-sym">;</span></div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;<span class="src-var">$server</span><span class="src-sym">-&gt;</span><a href="../Ripcord/Ripcord_Server.html#methodrun">run</a><span class="src-sym">(</span><span class="src-sym">)</span><span class="src-sym">;</span></div></li>
+<li><div class="src-line">&nbsp;<span class="src-php">?&gt;</span></div></li>
+</ol></div></p><p>An example with namespaces in the method names.  <div class="src-code"><ol><li><div class="src-line">&nbsp;<span class="src-php">&lt;?php</span></div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;<span class="src-var">$myObject&nbsp;</span>=&nbsp;<span class="src-key">new&nbsp;</span><span class="src-id">MyClass</span><span class="src-sym">(</span><span class="src-sym">)</span><span class="src-sym">;</span></div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;<span class="src-var">$myOtherObject&nbsp;</span>=&nbsp;<span class="src-key">new&nbsp;</span><span class="src-id">MyOtherClass</span><span class="src-sym">(</span><span class="src-sym">)</span><span class="src-sym">;</span></div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;<span class="src-var">$server&nbsp;</span>=&nbsp;<span class="src-key">new&nbsp;</span><span class="src-id"><a href="../Ripcord/Ripcord_Server.html">Ripcord_Server</a></span><span class="src-sym">(&nbsp;</span><span class="src-key">array</span><span class="src-sym">(&nbsp;</span><span class="src-str">'namespace1'&nbsp;</span>=&gt;&nbsp;<span class="src-var">$myObject</span><span class="src-sym">,&nbsp;</span><span class="src-str">'namespace2'&nbsp;</span>=&gt;&nbsp;<span class="src-var">$myOtherObject&nbsp;</span><span class="src-sym">)&nbsp;)</span><span class="src-sym">;</span></div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;<span class="src-var">$server</span><span class="src-sym">-&gt;</span><a href="../Ripcord/Ripcord_Server.html#methodrun">run</a><span class="src-sym">(</span><span class="src-sym">)</span><span class="src-sym">;</span></div></li>
+<li><div class="src-line">&nbsp;<span class="src-php">?&gt;</span></div></li>
+</ol></div></p></p>
+		<p class="notes">
+			Located in <a class="field" href="_ripcord_server.php.html">/ripcord_server.php</a> (line <span class="field">37</span>)
+		</p>
+		
+				
+		<pre></pre>
+	
+			</div>
+</div>
+
+
+
+
+	<a name="sec-method-summary"></a>
+	<div class="info-box">
+		<div class="info-box-title">Method Summary</span></div>
+		<div class="nav-bar">
+			<a href="#sec-description">Description</a> |
+												<span class="disabled">Methods</span> (<a href="#sec-methods">details</a>)
+		</div>
+		<div class="info-box-body">			
+			<div class="method-summary">
+																																																												
+												<div class="method-definition">
+											<span class="method-result">Ripcord_Server</span>
+										<a href="#__construct" title="details" class="method-name">__construct</a>
+											([<span class="var-type"></span>&nbsp;<span class="var-name">$services</span> = <span class="var-default">null</span>], [<span class="var-type"></span>&nbsp;<span class="var-name">$options</span> = <span class="var-default">null</span>], <span class="var-type">mixed</span>&nbsp;<span class="var-name">$services.</span>, <span class="var-type">array</span>&nbsp;<span class="var-name">$options.</span>)
+									</div>
+																<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#addMethod" title="details" class="method-name">addMethod</a>
+											(<span class="var-type">string</span>&nbsp;<span class="var-name">$name</span>, <span class="var-type">callback</span>&nbsp;<span class="var-name">$method</span>)
+									</div>
+																<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#addService" title="details" class="method-name">addService</a>
+											(<span class="var-type">object</span>&nbsp;<span class="var-name">$service</span>, [<span class="var-type">string</span>&nbsp;<span class="var-name">$serviceName</span> = <span class="var-default">0</span>])
+									</div>
+																<div class="method-definition">
+											<span class="method-result">mixed</span>
+										<a href="#call" title="details" class="method-name">call</a>
+											(<span class="var-type">string</span>&nbsp;<span class="var-name">$method</span>, [<span class="var-type">array</span>&nbsp;<span class="var-name">$args</span> = <span class="var-default">null</span>])
+									</div>
+																<div class="method-definition">
+											<span class="method-result">string</span>
+										<a href="#handle" title="details" class="method-name">handle</a>
+											(<span class="var-type">string</span>&nbsp;<span class="var-name">$request_xml</span>)
+									</div>
+																<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#run" title="details" class="method-name">run</a>
+										()
+									</div>
+																<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#setOutputOption" title="details" class="method-name">setOutputOption</a>
+											(<span class="var-type">string</span>&nbsp;<span class="var-name">$option</span>, <span class="var-type">mixed</span>&nbsp;<span class="var-name">$value</span>)
+									</div>
+								</div>
+		</div>
+	</div>		
+
+	
+	<a name="sec-methods"></a>
+	<div class="info-box">
+		<div class="info-box-title">Methods</div>
+		<div class="nav-bar">
+			<a href="#sec-description">Description</a> |
+																<a href="#sec-method-summary">Methods</a> (<span class="disabled">details</span>)
+						
+		</div>
+		<div class="info-box-body">
+			<A NAME='method_detail'></A>
+
+<a name="method__construct" id="__construct"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">Constructor __construct</span> (line <span class="line-number">83</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Creates a new instance of the Ripcord server.</p>
+	<ul class="tags">
+				<li><span class="field">see:</span> Server::setOutputOption</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">Ripcord_Server</span>
+		<span class="method-name">
+			__construct
+		</span>
+					([<span class="var-type"></span>&nbsp;<span class="var-name">$services</span> = <span class="var-default">null</span>], [<span class="var-type"></span>&nbsp;<span class="var-name">$options</span> = <span class="var-default">null</span>], <span class="var-type">mixed</span>&nbsp;<span class="var-name">$services.</span>, <span class="var-type">array</span>&nbsp;<span class="var-name">$options.</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">mixed</span>
+				<span class="var-name">$services.</span><span class="var-description">: Optional. An object or array of objects. The public methods in these objects will be exposed  through the RPC server. If the services array has non-numeric keys, the key for each object will define its namespace.</span>			</li>
+					<li>
+				<span class="var-type">array</span>
+				<span class="var-name">$options.</span><span class="var-description">: Optional. Allows you to override the default server settings. Accepted key names are:  'documentor' - allows you to specify an alternative HTML documentor class, or if set to false, no HTML documentor.  'name' - The name of the server, used by the default HTML documentor.  'css' - An url of a css file to link to in the HTML documentation.  'wsdl' - The wsdl 1.0 description of this service (only usefull if you run the 'soap 1.1' version, or the 'auto' version  'wsdl2' - The wsdl 2.0 description of this service  In addition you can set any of the outputOptions for the xmlrpc server.</span>			</li>
+					<li>
+				<span class="var-type"></span>
+				<span class="var-name">$services</span>			</li>
+					<li>
+				<span class="var-type"></span>
+				<span class="var-name">$options</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methodaddMethod" id="addMethod"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">addMethod</span> (line <span class="line-number">166</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Allows you to add a single method to the server after construction.</p>
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			addMethod
+		</span>
+					(<span class="var-type">string</span>&nbsp;<span class="var-name">$name</span>, <span class="var-type">callback</span>&nbsp;<span class="var-name">$method</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">string</span>
+				<span class="var-name">$name</span><span class="var-description">: The name of the method as exposed through the rpc server</span>			</li>
+					<li>
+				<span class="var-type">callback</span>
+				<span class="var-name">$method</span><span class="var-description">: The name of the method to call, or an array with classname or object and method name.</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methodaddService" id="addService"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">addService</span> (line <span class="line-number">134</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Allows you to add a service to the server after construction.</p>
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			addService
+		</span>
+					(<span class="var-type">object</span>&nbsp;<span class="var-name">$service</span>, [<span class="var-type">string</span>&nbsp;<span class="var-name">$serviceName</span> = <span class="var-default">0</span>])
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">object</span>
+				<span class="var-name">$service</span><span class="var-description">: The object whose public methods must be added to the rpc server</span>			</li>
+					<li>
+				<span class="var-type">string</span>
+				<span class="var-name">$serviceName</span><span class="var-description">: Optional. The namespace for the methods.</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methodcall" id="call"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">call</span> (line <span class="line-number">261</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Calls a method by its rpc name.</p>
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">mixed</span>
+		<span class="method-name">
+			call
+		</span>
+					(<span class="var-type">string</span>&nbsp;<span class="var-name">$method</span>, [<span class="var-type">array</span>&nbsp;<span class="var-name">$args</span> = <span class="var-default">null</span>])
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">string</span>
+				<span class="var-name">$method</span><span class="var-description">: The rpc name of the method</span>			</li>
+					<li>
+				<span class="var-type">array</span>
+				<span class="var-name">$args</span><span class="var-description">: The arguments to this method</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methodhandle" id="handle"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">handle</span> (line <span class="line-number">212</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Handles the given request xml</p>
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">string</span>
+		<span class="method-name">
+			handle
+		</span>
+					(<span class="var-type">string</span>&nbsp;<span class="var-name">$request_xml</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">string</span>
+				<span class="var-name">$request_xml</span><span class="var-description">: The incoming request.</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methodrun" id="run"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">run</span> (line <span class="line-number">178</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Runs the rpc server. Automatically handles an incoming request.</p>
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			run
+		</span>
+				()
+			</div>
+	
+		
+			
+	</div>
+<a name="methodsetOutputOption" id="setOutputOption"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">setOutputOption</span> (line <span class="line-number">300</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Allows you to set specific output options of the server after construction.</p>
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			setOutputOption
+		</span>
+					(<span class="var-type">string</span>&nbsp;<span class="var-name">$option</span>, <span class="var-type">mixed</span>&nbsp;<span class="var-name">$value</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">string</span>
+				<span class="var-name">$option</span><span class="var-description">: The name of the option</span>			</li>
+					<li>
+				<span class="var-type">mixed</span>
+				<span class="var-name">$value</span><span class="var-description">: The value of the option  The options are:  output_type: Return data as either php native data or xml encoded. Can be either 'php' or 'xml'. 'xml' is the default.  verbosity: Determines the compactness of generated xml. Can be either 'no_white_space', 'newlines_only' or 'pretty'.    'pretty' is the default.  escaping: Determines how/whether to escape certain characters. 1 or more values are allowed. If multiple, they need    to be specified as a sub-array. Options are: 'cdata', 'non-ascii', 'non-print' and 'markup'. Default is 'non-ascii',    'non-print' and 'markup'.  version: Version of the xml vocabulary to use. Currently, three are supported: 'xmlrpc', 'soap 1.1' and 'simple'. The    keyword 'auto' is also recognized and tells the server to respond in whichever version the request cam in. 'auto' is    the default.  encoding: The character encoding that the data is in. Can be any supported character encoding. Default is 'utf-8'.</span>			</li>
+				</ul>
+		
+			
+	</div>
+						
+		</div>
+	</div>
+
+
+	<p class="notes" id="credit">
+		Documentation generated on Mon, 08 Mar 2010 18:26:31 +0100 by <a href="http://www.phpdoc.org" target="_blank">phpDocumentor 1.4.3</a>
+	</p>
+	</div></body>
+</html>
