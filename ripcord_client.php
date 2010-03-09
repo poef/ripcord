@@ -5,7 +5,7 @@
  * @author Auke van Slooten <auke@muze.nl>
  * @copyright Copyright (C) 2010, Muze <www.muze.nl>
  * @license http://opensource.org/licenses/gpl-3.0.html GNU Public License
- * @version Ripcord 0.1 - PHP 5.0
+ * @version Ripcord 0.2 - PHP 5.0
  */
 
 require_once(dirname(__FILE__).'/ripcord.php');
