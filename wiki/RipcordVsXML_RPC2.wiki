@@ -1,0 +1,44 @@
+#summary A comparison between Ripcord and PEARs XML_RPC2
+
+==Why not use PEAR XML_RPC2?==
+
+For most purposes you are probably just as well served with the PEAR XML_RPC2 class. However Ripcord has a few differences which make it more flexible and simple in use.
+
+===Dependency Injection===
+
+Ripcord allows you to inject the objects it depends on. The server has an autodocument feature, just like XML_RPC2, but you can substitute your own documentor object for the default one. This allows you to generate your own auto documentation in whatever form you wish.
+
+The client can use different transport objects to do the work of sending the request and receiving the answer. Default it comes with two; one based on streams and one based on CURL. With dependency injection not only can you substitute your own, you can also create a transport object seperately and modify its settings before passing it on to the Ripcord client. The XML_RPC2 client has one transport backend, using CURL, and doesn't allow you to change any setting other than those it exposes through the client options.
+
+===Flexibility===
+
+Ripcord is flexible not just because of its use of dependency injection, but also because of other design choices.
+
+The XML_RPC2 server accepts a class or object as its 'callHandler', but it is limited to one, with one prefix. Ripcord allows you to create an XML RPC server with many different namespaces (or prefixes).
+
+Finally Ripcord supports the system methods of the xmlrpc extension. Meaning you automatically have things like system.listMethods and system.multiCall in your server for free. 
+
+===Simplicity===
+
+The Ripcord client has a very simple way to access namespaced (or prefixed) methods. You simply use the name of the namespace as a property of the client. So calling 'system.listMethods' becomes as easy as 
+{{{
+  $client->system->listMethods();
+}}}
+
+The Ripcord client has another simple trick, it supports the system.multiCall method many xml-rpc servers implement in a very simple and readable syntax:
+{{{
+  $client->system->multiCall(
+    $client->doOneCall()->bind($resultOne),
+    $client->doAnotherCall()->bind($resultTwo)
+  );
+}}}
+
+==When XML_RPC2 is better==
+
+If you really need a caching mechanism for your xml-rpc client, but do not want to write your own caching wrapper. XML_RPC2 comes with a caching client built-in.
+
+Ripcord doesn't have an alternative backend when you cannot use PHP's xmlrpc extension. XML_RPC2 does have a PHP only solution for that.
+
+==Conclusion==
+
+Ripcord is designed to be simple to use and simple to comprehend and extend. Every class does only one thing and tries to do it well. It doesn't try to be everything for everybody. But it does allow you access to everything it uses, so the simple things are easy and the difficult things are still possible.
