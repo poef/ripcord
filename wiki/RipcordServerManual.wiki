@@ -44,3 +44,20 @@ If you need to support namespaced methods, you can do something like this:
 }}}
 
 This will add the public methods from MyTest to the rpc server within the namespace 'test', and the methods from MySecondTest in the namespace 'test2'. So the ripcord server would now publish, among others, the 'test.Foo' method.
+
+The Ripcord server by default autodocuments itself. You can either disable this or override the default autodocumentor. Disabling the autodocument feature is done by setting the documentor option to false:
+{{{
+  $server = ripcord::server( $services, array(
+    'documentor' => false
+  ) );
+}}}
+
+Overriding it with your own class is done like this:
+{{{
+  class myDocumentor extends Ripcord_Documentor {
+    ....
+  }
+  $server = ripcord::server( $services, array(
+    'documentor' => new myDocumentor()
+  ) );
+}}}
