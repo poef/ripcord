@@ -1,5 +1,7 @@
 #summary A comparison between Ripcord and PEARs XML_RPC2
 
+
+
 ==Why not use PEAR XML_RPC2?==
 
 For most purposes you are probably just as well served with the PEAR XML_RPC2 class. However Ripcord has a few differences which make it more flexible and simple in use.
