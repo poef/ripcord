@@ -1,6 +1,19 @@
 #summary A comparison between Ripcord and PEARs XML_RPC2
 
-test
+==Random Feature Comparison==
+
+||                                 || XML_RPC2  || Ripcord ||
+|| Built-in Caching                || yes       || no      ||
+|| Requires xmlrpc Extension       || no        || yes     ||
+|| Requires CURL Extension         || yes       || no      ||
+|| Part of PEAR                    || yes       || no      ||
+|| Overridable Transport Layer     || no        || yes     ||
+|| Overridable Autodocumentor      || no        || yes     ||
+|| Supports XML-RPC Introspection  || no        || yes     ||
+|| Supports Native Multicall       || no        || yes     ||
+
+Introspection refers to [http://xmlrpc-c.sourceforge.net/introspection.html
+XML-RPC Introspection].
 
 ==Why not use PEAR XML_RPC2?==
 
