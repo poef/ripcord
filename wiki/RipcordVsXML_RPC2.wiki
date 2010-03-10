@@ -1,6 +1,6 @@
 #summary A comparison between Ripcord and PEARs XML_RPC2
 
-
+test
 
 ==Why not use PEAR XML_RPC2?==
 
