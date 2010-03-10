@@ -139,7 +139,13 @@ class Ripcord_Server
 		} else {
 			$serviceName = '';
 		}
-		$reflection = new ReflectionObject($service);
+		if (is_object($service)) {
+			$reflection = new ReflectionObject($service);
+		} else if (is_string($service)) {
+			$reflection = new ReflectionClass($service);
+		} else {
+			throw new Ripcord_Exception('Unknown service type '.$serviceName, -8);
+		}
 		$methods = $reflection->getMethods();
 		if (is_array($methods)) 
 		{
