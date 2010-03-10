@@ -62,7 +62,7 @@ class Ripcord_Server
 	private $outputOptions = array(
 		"output_type" => "xml",
 		"verbosity" => "pretty",
-		"escaping" => array("markup", "non-ascii", "non-print"),
+		"escaping" => array("markup"),
 		"version" => "auto",
 		"encoding" => "utf-8"
 	);
