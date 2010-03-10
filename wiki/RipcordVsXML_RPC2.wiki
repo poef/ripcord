@@ -12,8 +12,7 @@
 || Supports XML-RPC Introspection  || no        || yes     ||
 || Supports Native Multicall       || no        || yes     ||
 
-Introspection refers to [http://xmlrpc-c.sourceforge.net/introspection.html
-XML-RPC Introspection].
+Introspection refers to [http://xmlrpc-c.sourceforge.net/introspection.html XML-RPC Introspection].
 
 ==Why not use PEAR XML_RPC2?==
 
