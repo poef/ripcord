@@ -76,7 +76,7 @@ class ripcord
 
 	/**
 	 * This method returns a unix timestamp from a given XML-RPC datetime object.
-	 * It will throw a 'Variable is not of type datetime' Ripcord_Exception (code -2)
+	 * It will throw a 'Variable is not of type datetime' Ripcord_Exception (code -6)
 	 * if the given argument is not of the correct type.
 	 * @param object $datetime
 	 * @return int
@@ -88,6 +88,31 @@ class ripcord
 			return $datetime->timestamp;
 		} else {
 			throw Ripcord_Exception('Variable is not of type datetime', -6);
+		}
+	}
+	
+	/**
+	 * This method returns an XML-RPC base64 object from a given binary string.
+	 * @param string $binary
+	 * @return object
+	 */
+	public static function base64($binary) {
+		return xmlrpc_set_type($binary, 'base64');
+	}
+	
+	/**
+	 * This method returns a (binary) string from a given XML-RPC base64 object.
+	 * It will throw a 'Variable is not of type base64' Ripcord_Exception (code -7)
+	 * if the given argument is not of the correct type.
+	 * @param object $base64
+	 * @return string
+	 */
+	public static function binary($base64) {
+		if (xmlrpc_get_type($base64)=='base64')
+		{
+			return $base64->scalar;
+		} else {
+			throw Ripcord_Exception('Variable is not of type base64', -7);
 		}
 	}
 
@@ -158,7 +183,8 @@ class ripcord
  * -3 Cannot recurse system.multiCall  - Thrown by the ripcord server when system.multicall is called within itself.
  * -4  Could not access {url} - Thrown by the transport object when unable to access the given url.
  * -5 PHP XMLRPC library is not installed - Thrown by the ripcord server and client when the xmlrpc library is not installed.
- * -6 Variable is not of type datetime - Thrown by the ripcord datetime method.
+ * -6 Variable is not of type datetime - Thrown by the ripcord timestamp method.
+ * -7 Variable is not of type base64 - Thrown by the ripcord binary method.
  */
 class Ripcord_Exception extends Exception { }
 

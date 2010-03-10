@@ -57,7 +57,7 @@ class Ripcord_Client
 	private $_outputOptions = array(
 		"output_type" => "xml",
 		"verbosity" => "pretty",
-		"escaping" => array("markup", "non-ascii", "non-print"),
+		"escaping" => array("markup"),
 		"version" => "xmlrpc",
 		"encoding" => "utf-8"
 	);
