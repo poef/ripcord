@@ -5,7 +5,7 @@
  * @author Auke van Slooten <auke@muze.nl>
  * @copyright Copyright (C) 2010, Muze <www.muze.nl>
  * @license http://opensource.org/licenses/gpl-3.0.html GNU Public License
- * @version Ripcord 0.2 - PHP 5.0
+ * @version Ripcord 0.3 - PHP 5.0
  */
 
 require_once(dirname(__FILE__).'/ripcord.php');
@@ -52,7 +52,7 @@ class Ripcord_Client
 
 	/**
 	 * A list of output options, used with the xmlrpc_encode_request method.
-	 * @see Ripcord_Server::setOutputOption
+	 * @see Ripcord_Server::setOutputOption()
 	 */
 	private $_outputOptions = array(
 		"output_type" => "xml",
@@ -103,7 +103,7 @@ class Ripcord_Client
 	/**
 	 * The constructor for the RPC client.
 	 * @param string $url The url of the rpc server
-	 * @param array $options Optional. A list of outputOptions. @see Ripcord_Server::setOutputOption
+	 * @param array $options Optional. A list of outputOptions. See {@link Ripcord_Server::setOutputOption()}
 	 * @param object $rootClient Optional. Used internally when using namespaces.
 	 * @throws Ripcord_Exception (ripcord::xmlrpcNotInstalled) when the xmlrpc extension is not available.
 	 */
@@ -246,6 +246,8 @@ class Ripcord_Client
 	 * This method catches any reference to properties of the client and uses them as a namespace. The
 	 * property is automatically created as a new instance of the rpc client, with the name of the property
 	 * as a namespace.
+	 * @param string $name The name of the namespace
+	 * @return object A Ripcord Client with the given namespace set.
 	 */
 	public function __get($name) 
 	{
@@ -310,6 +312,8 @@ class Ripcord_Client_Call
 	 * This method allows you to bind a php variable to the result of this method call.
 	 * When the method call's result is available, the php variable will be filled with
 	 * this result.
+	 * @param mixed $bound The variable to bind the result from this call to.
+	 * @return object Returns this object for chaining.
 	 */
 	public function bind(&$bound) 
 	{
@@ -319,6 +323,7 @@ class Ripcord_Client_Call
 
 	/**
 	 * This method returns the correct format for a multiCall argument.
+	 * @return array An array with the methodName and params
 	 */
 	public function encode() {
 		return array(
@@ -339,7 +344,7 @@ interface Ripcord_Transport
 	 * This method must post the request to the given url and return the results.
 	 * @param string $url The url to post to.
 	 * @param string $request The request to post.
-	 * @return string
+	 * @return string The server response
 	 */
 	public function post( $url, $request );
 }
@@ -375,7 +380,7 @@ class  Ripcord_Transport_Stream implements Ripcord_Transport
 	 * This method posts the request to the given url.
 	 * @param string $url The url to post to.
 	 * @param string $request The request to post.
-	 * @return string
+	 * @return string The server response
 	 * @throws Ripcord_Exception (ripcord::cannotAccessURL) when the given URL cannot be accessed for any reason.
 	 */
 	public function post( $url, $request ) 
@@ -433,6 +438,7 @@ class Ripcord_Transport_CURL implements Ripcord_Transport
 	 * @param string $url The url to post to.
 	 * @param string $request The request to post.
 	 * @throws Ripcord_Exception (ripcord::cannotAccessURL) when the given URL cannot be accessed for any reason.
+	 * @return string The server response
 	 */
 	public function post( $url, $request) 
 	{

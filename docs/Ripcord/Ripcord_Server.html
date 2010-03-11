@@ -112,13 +112,15 @@
 <div class="evenrow">
 	
 	<div class="method-header">
-		<span class="method-title">Constructor __construct</span> (line <span class="line-number">83</span>)
+		<span class="method-title">Constructor __construct</span> (line <span class="line-number">85</span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
 <p class="short-description">Creates a new instance of the Ripcord server.</p>
 	<ul class="tags">
-				<li><span class="field">see:</span> Server::setOutputOption</li>
+				<li><span class="field">see:</span> <a href="../Ripcord/Ripcord_Server.html#methodsetOutputOption">Ripcord_Server::setOutputOption()</a></li>
+				<li><span class="field">throws:</span> Ripcord_InvalidArgumentException (ripcord::unknownServiceType) when passed an incorrect service</li>
+				<li><span class="field">throws:</span> Ripcord_Exception (ripcord::xmlrpcNotInstalled) when the xmlrpc extension in not available.</li>
 			</ul>
 	
 	<div class="method-signature">
@@ -135,7 +137,7 @@
 				<span class="var-name">$services.</span><span class="var-description">: Optional. An object or array of objects. The public methods in these objects will be exposed  through the RPC server. If the services array has non-numeric keys, the key for each object will define its namespace.</span>			</li>
 					<li>
 				<span class="var-type">array</span>
-				<span class="var-name">$options.</span><span class="var-description">: Optional. Allows you to override the default server settings. Accepted key names are:  'documentor' - allows you to specify an alternative HTML documentor class, or if set to false, no HTML documentor.  'name' - The name of the server, used by the default HTML documentor.  'css' - An url of a css file to link to in the HTML documentation.  'wsdl' - The wsdl 1.0 description of this service (only usefull if you run the 'soap 1.1' version, or the 'auto' version  'wsdl2' - The wsdl 2.0 description of this service  In addition you can set any of the outputOptions for the xmlrpc server.</span>			</li>
+				<span class="var-name">$options.</span><span class="var-description">: Optional. Allows you to override the default server settings. Accepted key names are: <ul><li>'documentor': allows you to specify an alternative HTML documentor class, or if set to false, no HTML documentor.</li><li>'name'      : The name of the server, used by the default HTML documentor.</li><li>'css'       : An url of a css file to link to in the HTML documentation.</li><li>'wsdl'      : The wsdl 1.0 description of this service (only usefull if you run the 'soap 1.1' version, or the 'auto' version</li><li>'wsdl2'     : The wsdl 2.0 description of this service</li></ul> In addition you can set any of the outputOptions for the xmlrpc server.</span>			</li>
 					<li>
 				<span class="var-type"></span>
 				<span class="var-name">$services</span>			</li>
@@ -150,7 +152,7 @@
 <div class="oddrow">
 	
 	<div class="method-header">
-		<span class="method-title">addMethod</span> (line <span class="line-number">166</span>)
+		<span class="method-title">addMethod</span> (line <span class="line-number">175</span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -182,12 +184,13 @@
 <div class="evenrow">
 	
 	<div class="method-header">
-		<span class="method-title">addService</span> (line <span class="line-number">134</span>)
+		<span class="method-title">addService</span> (line <span class="line-number">137</span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
 <p class="short-description">Allows you to add a service to the server after construction.</p>
 	<ul class="tags">
+				<li><span class="field">throws:</span> Ripcord_InvalidArgumentException (ripcord::unknownServiceType) when passed an incorrect service</li>
 				<li><span class="field">access:</span> public</li>
 			</ul>
 	
@@ -214,12 +217,14 @@
 <div class="oddrow">
 	
 	<div class="method-header">
-		<span class="method-title">call</span> (line <span class="line-number">261</span>)
+		<span class="method-title">call</span> (line <span class="line-number">272</span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
 <p class="short-description">Calls a method by its rpc name.</p>
 	<ul class="tags">
+				<li><span class="field">throws:</span> Ripcord_Exception (ripcord::methodNotFound) when the requested method isn't available.</li>
+				<li><span class="field">throws:</span> Ripcord_InvalidArgumentException (ripcord::cannotRecurse) when passed a recursive multiCall</li>
 				<li><span class="field">access:</span> public</li>
 			</ul>
 	
@@ -246,7 +251,7 @@
 <div class="evenrow">
 	
 	<div class="method-header">
-		<span class="method-title">handle</span> (line <span class="line-number">212</span>)
+		<span class="method-title">handle</span> (line <span class="line-number">221</span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -275,7 +280,7 @@
 <div class="oddrow">
 	
 	<div class="method-header">
-		<span class="method-title">run</span> (line <span class="line-number">178</span>)
+		<span class="method-title">run</span> (line <span class="line-number">187</span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -299,7 +304,7 @@
 <div class="evenrow">
 	
 	<div class="method-header">
-		<span class="method-title">setOutputOption</span> (line <span class="line-number">300</span>)
+		<span class="method-title">setOutputOption</span> (line <span class="line-number">311</span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -322,7 +327,12 @@
 				<span class="var-name">$option</span><span class="var-description">: The name of the option</span>			</li>
 					<li>
 				<span class="var-type">mixed</span>
-				<span class="var-name">$value</span><span class="var-description">: The value of the option  The options are:  output_type: Return data as either php native data or xml encoded. Can be either 'php' or 'xml'. 'xml' is the default.  verbosity: Determines the compactness of generated xml. Can be either 'no_white_space', 'newlines_only' or 'pretty'.    'pretty' is the default.  escaping: Determines how/whether to escape certain characters. 1 or more values are allowed. If multiple, they need    to be specified as a sub-array. Options are: 'cdata', 'non-ascii', 'non-print' and 'markup'. Default is 'non-ascii',    'non-print' and 'markup'.  version: Version of the xml vocabulary to use. Currently, three are supported: 'xmlrpc', 'soap 1.1' and 'simple'. The    keyword 'auto' is also recognized and tells the server to respond in whichever version the request cam in. 'auto' is    the default.  encoding: The character encoding that the data is in. Can be any supported character encoding. Default is 'utf-8'.</span>			</li>
+				<span class="var-name">$value</span><span class="var-description">: The value of the option  The options are: <ul><li>output_type: Return data as either php native data or xml encoded. Can be either 'php' or 'xml'. 'xml' is the default.</li><li>verbosity: Determines the compactness of generated xml. Can be either 'no_white_space', 'newlines_only' or 'pretty'.
+   'pretty' is the default.</li><li>escaping: Determines how/whether to escape certain characters. 1 or more values are allowed. If multiple, they need
+   to be specified as a sub-array. Options are: 'cdata', 'non-ascii', 'non-print' and 'markup'. Default is 'non-ascii',
+   'non-print' and 'markup'.</li><li>version: Version of the xml vocabulary to use. Currently, three are supported: 'xmlrpc', 'soap 1.1' and 'simple'. The
+   keyword 'auto' is also recognized and tells the server to respond in whichever version the request cam in. 'auto' is
+   the default.</li><li>encoding: The character encoding that the data is in. Can be any supported character encoding. Default is 'utf-8'.</li></ul></span>			</li>
 				</ul>
 		
 			
@@ -333,7 +343,7 @@
 
 
 	<p class="notes" id="credit">
-		Documentation generated on Mon, 08 Mar 2010 18:26:31 +0100 by <a href="http://www.phpdoc.org" target="_blank">phpDocumentor 1.4.3</a>
+		Documentation generated on Thu, 11 Mar 2010 12:09:27 +0100 by <a href="http://www.phpdoc.org" target="_blank">phpDocumentor 1.4.3</a>
 	</p>
 	</div></body>
 </html>

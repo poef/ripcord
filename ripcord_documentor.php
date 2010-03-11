@@ -5,7 +5,7 @@
  * @author Auke van Slooten <auke@muze.nl>
  * @copyright Copyright (C) 2010, Muze <www.muze.nl>
  * @license http://opensource.org/licenses/gpl-3.0.html GNU Public License
- * @version Ripcord 0.2 - PHP 5.0
+ * @version Ripcord 0.3 - PHP 5.0
  */
 
 /**
@@ -155,6 +155,7 @@ class Ripcord_Documentor implements Ripcord_Documentor_Interface
 	/**
 	 * This method returns an XML document in the introspection format expected by xmlrpc_server_register_introspection_callback
 	 * It uses the php Reflection classes to gather information from the registered methods. Descriptions are added from phpdoc docblocks if found.
+	 * @return string XML string with the introspection data.
 	 */
 	function getIntrospectionXML() {
 		$xml = "<?xml version='1.0' ?><introspection version='1.0'><methodList>";

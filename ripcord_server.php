@@ -5,7 +5,7 @@
  * @author Auke van Slooten <auke@muze.nl>
  * @copyright Copyright (C) 2010, Muze <www.muze.nl>
  * @license http://opensource.org/licenses/gpl-3.0.html GNU Public License
- * @version Ripcord 0.2 - PHP 5.0
+ * @version Ripcord 0.3 - PHP 5.0
  */
  
 require_once(dirname(__FILE__).'/ripcord.php');
@@ -57,7 +57,7 @@ class Ripcord_Server
 	 * Contains an array with outputOptions, used when calling methods on the xmlrpc server created with 
 	 * xmlrpc_server_create. These options can be overridden through the $options parameter of the 
 	 * Ripcord_Server constructor.
-	 * @see Ripcord_Server::setOutputOption
+	 * @see Ripcord_Server::setOutputOption()
 	 */
 	private $outputOptions = array(
 		"output_type" => "xml",
@@ -72,13 +72,13 @@ class Ripcord_Server
 	 * @param mixed $services. Optional. An object or array of objects. The public methods in these objects will be exposed
 	 * through the RPC server. If the services array has non-numeric keys, the key for each object will define its namespace.
 	 * @param array $options. Optional. Allows you to override the default server settings. Accepted key names are:
-	 * 'documentor' - allows you to specify an alternative HTML documentor class, or if set to false, no HTML documentor.
-	 * 'name' - The name of the server, used by the default HTML documentor.
-	 * 'css' - An url of a css file to link to in the HTML documentation.
-	 * 'wsdl' - The wsdl 1.0 description of this service (only usefull if you run the 'soap 1.1' version, or the 'auto' version
-	 * 'wsdl2' - The wsdl 2.0 description of this service
+	 * - 'documentor': allows you to specify an alternative HTML documentor class, or if set to false, no HTML documentor.
+	 * - 'name'      : The name of the server, used by the default HTML documentor.
+	 * - 'css'       : An url of a css file to link to in the HTML documentation.
+	 * - 'wsdl'      : The wsdl 1.0 description of this service (only usefull if you run the 'soap 1.1' version, or the 'auto' version
+	 * - 'wsdl2'     : The wsdl 2.0 description of this service
 	 * In addition you can set any of the outputOptions for the xmlrpc server.
-	 * @see Server::setOutputOption
+	 * @see Ripcord_Server::setOutputOption()
 	 * @throws Ripcord_InvalidArgumentException (ripcord::unknownServiceType) when passed an incorrect service
 	 * @throws Ripcord_Exception (ripcord::xmlrpcNotInstalled) when the xmlrpc extension in not available.
 	 */
@@ -297,16 +297,16 @@ class Ripcord_Server
 	 * @param string $option The name of the option
 	 * @param mixed $value The value of the option
 	 * The options are:
-	 * output_type: Return data as either php native data or xml encoded. Can be either 'php' or 'xml'. 'xml' is the default.
-	 * verbosity: Determines the compactness of generated xml. Can be either 'no_white_space', 'newlines_only' or 'pretty'. 
+	 * - output_type: Return data as either php native data or xml encoded. Can be either 'php' or 'xml'. 'xml' is the default.
+	 * - verbosity: Determines the compactness of generated xml. Can be either 'no_white_space', 'newlines_only' or 'pretty'. 
 	 *   'pretty' is the default.
-	 * escaping: Determines how/whether to escape certain characters. 1 or more values are allowed. If multiple, they need
+	 * - escaping: Determines how/whether to escape certain characters. 1 or more values are allowed. If multiple, they need
 	 *   to be specified as a sub-array. Options are: 'cdata', 'non-ascii', 'non-print' and 'markup'. Default is 'non-ascii',
 	 *   'non-print' and 'markup'.
-	 * version: Version of the xml vocabulary to use. Currently, three are supported: 'xmlrpc', 'soap 1.1' and 'simple'. The
+	 * - version: Version of the xml vocabulary to use. Currently, three are supported: 'xmlrpc', 'soap 1.1' and 'simple'. The
 	 *   keyword 'auto' is also recognized and tells the server to respond in whichever version the request cam in. 'auto' is
 	 *   the default.
-	 * encoding: The character encoding that the data is in. Can be any supported character encoding. Default is 'utf-8'.
+	 * - encoding: The character encoding that the data is in. Can be any supported character encoding. Default is 'utf-8'.
 	 */
 	public function setOutputOption($option, $value) 
 	{
