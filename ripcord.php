@@ -97,7 +97,8 @@ class ripcord
 	 * @return object
 	 */
 	public static function base64($binary) {
-		return xmlrpc_set_type($binary, 'base64');
+		xmlrpc_set_type($binary, 'base64');
+		return $binary;
 	}
 	
 	/**
@@ -114,6 +115,16 @@ class ripcord
 		} else {
 			throw Ripcord_Exception('Variable is not of type base64', -7);
 		}
+	}
+	
+	/**
+	 * This method returns the type of the given parameter. This can be any of the XML-RPC data types, e.g.
+	 * 'struct', 'int', 'string', 'base64', 'boolean', 'double', 'array' or 'datetime'. 
+	 * @param mixed $param
+	 * @return string
+	 */
+	public static function getType($param) {
+		return xmlrpc_get_type($param);
 	}
 
 	/**
@@ -132,6 +143,7 @@ class ripcord
 	 * This method returns a new Ripcord client, configured to access an XML-RPC server.
 	 * @param string $url 
 	 * @param array $options Optional.
+	 * @return object
 	 * @see Ripcord_Client
 	 */
 	public static function xmlrpcClient($url, $options = null) 
@@ -144,6 +156,7 @@ class ripcord
 	 * This method returns a new Ripcord client, configured to access a Simple RPC server.
 	 * @param string $url 
 	 * @param array $options Optional.
+	 * @return object
 	 * @see Ripcord_Client
 	 */
 	public static function simpleClient($url, $options = null) 
@@ -155,6 +168,7 @@ class ripcord
 	/**
 	 * This method includes a ripcord class, using require_once. Used for autoloading ripcord classes.
 	 * @param string $class The name of the class to load.
+	 * @return boolean
 	 */
 	public static function load($class) {
 		if (substr($class, 0, 8)=='Ripcord_') {
@@ -174,25 +188,62 @@ class ripcord
 		}
 		return false;
 	}
+	
+	/**
+	 * This method creates a new Ripcord_Client_Call object, which encodes the information needed for
+	 * a method call to an rpc server. This is mostly used for the system.multiCall method.
+	 * @param string $method The name of the method call to encode
+	 * @params mixed $args The remainder of the arguments are encoded as parameters to the call
+	 * @return object
+	 */
+	public static function encodeCall() {
+		self::load('Ripcord_Client');
+		$params = func_get_args();
+		$method = array_shift($params);
+		return new Ripcord_Client_Call( $method, $params );
+	}
+	
+	/**
+	 * These constants define the error codes for specific types of error exceptions
+	 */
+	const methodNotFound     = -1;
+	const notRipcordCall     = -2;
+	const cannotRecurse      = -3;
+	const cannotAccessURL    = -4;
+	const xmlrpcNotInstalled = -5;
+	const notDatetime        = -6;
+	const notBase64          = -7;
+	const unknownServiceType = -8;
 }
 
 /**
- * This class is used for all exceptions thrown by Ripcord. Possible exceptions thrown are:
- * -1 Method {method} not found. - Thrown by the ripcord server when a requested method isn't found.
- * -2 Argument {index} is not a valid Ripcord call - Thrown by the client when passing incorrect arguments to system.multiCall.
- * -3 Cannot recurse system.multiCall  - Thrown by the ripcord server when system.multicall is called within itself.
- * -4  Could not access {url} - Thrown by the transport object when unable to access the given url.
- * -5 PHP XMLRPC library is not installed - Thrown by the ripcord server and client when the xmlrpc library is not installed.
- * -6 Variable is not of type datetime - Thrown by the ripcord timestamp method.
- * -7 Variable is not of type base64 - Thrown by the ripcord binary method.
+ * This class is the base class for all exceptions thrown by Ripcord. Possible exceptions thrown are:
+ * ripcord::methodNotFound (-1) Method {method} not found. - Thrown by the ripcord server when a requested method isn't found.
+ * ripcord::xmlrpcNotInstalled (-5) PHP XMLRPC library is not installed - Thrown by the ripcord server and client when the xmlrpc library is not installed.
  */
 class Ripcord_Exception extends Exception { }
+
+/**
+ * This class is used whenever an argument passed to a Ripcord method is invalid for any reason. Possible exceptions thrown are:
+ * ripcord::notRipcordCall (-2) Argument {index} is not a valid Ripcord call - Thrown by the client when passing incorrect arguments to system.multiCall.
+ * ripcord::cannotRecurse (-3) Cannot recurse system.multiCall  - Thrown by the ripcord server when system.multicall is called within itself.
+ * ripcord::notDateTime (-6) Variable is not of type datetime - Thrown by the ripcord timestamp method.
+ * ripcord::notBase64 (-7) Variable is not of type base64 - Thrown by the ripcord binary method.
+ * ripcord::unknownServiceType (-8) Variable is not a classname or an object - Thrown by the ripcord server.
+ */
+class Ripcord_InvalidArgumentException extends Ripcord_Exception { }
+
+/**
+ * This class is used whenever something goes wrong in sending / receiving data. Possible exceptions thrown are:
+ * ripcord::cannotAccessURL (-4) Could not access {url} - Thrown by the transport object when unable to access the given url.
+ */
+class Ripcord_TransportException extends Ripcord_Exception { }
 
 /**
  * This class is used for exceptions generated from xmlrpc faults returned by the server. The code and message correspond
  * to the code and message from the xmlrpc fault.
  */
-class Ripcord_Exception_Remote extends Ripcord_Exception { }
+class Ripcord_RemoteException extends Ripcord_Exception { }
 
 if (function_exists('spl_autoload_register')) {
 	spl_autoload_register('ripcord::load');
