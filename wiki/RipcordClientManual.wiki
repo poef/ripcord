@@ -24,8 +24,8 @@ Some XML-RPC servers support 'system.multiCall'. This allows you to call multipl
 <?php
 
     $client->system->multiCall(
-        $client->film->getScore( 'e3dee9d19a8c3af7c92f9067d2945b59', 500 )->bind($score),
-        $client->system->listMethods()->bind($methods)
+        ripcord::encodeCall('film.getScore', 'e3dee9d19a8c3af7c92f9067d2945b59', 500 )->bind($score),
+        ripcord::encodeCall('system.listMethods')->bind($methods)
     );
 
 ?>
@@ -39,8 +39,8 @@ An alternative syntax, without binding variables to the results automatically is
 <?php
 
     $result = $client->system->multiCall( array(
-        "score" => $client->film->getScore( 'e3dee9d19a8c3af7c92f9067d2945b59', 500 ),
-        "methods" => $client->system->listMethods()
+        "score" => ripcord::encodeCall('film.getScore', 'e3dee9d19a8c3af7c92f9067d2945b59', 500 ),
+        "methods" => ripcord::encodeCall('system.listMethods')
     ) );
 
 ?>
