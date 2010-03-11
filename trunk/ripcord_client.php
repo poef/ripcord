@@ -95,10 +95,17 @@ class Ripcord_Client
 	public $_throwExceptions = false;
 	
 	/**
+	 * Whether or not to decode the XML-RPC datetime and base64 types to unix timestamp and binary string
+	 * respectively.
+	 */
+	public $_autoDecode = true;
+	
+	/**
 	 * The constructor for the RPC client.
 	 * @param string $url The url of the rpc server
 	 * @param array $options Optional. A list of outputOptions. @see Ripcord_Server::setOutputOption
 	 * @param object $rootClient Optional. Used internally when using namespaces.
+	 * @throws Ripcord_Exception (ripcord::xmlrpcNotInstalled) when the xmlrpc extension is not available.
 	 */
 	public function __construct( $url, array $options = null, $rootClient = null) 
 	{
@@ -127,13 +134,16 @@ class Ripcord_Client
 		}
 		if ( !function_exists( 'xmlrpc_encode_request' ) )
 		{
-			throw new Exception('PHP XMLRPC library is not installed', -5);
+			throw new Ripcord_Exception('PHP XMLRPC library is not installed', ripcord::xmlrpcNotInstalled);
 		}
 	}
 
 	/**
 	 * This method catches any native method called on the client and calls it on the rpc server instead. It automatically
 	 * parses the resulting xml and returns native php type results.
+	 * @throws Ripcord_InvalidArgumentException (ripcord::notRipcordCall) when handling a multiCall and the 
+	 * arguments passed do not have the correct method call information
+	 * @throws Ripcord_RemoteException when _throwExceptions is true and the server returns an XML-RPC Fault.
 	 */
 	public function __call($name, $args) 
 	{
@@ -142,42 +152,43 @@ class Ripcord_Client
 			$name = $this->_namespace . '.' . $name;
 		}
 
-		if ( self::$_multicall && $this->_namespace === 'system' ) 
+		if ( $name === 'system.multiCall' ) 
 		{
-			// this exits the multicall scope when simply calling a system method
-			// but if you call a system method in the multicall scope, $_multicall
-			// is > 1, so you stay in multicall scope, and system.multiCall will
-			// add your system method to the list of methods to call later.
-			self::$_multicall -= 1;
-		}
-		if ( self::$_multicall && ($name !== 'system.multiCall') ) 
-		{
-			// inside a multicall method, so return deferred calls instead
-			return new Ripcord_Call( $name, $args );
-		} 
-		else if ( $name === 'system.multiCall' ) 
-		{
-			self::$_multicall = false;
-			if ( is_array( $args ) && count( $args ) == 1 && is_array( $args[0] )) 
+			if ( is_array( $args ) && (count( $args ) == 1) && is_array( $args[0] )  && !isset( $args[0]['methodName'] ) ) 
 			{ 
 				// multicall is called with a simple array of calls.
 				$args = $args[0];
+			}
+			else {
+				echo ':'.is_array($args).':'.count($args);
+				if (is_array($args[0])) {
+					echo ':'.is_array($args[0]).':'.!isset($args[0]['methodName']);
+				}
+				echo ";\n";
 			}
 			$params = array();
 			$bound = array();
 			foreach ( $args as $key => $arg ) 
 			{
-				if ( !is_a( $arg, 'Ripcord_Call' ) ) 
+				if ( !is_a( $arg, 'Ripcord_Client_Call' ) && (!is_array($arg) || !isset($arg['methodName']) ) ) 
 				{
-					throw new Ripcord_Exception(
-						'Argument '.$key.' is not a valid Ripcord call', -2);
+					throw new Ripcord_InvalidArgumentException(
+						'Argument '.$key.' is not a valid Ripcord call', ripcord::notRipcordCall);
+				}
+				if ( is_a( $arg, 'Ripcord_Client_Call' ) ) 
+				{
+					$arg->index  = count( $params );
+					$params[]    = $arg->encode();
+				}
+				else
+				{
+					$arg['index'] = count( $params );
+					$params[]    = array(
+						'methodName' => $arg['methodName'],
+						'params'     => isset($arg['params']) ? (array) $arg['params'] : array()
+					);
 				}
 				$bound[$key] = $arg;
-				$arg->index  = count( $params );
-				$params[]    = array(
-					'methodName' => $arg->method,
-					'params'     => $arg->params
-				);
 			}
 			$args = array( $params );
 		}
@@ -189,19 +200,41 @@ class Ripcord_Client
 		$this->_rootClient->_response = $response;
 		if ( ripcord::isFault( $result ) && $this->_throwExceptions ) 
 		{
-			throw new Ripcord_Exception_Remote($result['faultString'], $result['faultCode']);
+			throw new Ripcord_RemoteException($result['faultString'], $result['faultCode']);
 		}
 		if ( isset($bound) && is_array( $bound ) ) 
 		{
 			foreach ( $bound as $key => $callObject ) 
 			{
-				$returnValue = $result[$callObject->index];
+				if ( is_a( $callObject, 'Ripcord_Client_Call' ) )
+				{
+					$returnValue = $result[$callObject->index];
+				}
+				else
+				{
+					$returnValue = $result[$callObject['index']];
+				}
 				if ( is_array( $returnValue ) && count( $returnValue ) == 1 ) 
 				{
 					// XML-RPC specification says that non-fault results must be in a single item array
 					$returnValue = current($returnValue);
 				}
-				$callObject->bound = $returnValue;
+				if ($this->_autoDecode)
+				{
+					$type = xmlrpc_get_type($returnValue);
+					switch ($type) 
+					{
+						case 'base64' : 
+							$returnValue = ripcord::binary($returnValue);
+						break;
+						case 'datetime' :
+							$returnValue = ripcord::timestamp($returnValue);
+						break;
+					}
+				}
+				if ( is_a( $callObject, 'Ripcord_Client_Call' ) ) {
+					$callObject->bound = $returnValue;
+				} 
 				$bound[$key] = $returnValue;
 			}
 			$result = $bound;
@@ -228,12 +261,7 @@ class Ripcord_Client
 				),
 				$this->_rootClient
 			);
-			if ( $name === 'system' ) 
-			{
-				self::$_multicall+=1;
-			} else {
-				$this->{$name} = $result;
-			}
+			$this->{$name} = $result;
 		}
 		return $result;
 	}
@@ -241,11 +269,11 @@ class Ripcord_Client
 
 /**
  *  This class is used with the Ripcord_Client when calling system.multiCall. Instead of immediately calling the method on the rpc server,
- *  a Ripcord_Call  object is created with all the information needed to call the method using the multicall parameters. The call object is
+ *  a Ripcord_Client_Call  object is created with all the information needed to call the method using the multicall parameters. The call object is
  *  returned immediately and is used as input parameter for the multiCall call. The result of the call can be bound to a php variable. This
  *  variable will be filled with the result of the call when it is available.
  */
-class Ripcord_Call 
+class Ripcord_Client_Call 
 {
 	/**
 	 * The method to call on the rpc server
@@ -255,7 +283,7 @@ class Ripcord_Call
 	/**
 	 * The arguments to pass on to the method.
 	 */
-	public $params = null;
+	public $params = array();
 	
 	/**
 	 * The index in the multicall request array, if any.
@@ -268,7 +296,7 @@ class Ripcord_Call
 	public $bound  = null;
 	
 	/**
-	 * The constructor for the Ripcord_Call class.
+	 * The constructor for the Ripcord_Client_Call class.
 	 * @param string $method The name of the rpc method to call
 	 * @param array $params The parameters for the rpc method.
 	 */
@@ -288,6 +316,17 @@ class Ripcord_Call
 		$this->bound =& $bound;
 		return $this;
 	}
+
+	/**
+	 * This method returns the correct format for a multiCall argument.
+	 */
+	public function encode() {
+		return array(
+			'methodName' => $this->method,
+			'params' => (array) $this->params
+		);
+	}
+	
 }
 
 /**
@@ -337,6 +376,7 @@ class  Ripcord_Transport_Stream implements Ripcord_Transport
 	 * @param string $url The url to post to.
 	 * @param string $request The request to post.
 	 * @return string
+	 * @throws Ripcord_Exception (ripcord::cannotAccessURL) when the given URL cannot be accessed for any reason.
 	 */
 	public function post( $url, $request ) 
 	{
@@ -355,7 +395,7 @@ class  Ripcord_Transport_Stream implements Ripcord_Transport
 		$this->responseHeaders = $http_response_header;
 		if ( !$result )
 		{
-			throw new Ripcord_Exception( 'Could not access ' . $url, -4 );
+			throw new Ripcord_TransportException( 'Could not access ' . $url, ripcord::cannotAccessURL );
 		}
 		return $result;
 	}
@@ -392,6 +432,7 @@ class Ripcord_Transport_CURL implements Ripcord_Transport
 	 * This method posts the request to the given url
 	 * @param string $url The url to post to.
 	 * @param string $request The request to post.
+	 * @throws Ripcord_Exception (ripcord::cannotAccessURL) when the given URL cannot be accessed for any reason.
 	 */
 	public function post( $url, $request) 
 	{
@@ -416,7 +457,7 @@ class Ripcord_Transport_CURL implements Ripcord_Transport
 			$errorNumber = curl_errno( $curl );
 			$errorMessage = curl_error( $curl );
 			curl_close( $curl );
-			throw new Ripcord_Exception( 'Could not access ' . $url, -4, 
+			throw new Ripcord_TransportException( 'Could not access ' . $url, ripcord::cannotAccessURL, 
 				new Exception( $errorMessage, $errorNumber ) );
 		}
 		curl_close($curl);

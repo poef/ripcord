@@ -79,12 +79,14 @@ class Ripcord_Server
 	 * 'wsdl2' - The wsdl 2.0 description of this service
 	 * In addition you can set any of the outputOptions for the xmlrpc server.
 	 * @see Server::setOutputOption
+	 * @throws Ripcord_InvalidArgumentException (ripcord::unknownServiceType) when passed an incorrect service
+	 * @throws Ripcord_Exception (ripcord::xmlrpcNotInstalled) when the xmlrpc extension in not available.
 	 */
 	function __construct($services = null, $options = null) 
 	{
 		if ( !function_exists( 'xmlrpc_server_create' ) )
 		{
-			throw new Exception('PHP XMLRPC library is not installed', -5);
+			throw new Ripcord_Exception('PHP XMLRPC library is not installed', ripcord::xmlrpcNotInstalled );
 		}
 		$this->xmlrpc = xmlrpc_server_create();
 		if (isset($services)) 
@@ -130,6 +132,7 @@ class Ripcord_Server
 	 * Allows you to add a service to the server after construction.
 	 * @param object $service The object whose public methods must be added to the rpc server
 	 * @param string $serviceName Optional. The namespace for the methods.
+	 * @throws Ripcord_InvalidArgumentException (ripcord::unknownServiceType) when passed an incorrect service
 	 */
 	public function addService($service, $serviceName = 0) 
 	{
@@ -141,10 +144,10 @@ class Ripcord_Server
 		}
 		if (is_object($service)) {
 			$reflection = new ReflectionObject($service);
-		} else if (is_string($service)) {
+		} else if (is_string($service) && class_exists($service)) {
 			$reflection = new ReflectionClass($service);
 		} else {
-			throw new Ripcord_Exception('Unknown service type '.$serviceName, -8);
+			throw new Ripcord_InvalidArgumentException('Unknown service type '.$serviceName, ripcord::unknownServiceType );
 		}
 		$methods = $reflection->getMethods();
 		if (is_array($methods)) 
@@ -263,6 +266,8 @@ class Ripcord_Server
 	 * @param string $method The rpc name of the method
 	 * @param array $args The arguments to this method
 	 * @return mixed
+	 * @throws Ripcord_InvalidArgumentException (ripcord::cannotRecurse) when passed a recursive multiCall
+ 	 * @throws Ripcord_Exception (ripcord::methodNotFound) when the requested method isn't available.
 	 */
 	public function call( $method, $args = null ) 
 	{
@@ -274,7 +279,7 @@ class Ripcord_Server
 			if ( substr( $method, 0, 7 ) == 'system.' ) 
 			{
 				if ( $method == 'system.multiCall' ) {
-					throw new Ripcord_Exception( 'Cannot recurse system.multiCall', -3 );
+					throw new Ripcord_InvalidArgumentException( 'Cannot recurse system.multiCall', ripcord::cannotRecurse );
 				}
 				// system methods are handled internally by the xmlrpc server, so we've got to create a makebelieve request, 
 				// there is no other way because of a badly designed API 
@@ -282,7 +287,7 @@ class Ripcord_Server
 				$result = xmlrpc_server_call_method( $this->xmlrpc, $req, null, $this->outputOptions);
 				return xmlrpc_decode( $result );
 			} else {
-				throw new Ripcord_Exception( 'Method '.$method.' not found.', -1 );
+				throw new Ripcord_Exception( 'Method '.$method.' not found.', ripcord::methodNotFound );
 			}
 		}
 	}
