@@ -20,6 +20,7 @@
 	<a class="index-letter" href="elementindex.html#b">b</a>
 	<a class="index-letter" href="elementindex.html#c">c</a>
 	<a class="index-letter" href="elementindex.html#d">d</a>
+	<a class="index-letter" href="elementindex.html#e">e</a>
 	<a class="index-letter" href="elementindex.html#f">f</a>
 	<a class="index-letter" href="elementindex.html#g">g</a>
 	<a class="index-letter" href="elementindex.html#h">h</a>
@@ -31,6 +32,7 @@
 	<a class="index-letter" href="elementindex.html#r">r</a>
 	<a class="index-letter" href="elementindex.html#s">s</a>
 	<a class="index-letter" href="elementindex.html#t">t</a>
+	<a class="index-letter" href="elementindex.html#u">u</a>
 	<a class="index-letter" href="elementindex.html#v">v</a>
 	<a class="index-letter" href="elementindex.html#w">w</a>
 	<a class="index-letter" href="elementindex.html#x">x</a>
@@ -70,14 +72,28 @@
 						<span class="var-title">$bound</span>
 					</dt>
 		<dd class="index-item-body">
-			<div class="index-item-details"><a href="Ripcord/Ripcord_Call.html#var$bound">Ripcord_Call::$bound</a> in ripcord_client.php</div>
+			<div class="index-item-details"><a href="Ripcord/Ripcord_Client_Call.html#var$bound">Ripcord_Client_Call::$bound</a> in ripcord_client.php</div>
 							<div class="index-item-description">A reference to the php variable to fill with the result of the call, if any.</div>
+					</dd>
+			<dt class="field">
+						<span class="method-title">base64</span>
+					</dt>
+		<dd class="index-item-body">
+			<div class="index-item-details"><a href="Ripcord/ripcord.html#methodbase64">ripcord::base64()</a> in ripcord.php</div>
+							<div class="index-item-description">This method returns an XML-RPC base64 object from a given binary string.</div>
+					</dd>
+			<dt class="field">
+						<span class="method-title">binary</span>
+					</dt>
+		<dd class="index-item-body">
+			<div class="index-item-details"><a href="Ripcord/ripcord.html#methodbinary">ripcord::binary()</a> in ripcord.php</div>
+							<div class="index-item-description">This method returns a (binary) string from a given XML-RPC base64 object.</div>
 					</dd>
 			<dt class="field">
 						<span class="method-title">bind</span>
 					</dt>
 		<dd class="index-item-body">
-			<div class="index-item-details"><a href="Ripcord/Ripcord_Call.html#methodbind">Ripcord_Call::bind()</a> in ripcord_client.php</div>
+			<div class="index-item-details"><a href="Ripcord/Ripcord_Client_Call.html#methodbind">Ripcord_Client_Call::bind()</a> in ripcord_client.php</div>
 							<div class="index-item-description">This method allows you to bind a php variable to the result of this method call.</div>
 					</dd>
 		</dl>
@@ -103,6 +119,20 @@
 							<div class="index-item-description">Calls a method by its rpc name.</div>
 					</dd>
 			<dt class="field">
+						cannotAccessURL
+					</dt>
+		<dd class="index-item-body">
+			<div class="index-item-details"><a href="Ripcord/ripcord.html#constcannotAccessURL">ripcord::cannotAccessURL</a> in ripcord.php</div>
+							<div class="index-item-description">Could not access {url} - Thrown by the transport object when unable to access the given url.</div>
+					</dd>
+			<dt class="field">
+						cannotRecurse
+					</dt>
+		<dd class="index-item-body">
+			<div class="index-item-details"><a href="Ripcord/ripcord.html#constcannotRecurse">ripcord::cannotRecurse</a> in ripcord.php</div>
+							<div class="index-item-description">Cannot recurse system.multiCall  - Thrown by the ripcord server when system.multicall is called within itself.</div>
+					</dd>
+			<dt class="field">
 						<span class="method-title">client</span>
 					</dt>
 		<dd class="index-item-body">
@@ -123,6 +153,28 @@
 		<dd class="index-item-body">
 			<div class="index-item-details"><a href="Ripcord/ripcord.html#methoddatetime">ripcord::datetime()</a> in ripcord.php</div>
 							<div class="index-item-description">This method returns an XML-RPC datetime object from a given unix timestamp.</div>
+					</dd>
+		</dl>
+	<a name="e"></a>
+	<div class="index-letter-section">
+		<div style="float: left" class="index-letter-title">e</div>
+		<div style="float: right"><a href="#top">top</a></div>
+		<div style="clear: both"></div>
+	</div>
+	<dl>
+			<dt class="field">
+						<span class="method-title">encode</span>
+					</dt>
+		<dd class="index-item-body">
+			<div class="index-item-details"><a href="Ripcord/Ripcord_Client_Call.html#methodencode">Ripcord_Client_Call::encode()</a> in ripcord_client.php</div>
+							<div class="index-item-description">This method returns the correct format for a multiCall argument.</div>
+					</dd>
+			<dt class="field">
+						<span class="method-title">encodeCall</span>
+					</dt>
+		<dd class="index-item-body">
+			<div class="index-item-details"><a href="Ripcord/ripcord.html#methodencodeCall">ripcord::encodeCall()</a> in ripcord.php</div>
+							<div class="index-item-description">This method creates a new Ripcord_Client_Call object, which encodes the information needed for  a method call to an rpc server. This is mostly used for the system.multiCall method.</div>
 					</dd>
 		</dl>
 	<a name="f"></a>
@@ -159,6 +211,13 @@
 		<dd class="index-item-body">
 			<div class="index-item-details"><a href="Ripcord/Ripcord_Documentor.html#methodgetIntrospectionXML">Ripcord_Documentor::getIntrospectionXML()</a> in ripcord_documentor.php</div>
 							<div class="index-item-description">This method returns an XML document in the introspection format expected by xmlrpc_server_register_introspection_callback  It uses the php Reflection classes to gather information from the registered methods. Descriptions are added from phpdoc docblocks if found.</div>
+					</dd>
+			<dt class="field">
+						<span class="method-title">getType</span>
+					</dt>
+		<dd class="index-item-body">
+			<div class="index-item-details"><a href="Ripcord/ripcord.html#methodgetType">ripcord::getType()</a> in ripcord.php</div>
+							<div class="index-item-description">This method returns the type of the given parameter. This can be any of the XML-RPC data types, e.g.</div>
 					</dd>
 		</dl>
 	<a name="h"></a>
@@ -200,7 +259,7 @@
 						<span class="var-title">$index</span>
 					</dt>
 		<dd class="index-item-body">
-			<div class="index-item-details"><a href="Ripcord/Ripcord_Call.html#var$index">Ripcord_Call::$index</a> in ripcord_client.php</div>
+			<div class="index-item-details"><a href="Ripcord/Ripcord_Client_Call.html#var$index">Ripcord_Client_Call::$index</a> in ripcord_client.php</div>
 							<div class="index-item-description">The index in the multicall request array, if any.</div>
 					</dd>
 			<dt class="field">
@@ -237,8 +296,15 @@
 						<span class="var-title">$method</span>
 					</dt>
 		<dd class="index-item-body">
-			<div class="index-item-details"><a href="Ripcord/Ripcord_Call.html#var$method">Ripcord_Call::$method</a> in ripcord_client.php</div>
+			<div class="index-item-details"><a href="Ripcord/Ripcord_Client_Call.html#var$method">Ripcord_Client_Call::$method</a> in ripcord_client.php</div>
 							<div class="index-item-description">The method to call on the rpc server</div>
+					</dd>
+			<dt class="field">
+						methodNotFound
+					</dt>
+		<dd class="index-item-body">
+			<div class="index-item-details"><a href="Ripcord/ripcord.html#constmethodNotFound">ripcord::methodNotFound</a> in ripcord.php</div>
+							<div class="index-item-description">Method {method} not found. - Thrown by the ripcord server when a requested method isn't found.</div>
 					</dd>
 		</dl>
 	<a name="n"></a>
@@ -255,6 +321,27 @@
 			<div class="index-item-details"><a href="Ripcord/Ripcord_Documentor.html#var$name">Ripcord_Documentor::$name</a> in ripcord_documentor.php</div>
 							<div class="index-item-description">The name of the rpc server, used as the title and heading of the default HTML page.</div>
 					</dd>
+			<dt class="field">
+						notBase64
+					</dt>
+		<dd class="index-item-body">
+			<div class="index-item-details"><a href="Ripcord/ripcord.html#constnotBase64">ripcord::notBase64</a> in ripcord.php</div>
+							<div class="index-item-description">Variable is not of type base64 - Thrown by the ripcord binary method.</div>
+					</dd>
+			<dt class="field">
+						notDatetime
+					</dt>
+		<dd class="index-item-body">
+			<div class="index-item-details"><a href="Ripcord/ripcord.html#constnotDatetime">ripcord::notDatetime</a> in ripcord.php</div>
+							<div class="index-item-description">Variable is not of type datetime - Thrown by the ripcord timestamp method.</div>
+					</dd>
+			<dt class="field">
+						notRipcordCall
+					</dt>
+		<dd class="index-item-body">
+			<div class="index-item-details"><a href="Ripcord/ripcord.html#constnotRipcordCall">ripcord::notRipcordCall</a> in ripcord.php</div>
+							<div class="index-item-description">Argument {index} is not a valid Ripcord call - Thrown by the client when passing incorrect arguments to system.multiCall.</div>
+					</dd>
 		</dl>
 	<a name="p"></a>
 	<div class="index-letter-section">
@@ -267,7 +354,7 @@
 						<span class="var-title">$params</span>
 					</dt>
 		<dd class="index-item-body">
-			<div class="index-item-details"><a href="Ripcord/Ripcord_Call.html#var$params">Ripcord_Call::$params</a> in ripcord_client.php</div>
+			<div class="index-item-details"><a href="Ripcord/Ripcord_Client_Call.html#var$params">Ripcord_Client_Call::$params</a> in ripcord_client.php</div>
 							<div class="index-item-description">The arguments to pass on to the method.</div>
 					</dd>
 			<dt class="field">
@@ -334,13 +421,6 @@
 			<div class="index-item-details"><a href="Ripcord/_ripcord.php.html">ripcord.php</a> in ripcord.php</div>
 					</dd>
 			<dt class="field">
-						Ripcord_Call
-					</dt>
-		<dd class="index-item-body">
-			<div class="index-item-details"><a href="Ripcord/Ripcord_Call.html">Ripcord_Call</a> in ripcord_client.php</div>
-							<div class="index-item-description">This class is used with the Ripcord_Client when calling system.multiCall. Instead of immediately calling the method on the rpc server,   a Ripcord_Call  object is created with all the information needed to call the method using the multicall parameters. The call object is   returned immediately and is used as input parameter for the multiCall call. The result of the call can be bound to a php variable. This   variable will be filled with the result of the call when it is available.</div>
-					</dd>
-			<dt class="field">
 						Ripcord_Client
 					</dt>
 		<dd class="index-item-body">
@@ -352,6 +432,13 @@
 					</dt>
 		<dd class="index-item-body">
 			<div class="index-item-details"><a href="Ripcord/_ripcord_client.php.html">ripcord_client.php</a> in ripcord_client.php</div>
+					</dd>
+			<dt class="field">
+						Ripcord_Client_Call
+					</dt>
+		<dd class="index-item-body">
+			<div class="index-item-details"><a href="Ripcord/Ripcord_Client_Call.html">Ripcord_Client_Call</a> in ripcord_client.php</div>
+							<div class="index-item-description">This class is used with the Ripcord_Client when calling system.multiCall. Instead of immediately calling the method on the rpc server,   a Ripcord_Client_Call  object is created with all the information needed to call the method using the multicall parameters. The call object is   returned immediately and is used as input parameter for the multiCall call. The result of the call can be bound to a php variable. This   variable will be filled with the result of the call when it is available.</div>
 					</dd>
 			<dt class="field">
 						Ripcord_Documentor
@@ -378,13 +465,20 @@
 					</dt>
 		<dd class="index-item-body">
 			<div class="index-item-details"><a href="Ripcord/Ripcord_Exception.html">Ripcord_Exception</a> in ripcord.php</div>
-							<div class="index-item-description">This class is used for all exceptions thrown by Ripcord. Possible exceptions thrown are:  -1 Method {method} not found. - Thrown by the ripcord server when a requested method isn't found.</div>
+							<div class="index-item-description">This class is the base class for all exceptions thrown by Ripcord. Possible exceptions thrown are: <ul><li>ripcord::methodNotFound (-1) Method {method} not found. - Thrown by the ripcord server when a requested method isn't found.</li></ul></div>
 					</dd>
 			<dt class="field">
-						Ripcord_Exception_Remote
+						Ripcord_InvalidArgumentException
 					</dt>
 		<dd class="index-item-body">
-			<div class="index-item-details"><a href="Ripcord/Ripcord_Exception_Remote.html">Ripcord_Exception_Remote</a> in ripcord.php</div>
+			<div class="index-item-details"><a href="Ripcord/Ripcord_InvalidArgumentException.html">Ripcord_InvalidArgumentException</a> in ripcord.php</div>
+							<div class="index-item-description">This class is used whenever an argument passed to a Ripcord method is invalid for any reason. Possible exceptions thrown are: <ul><li>ripcord::notRipcordCall (-2) Argument {index} is not a valid Ripcord call - Thrown by the client when passing incorrect arguments to system.multiCall.</li></ul></div>
+					</dd>
+			<dt class="field">
+						Ripcord_RemoteException
+					</dt>
+		<dd class="index-item-body">
+			<div class="index-item-details"><a href="Ripcord/Ripcord_RemoteException.html">Ripcord_RemoteException</a> in ripcord.php</div>
 							<div class="index-item-description">This class is used for exceptions generated from xmlrpc faults returned by the server. The code and message correspond  to the code and message from the xmlrpc fault.</div>
 					</dd>
 			<dt class="field">
@@ -406,6 +500,13 @@
 		<dd class="index-item-body">
 			<div class="index-item-details"><a href="Ripcord/Ripcord_Transport.html">Ripcord_Transport</a> in ripcord_client.php</div>
 							<div class="index-item-description">This interface describes the minimum interface needed for the transport object used by the</div>
+					</dd>
+			<dt class="field">
+						Ripcord_TransportException
+					</dt>
+		<dd class="index-item-body">
+			<div class="index-item-details"><a href="Ripcord/Ripcord_TransportException.html">Ripcord_TransportException</a> in ripcord.php</div>
+							<div class="index-item-description">This class is used whenever something goes wrong in sending / receiving data. Possible exceptions thrown are: <ul><li>ripcord::cannotAccessURL (-4) Could not access {url} - Thrown by the transport object when unable to access the given url.</li></ul></div>
 					</dd>
 			<dt class="field">
 						Ripcord_Transport_CURL
@@ -493,6 +594,21 @@
 							<div class="index-item-description">This method returns a unix timestamp from a given XML-RPC datetime object.</div>
 					</dd>
 		</dl>
+	<a name="u"></a>
+	<div class="index-letter-section">
+		<div style="float: left" class="index-letter-title">u</div>
+		<div style="float: right"><a href="#top">top</a></div>
+		<div style="clear: both"></div>
+	</div>
+	<dl>
+			<dt class="field">
+						unknownServiceType
+					</dt>
+		<dd class="index-item-body">
+			<div class="index-item-details"><a href="Ripcord/ripcord.html#constunknownServiceType">ripcord::unknownServiceType</a> in ripcord.php</div>
+							<div class="index-item-description">Variable is not a classname or an object - Thrown by the ripcord server.</div>
+					</dd>
+		</dl>
 	<a name="v"></a>
 	<div class="index-letter-section">
 		<div style="float: left" class="index-letter-title">v</div>
@@ -544,6 +660,13 @@
 			<div class="index-item-details"><a href="Ripcord/ripcord.html#methodxmlrpcClient">ripcord::xmlrpcClient()</a> in ripcord.php</div>
 							<div class="index-item-description">This method returns a new Ripcord client, configured to access an XML-RPC server.</div>
 					</dd>
+			<dt class="field">
+						xmlrpcNotInstalled
+					</dt>
+		<dd class="index-item-body">
+			<div class="index-item-details"><a href="Ripcord/ripcord.html#constxmlrpcNotInstalled">ripcord::xmlrpcNotInstalled</a> in ripcord.php</div>
+							<div class="index-item-description">PHP XMLRPC library is not installed - Thrown by the ripcord server and client when the xmlrpc library is not installed.</div>
+					</dd>
 		</dl>
 	<a name="_"></a>
 	<div class="index-letter-section">
@@ -552,6 +675,13 @@
 		<div style="clear: both"></div>
 	</div>
 	<dl>
+			<dt class="field">
+						<span class="var-title">$_autoDecode</span>
+					</dt>
+		<dd class="index-item-body">
+			<div class="index-item-details"><a href="Ripcord/Ripcord_Client.html#var$_autoDecode">Ripcord_Client::$_autoDecode</a> in ripcord_client.php</div>
+							<div class="index-item-description">Whether or not to decode the XML-RPC datetime and base64 types to unix timestamp and binary string  respectively.</div>
+					</dd>
 			<dt class="field">
 						<span class="var-title">$_request</span>
 					</dt>
@@ -597,13 +727,6 @@
 						<span class="method-title">__construct</span>
 					</dt>
 		<dd class="index-item-body">
-			<div class="index-item-details"><a href="Ripcord/Ripcord_Server.html#method__construct">Ripcord_Server::__construct()</a> in ripcord_server.php</div>
-							<div class="index-item-description">Creates a new instance of the Ripcord server.</div>
-					</dd>
-			<dt class="field">
-						<span class="method-title">__construct</span>
-					</dt>
-		<dd class="index-item-body">
 			<div class="index-item-details"><a href="Ripcord/Ripcord_Transport_Stream.html#method__construct">Ripcord_Transport_Stream::__construct()</a> in ripcord_client.php</div>
 							<div class="index-item-description">This is the constructor for the Ripcord_Transport_Stream class.</div>
 					</dd>
@@ -625,8 +748,15 @@
 						<span class="method-title">__construct</span>
 					</dt>
 		<dd class="index-item-body">
-			<div class="index-item-details"><a href="Ripcord/Ripcord_Call.html#method__construct">Ripcord_Call::__construct()</a> in ripcord_client.php</div>
-							<div class="index-item-description">The constructor for the Ripcord_Call class.</div>
+			<div class="index-item-details"><a href="Ripcord/Ripcord_Client_Call.html#method__construct">Ripcord_Client_Call::__construct()</a> in ripcord_client.php</div>
+							<div class="index-item-description">The constructor for the Ripcord_Client_Call class.</div>
+					</dd>
+			<dt class="field">
+						<span class="method-title">__construct</span>
+					</dt>
+		<dd class="index-item-body">
+			<div class="index-item-details"><a href="Ripcord/Ripcord_Server.html#method__construct">Ripcord_Server::__construct()</a> in ripcord_server.php</div>
+							<div class="index-item-description">Creates a new instance of the Ripcord server.</div>
 					</dd>
 			<dt class="field">
 						<span class="method-title">__get</span>
@@ -642,6 +772,7 @@
 	<a class="index-letter" href="elementindex.html#b">b</a>
 	<a class="index-letter" href="elementindex.html#c">c</a>
 	<a class="index-letter" href="elementindex.html#d">d</a>
+	<a class="index-letter" href="elementindex.html#e">e</a>
 	<a class="index-letter" href="elementindex.html#f">f</a>
 	<a class="index-letter" href="elementindex.html#g">g</a>
 	<a class="index-letter" href="elementindex.html#h">h</a>
@@ -653,6 +784,7 @@
 	<a class="index-letter" href="elementindex.html#r">r</a>
 	<a class="index-letter" href="elementindex.html#s">s</a>
 	<a class="index-letter" href="elementindex.html#t">t</a>
+	<a class="index-letter" href="elementindex.html#u">u</a>
 	<a class="index-letter" href="elementindex.html#v">v</a>
 	<a class="index-letter" href="elementindex.html#w">w</a>
 	<a class="index-letter" href="elementindex.html#x">x</a>

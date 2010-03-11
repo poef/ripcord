@@ -23,10 +23,10 @@
 					</div>
 	<div class="info-box-body">
         		<!-- ========== Info from phpDoc block ========= -->
-<p class="short-description">This class is used for all exceptions thrown by Ripcord. Possible exceptions thrown are:  -1 Method {method} not found. - Thrown by the ripcord server when a requested method isn't found.</p>
-<p class="description"><p>-2 Argument {index} is not a valid Ripcord call - Thrown by the client when passing incorrect arguments to system.multiCall.  -3 Cannot recurse system.multiCall  - Thrown by the ripcord server when system.multicall is called within itself.  -4  Could not access {url} - Thrown by the transport object when unable to access the given url.  -5 PHP XMLRPC library is not installed - Thrown by the ripcord server and client when the xmlrpc library is not installed.  -6 Variable is not of type datetime - Thrown by the ripcord datetime method.</p></p>
+<p class="short-description">This class is the base class for all exceptions thrown by Ripcord. Possible exceptions thrown are: <ul><li>ripcord::methodNotFound (-1) Method {method} not found. - Thrown by the ripcord server when a requested method isn't found.</li></ul></p>
+<p class="description"><p><ul><li>ripcord::xmlrpcNotInstalled (-5) PHP XMLRPC library is not installed - Thrown by the ripcord server and client when the xmlrpc library is not installed.</li></ul></p></p>
 		<p class="notes">
-			Located in <a class="field" href="_ripcord.php.html">/ripcord.php</a> (line <span class="field">163</span>)
+			Located in <a class="field" href="_ripcord.php.html">/ripcord.php</a> (line <span class="field">245</span>)
 		</p>
 		
 				
@@ -54,7 +54,19 @@
 					<th class="class-table-header">Description</th>
 				</tr>
 								<tr>
-					<td style="padding-right: 2em"><a href="../Ripcord/Ripcord_Exception_Remote.html">Ripcord_Exception_Remote</a></td>
+					<td style="padding-right: 2em"><a href="../Ripcord/Ripcord_InvalidArgumentException.html">Ripcord_InvalidArgumentException</a></td>
+					<td>
+											This class is used whenever an argument passed to a Ripcord method is invalid for any reason. Possible exceptions thrown are: <ul><li>ripcord::notRipcordCall (-2) Argument {index} is not a valid Ripcord call - Thrown by the client when passing incorrect arguments to system.multiCall.</li></ul>
+										</td>
+				</tr>
+								<tr>
+					<td style="padding-right: 2em"><a href="../Ripcord/Ripcord_TransportException.html">Ripcord_TransportException</a></td>
+					<td>
+											This class is used whenever something goes wrong in sending / receiving data. Possible exceptions thrown are: <ul><li>ripcord::cannotAccessURL (-4) Could not access {url} - Thrown by the transport object when unable to access the given url.</li></ul>
+										</td>
+				</tr>
+								<tr>
+					<td style="padding-right: 2em"><a href="../Ripcord/Ripcord_RemoteException.html">Ripcord_RemoteException</a></td>
 					<td>
 											This class is used for exceptions generated from xmlrpc faults returned by the server. The code and message correspond  to the code and message from the xmlrpc fault.
 										</td>
@@ -141,7 +153,7 @@
 
 
 	<p class="notes" id="credit">
-		Documentation generated on Mon, 08 Mar 2010 18:26:30 +0100 by <a href="http://www.phpdoc.org" target="_blank">phpDocumentor 1.4.3</a>
+		Documentation generated on Thu, 11 Mar 2010 12:09:26 +0100 by <a href="http://www.phpdoc.org" target="_blank">phpDocumentor 1.4.3</a>
 	</p>
 	</div></body>
 </html>

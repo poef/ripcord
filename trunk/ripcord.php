@@ -5,7 +5,7 @@
  * @author Auke van Slooten <auke@muze.nl>
  * @copyright Copyright (C) 2010, Muze <www.muze.nl>
  * @license http://opensource.org/licenses/gpl-3.0.html GNU Public License
- * @version Ripcord 0.2 - PHP 5.0
+ * @version Ripcord 0.3 - PHP 5.0
  */
 
 /**
@@ -193,7 +193,7 @@ class ripcord
 	 * This method creates a new Ripcord_Client_Call object, which encodes the information needed for
 	 * a method call to an rpc server. This is mostly used for the system.multiCall method.
 	 * @param string $method The name of the method call to encode
-	 * @params mixed $args The remainder of the arguments are encoded as parameters to the call
+	 * @param mixed $args,... The remainder of the arguments are encoded as parameters to the call
 	 * @return object
 	 */
 	public static function encodeCall() {
@@ -204,38 +204,59 @@ class ripcord
 	}
 	
 	/**
-	 * These constants define the error codes for specific types of error exceptions
+	 * Method {method} not found. - Thrown by the ripcord server when a requested method isn't found.
 	 */
 	const methodNotFound     = -1;
+	/**
+	 * Argument {index} is not a valid Ripcord call - Thrown by the client when passing incorrect arguments to system.multiCall.
+	 */
 	const notRipcordCall     = -2;
+	/**
+	 * Cannot recurse system.multiCall  - Thrown by the ripcord server when system.multicall is called within itself.
+	 */
 	const cannotRecurse      = -3;
+	/**
+	 * Could not access {url} - Thrown by the transport object when unable to access the given url.
+	 */
 	const cannotAccessURL    = -4;
+	/**
+	 * PHP XMLRPC library is not installed - Thrown by the ripcord server and client when the xmlrpc library is not installed.
+	 */
 	const xmlrpcNotInstalled = -5;
+	/**
+	 * Variable is not of type datetime - Thrown by the ripcord timestamp method.
+ 	 */
 	const notDatetime        = -6;
+	/**
+	 * Variable is not of type base64 - Thrown by the ripcord binary method.
+ 	 */
 	const notBase64          = -7;
+	/**
+	 * Variable is not a classname or an object - Thrown by the ripcord server.
+	 */
 	const unknownServiceType = -8;
 }
 
 /**
  * This class is the base class for all exceptions thrown by Ripcord. Possible exceptions thrown are:
- * ripcord::methodNotFound (-1) Method {method} not found. - Thrown by the ripcord server when a requested method isn't found.
- * ripcord::xmlrpcNotInstalled (-5) PHP XMLRPC library is not installed - Thrown by the ripcord server and client when the xmlrpc library is not installed.
+ * - ripcord::methodNotFound (-1) Method {method} not found. - Thrown by the ripcord server when a requested method isn't found.
+ * - ripcord::xmlrpcNotInstalled (-5) PHP XMLRPC library is not installed - Thrown by the ripcord server and client when the xmlrpc library is not installed.
  */
 class Ripcord_Exception extends Exception { }
 
 /**
  * This class is used whenever an argument passed to a Ripcord method is invalid for any reason. Possible exceptions thrown are:
- * ripcord::notRipcordCall (-2) Argument {index} is not a valid Ripcord call - Thrown by the client when passing incorrect arguments to system.multiCall.
- * ripcord::cannotRecurse (-3) Cannot recurse system.multiCall  - Thrown by the ripcord server when system.multicall is called within itself.
- * ripcord::notDateTime (-6) Variable is not of type datetime - Thrown by the ripcord timestamp method.
- * ripcord::notBase64 (-7) Variable is not of type base64 - Thrown by the ripcord binary method.
- * ripcord::unknownServiceType (-8) Variable is not a classname or an object - Thrown by the ripcord server.
+ * - ripcord::notRipcordCall (-2) Argument {index} is not a valid Ripcord call - Thrown by the client when passing incorrect arguments to system.multiCall.
+ * - ripcord::cannotRecurse (-3) Cannot recurse system.multiCall  - Thrown by the ripcord server when system.multicall is called within itself.
+ * - ripcord::notDateTime (-6) Variable is not of type datetime - Thrown by the ripcord timestamp method.
+ * - ripcord::notBase64 (-7) Variable is not of type base64 - Thrown by the ripcord binary method.
+ * - ripcord::unknownServiceType (-8) Variable is not a classname or an object - Thrown by the ripcord server.
  */
 class Ripcord_InvalidArgumentException extends Ripcord_Exception { }
 
 /**
  * This class is used whenever something goes wrong in sending / receiving data. Possible exceptions thrown are:
- * ripcord::cannotAccessURL (-4) Could not access {url} - Thrown by the transport object when unable to access the given url.
+ * - ripcord::cannotAccessURL (-4) Could not access {url} - Thrown by the transport object when unable to access the given url.
  */
 class Ripcord_TransportException extends Ripcord_Exception { }
 
