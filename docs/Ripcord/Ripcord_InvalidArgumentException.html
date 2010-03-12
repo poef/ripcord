@@ -15,21 +15,28 @@
 <div class="info-box">
 	<div class="info-box-title">Description</div>
 	<div class="nav-bar">
-											</div>
+					<span class="disabled">Description</span> |
+													<a href="#sec-vars">Vars</a>
+						|											<a href="#sec-methods">Methods</a>
+						
+					</div>
 	<div class="info-box-body">
+                <p class="implements">
+            Implements interfaces:
+            <ul>
+                <li><a href="../Ripcord/Ripcord_Exception.html">Ripcord_Exception</a></li>            </ul>
+        </p>
         		<!-- ========== Info from phpDoc block ========= -->
 <p class="short-description">This class is used whenever an argument passed to a Ripcord method is invalid for any reason. Possible exceptions thrown are: <ul><li>ripcord::notRipcordCall (-2) Argument {index} is not a valid Ripcord call - Thrown by the client when passing incorrect arguments to system.multiCall.</li></ul></p>
 <p class="description"><p><ul><li>ripcord::cannotRecurse (-3) Cannot recurse system.multiCall  - Thrown by the ripcord server when system.multicall is called within itself.</li><li>ripcord::notDateTime (-6) Variable is not of type datetime - Thrown by the ripcord timestamp method.</li><li>ripcord::notBase64 (-7) Variable is not of type base64 - Thrown by the ripcord binary method.</li><li>ripcord::unknownServiceType (-8) Variable is not a classname or an object - Thrown by the ripcord server.</li></ul></p></p>
 		<p class="notes">
-			Located in <a class="field" href="_ripcord.php.html">/ripcord.php</a> (line <span class="field">255</span>)
+			Located in <a class="field" href="_ripcord.php.html">/ripcord.php</a> (line <span class="field">265</span>)
 		</p>
 		
 				
-		<pre>Exception
+		<pre>InvalidArgumentException
    |
-   --<a href="../Ripcord/Ripcord_Exception.html">Ripcord_Exception</a>
-      |
-      --Ripcord_InvalidArgumentException</pre>
+   --Ripcord_InvalidArgumentException</pre>
 	
 			</div>
 </div>
@@ -38,11 +45,74 @@
 
 
 
+	<a name="sec-vars"></a>
+	<div class="info-box">
+		<div class="info-box-title">Variables</div>
+		<div class="nav-bar">
+			<a href="#sec-description">Description</a> |
+										<span class="disabled">Vars</span>
+						
+			
+										| 
+									<a href="#sec-methods">Methods</a>
+							
+					</div>
+		<div class="info-box-body">
+										<h4>Inherited Variables</h4>
+				<A NAME='inherited_vars'><!-- --></A>
+									<p>Inherited from <span class="classname">InvalidArgumentException (Internal Class)</span></p>
+					<blockquote>
+													<span class="var-title">
+								<span class="var-name">$code</span><br>
+							</span>
+													<span class="var-title">
+								<span class="var-name">$file</span><br>
+							</span>
+													<span class="var-title">
+								<span class="var-name">$line</span><br>
+							</span>
+													<span class="var-title">
+								<span class="var-name">$message</span><br>
+							</span>
+											</blockquote> 
+										
+		</div>
+	</div>
 	
+	<a name="sec-methods"></a>
+	<div class="info-box">
+		<div class="info-box-title">Methods</div>
+		<div class="nav-bar">
+			<a href="#sec-description">Description</a> |
+															<a href="#sec-vars">Vars</a>
+																	<span class="disabled">Methods</span>
+						
+		</div>
+		<div class="info-box-body">
+			<A NAME='method_detail'></A>
+
+							<h4>Inherited Methods</h4>
+				<a name='inherited_methods'><!-- --></a>	
+									<!-- =========== Summary =========== -->
+					<p>Inherited From <span class="classname">InvalidArgumentException (Internal Class)</span></p>
+					<blockquote>
+													<span class="method-name">constructor __construct ( [$message = ], [$code = ] )</span><br>
+													<span class="method-name">getCode (  )</span><br>
+													<span class="method-name">getFile (  )</span><br>
+													<span class="method-name">getLine (  )</span><br>
+													<span class="method-name">getMessage (  )</span><br>
+													<span class="method-name">getTrace (  )</span><br>
+													<span class="method-name">getTraceAsString (  )</span><br>
+													<span class="method-name">__clone (  )</span><br>
+													<span class="method-name">__toString (  )</span><br>
+											</blockquote>
+										
+		</div>
+	</div>
 
 
 	<p class="notes" id="credit">
-		Documentation generated on Thu, 11 Mar 2010 12:09:26 +0100 by <a href="http://www.phpdoc.org" target="_blank">phpDocumentor 1.4.3</a>
+		Documentation generated on Fri, 12 Mar 2010 16:37:02 +0100 by <a href="http://www.phpdoc.org" target="_blank">phpDocumentor 1.4.3</a>
 	</p>
 	</div></body>
 </html>

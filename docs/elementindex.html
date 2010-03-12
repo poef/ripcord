@@ -390,14 +390,14 @@
 						<span class="var-title">$responseHeaders</span>
 					</dt>
 		<dd class="index-item-body">
-			<div class="index-item-details"><a href="Ripcord/Ripcord_Transport_Stream.html#var$responseHeaders">Ripcord_Transport_Stream::$responseHeaders</a> in ripcord_client.php</div>
+			<div class="index-item-details"><a href="Ripcord/Ripcord_Transport_CURL.html#var$responseHeaders">Ripcord_Transport_CURL::$responseHeaders</a> in ripcord_client.php</div>
 							<div class="index-item-description">Contains the headers sent by the server.</div>
 					</dd>
 			<dt class="field">
 						<span class="var-title">$responseHeaders</span>
 					</dt>
 		<dd class="index-item-body">
-			<div class="index-item-details"><a href="Ripcord/Ripcord_Transport_CURL.html#var$responseHeaders">Ripcord_Transport_CURL::$responseHeaders</a> in ripcord_client.php</div>
+			<div class="index-item-details"><a href="Ripcord/Ripcord_Transport_Stream.html#var$responseHeaders">Ripcord_Transport_Stream::$responseHeaders</a> in ripcord_client.php</div>
 							<div class="index-item-description">Contains the headers sent by the server.</div>
 					</dd>
 			<dt class="field">
@@ -421,6 +421,13 @@
 			<div class="index-item-details"><a href="Ripcord/_ripcord.php.html">ripcord.php</a> in ripcord.php</div>
 					</dd>
 			<dt class="field">
+						Ripcord_BadMethodCallException
+					</dt>
+		<dd class="index-item-body">
+			<div class="index-item-details"><a href="Ripcord/Ripcord_BadMethodCallException.html">Ripcord_BadMethodCallException</a> in ripcord.php</div>
+							<div class="index-item-description">This class is used whenever an when a method passed to the server is invalid.</div>
+					</dd>
+			<dt class="field">
 						Ripcord_Client
 					</dt>
 		<dd class="index-item-body">
@@ -439,6 +446,13 @@
 		<dd class="index-item-body">
 			<div class="index-item-details"><a href="Ripcord/Ripcord_Client_Call.html">Ripcord_Client_Call</a> in ripcord_client.php</div>
 							<div class="index-item-description">This class is used with the Ripcord_Client when calling system.multiCall. Instead of immediately calling the method on the rpc server,   a Ripcord_Client_Call  object is created with all the information needed to call the method using the multicall parameters. The call object is   returned immediately and is used as input parameter for the multiCall call. The result of the call can be bound to a php variable. This   variable will be filled with the result of the call when it is available.</div>
+					</dd>
+			<dt class="field">
+						Ripcord_ConfigurationException
+					</dt>
+		<dd class="index-item-body">
+			<div class="index-item-details"><a href="Ripcord/Ripcord_ConfigurationException.html">Ripcord_ConfigurationException</a> in ripcord.php</div>
+							<div class="index-item-description">This class is used whenever prerequisite requirements are not met.</div>
 					</dd>
 			<dt class="field">
 						Ripcord_Documentor
@@ -465,7 +479,7 @@
 					</dt>
 		<dd class="index-item-body">
 			<div class="index-item-details"><a href="Ripcord/Ripcord_Exception.html">Ripcord_Exception</a> in ripcord.php</div>
-							<div class="index-item-description">This class is the base class for all exceptions thrown by Ripcord. Possible exceptions thrown are: <ul><li>ripcord::methodNotFound (-1) Method {method} not found. - Thrown by the ripcord server when a requested method isn't found.</li></ul></div>
+							<div class="index-item-description">This interface is implemented by all exceptions thrown by Ripcord.</div>
 					</dd>
 			<dt class="field">
 						Ripcord_InvalidArgumentException

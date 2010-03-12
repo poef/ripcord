@@ -28,8 +28,9 @@ require_once(dirname(__FILE__).'/ripcord.php');
  * <?php
  *  $client = new Ripcord_Client( 'http://ripcord.muze.nl/ripcord.php' );
  *  $client->system->multiCall(
- *     $client->system->listMethods()->bind($methods),
- *     $client->getFoo()->bind($foo)
+ *     ripcord::encodeCall('system.listMethods')->bind($methods),
+ *     ripcord::encodeCall('getFoo')->bind($foo)
+ * );
  * ?>
  * </code>
  * 
@@ -105,7 +106,7 @@ class Ripcord_Client
 	 * @param string $url The url of the rpc server
 	 * @param array $options Optional. A list of outputOptions. See {@link Ripcord_Server::setOutputOption()}
 	 * @param object $rootClient Optional. Used internally when using namespaces.
-	 * @throws Ripcord_Exception (ripcord::xmlrpcNotInstalled) when the xmlrpc extension is not available.
+	 * @throws Ripcord_ConfigurationException (ripcord::xmlrpcNotInstalled) when the xmlrpc extension is not available.
 	 */
 	public function __construct( $url, array $options = null, $rootClient = null) 
 	{
@@ -134,7 +135,8 @@ class Ripcord_Client
 		}
 		if ( !function_exists( 'xmlrpc_encode_request' ) )
 		{
-			throw new Ripcord_Exception('PHP XMLRPC library is not installed', ripcord::xmlrpcNotInstalled);
+			throw new Ripcord_ConfigurationException('PHP XMLRPC library is not installed', 
+				ripcord::xmlrpcNotInstalled);
 		}
 	}
 
@@ -154,26 +156,22 @@ class Ripcord_Client
 
 		if ( $name === 'system.multiCall' ) 
 		{
-			if ( is_array( $args ) && (count( $args ) == 1) && is_array( $args[0] )  && !isset( $args[0]['methodName'] ) ) 
+			if ( is_array( $args ) && (count( $args ) == 1) && 
+				is_array( $args[0] )  && !isset( $args[0]['methodName'] ) ) 
 			{ 
 				// multicall is called with a simple array of calls.
 				$args = $args[0];
-			}
-			else {
-				echo ':'.is_array($args).':'.count($args);
-				if (is_array($args[0])) {
-					echo ':'.is_array($args[0]).':'.!isset($args[0]['methodName']);
-				}
-				echo ";\n";
 			}
 			$params = array();
 			$bound = array();
 			foreach ( $args as $key => $arg ) 
 			{
-				if ( !is_a( $arg, 'Ripcord_Client_Call' ) && (!is_array($arg) || !isset($arg['methodName']) ) ) 
+				if ( !is_a( $arg, 'Ripcord_Client_Call' ) && 
+					(!is_array($arg) || !isset($arg['methodName']) ) ) 
 				{
 					throw new Ripcord_InvalidArgumentException(
-						'Argument '.$key.' is not a valid Ripcord call', ripcord::notRipcordCall);
+						'Argument '.$key.' is not a valid Ripcord call', 
+							ripcord::notRipcordCall);
 				}
 				if ( is_a( $arg, 'Ripcord_Client_Call' ) ) 
 				{
@@ -185,7 +183,8 @@ class Ripcord_Client
 					$arg['index'] = count( $params );
 					$params[]    = array(
 						'methodName' => $arg['methodName'],
-						'params'     => isset($arg['params']) ? (array) $arg['params'] : array()
+						'params'     => isset($arg['params']) ? 
+							(array) $arg['params'] : array()
 					);
 				}
 				$bound[$key] = $arg;
@@ -381,7 +380,7 @@ class  Ripcord_Transport_Stream implements Ripcord_Transport
 	 * @param string $url The url to post to.
 	 * @param string $request The request to post.
 	 * @return string The server response
-	 * @throws Ripcord_Exception (ripcord::cannotAccessURL) when the given URL cannot be accessed for any reason.
+	 * @throws Ripcord_TransportException (ripcord::cannotAccessURL) when the given URL cannot be accessed for any reason.
 	 */
 	public function post( $url, $request ) 
 	{
@@ -400,7 +399,8 @@ class  Ripcord_Transport_Stream implements Ripcord_Transport
 		$this->responseHeaders = $http_response_header;
 		if ( !$result )
 		{
-			throw new Ripcord_TransportException( 'Could not access ' . $url, ripcord::cannotAccessURL );
+			throw new Ripcord_TransportException( 'Could not access ' . $url, 
+				ripcord::cannotAccessURL );
 		}
 		return $result;
 	}
@@ -437,7 +437,7 @@ class Ripcord_Transport_CURL implements Ripcord_Transport
 	 * This method posts the request to the given url
 	 * @param string $url The url to post to.
 	 * @param string $request The request to post.
-	 * @throws Ripcord_Exception (ripcord::cannotAccessURL) when the given URL cannot be accessed for any reason.
+	 * @throws Ripcord_TransportException (ripcord::cannotAccessURL) when the given URL cannot be accessed for any reason.
 	 * @return string The server response
 	 */
 	public function post( $url, $request) 
@@ -463,8 +463,10 @@ class Ripcord_Transport_CURL implements Ripcord_Transport
 			$errorNumber = curl_errno( $curl );
 			$errorMessage = curl_error( $curl );
 			curl_close( $curl );
-			throw new Ripcord_TransportException( 'Could not access ' . $url, ripcord::cannotAccessURL, 
-				new Exception( $errorMessage, $errorNumber ) );
+			throw new Ripcord_TransportException( 'Could not access ' . $url, 
+				ripcord::cannotAccessURL, 
+				new Exception( $errorMessage, $errorNumber ) 
+			);
 		}
 		curl_close($curl);
 		return $contents;
