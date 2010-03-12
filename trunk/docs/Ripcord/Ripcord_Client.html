@@ -30,15 +30,16 @@
 </ol></div></p><p>The client has a simple interface for the system.multiCall method:  <div class="src-code"><ol><li><div class="src-line">&nbsp;<span class="src-php">&lt;?php</span></div></li>
 <li><div class="src-line">&nbsp;&nbsp;<span class="src-var">$client&nbsp;</span>=&nbsp;<span class="src-key">new&nbsp;</span><span class="src-id"><a href="../Ripcord/Ripcord_Client.html">Ripcord_Client</a></span><span class="src-sym">(&nbsp;</span><span class="src-str">'http://ripcord.muze.nl/ripcord.php'&nbsp;</span><span class="src-sym">)</span><span class="src-sym">;</span></div></li>
 <li><div class="src-line">&nbsp;&nbsp;<span class="src-var">$client</span><span class="src-sym">-&gt;</span><a href="http://www.php.net/system">system</a><span class="src-sym">-&gt;</span><span class="src-id">multiCall</span><span class="src-sym">(</span></div></li>
-<li><div class="src-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="src-var">$client</span><span class="src-sym">-&gt;</span><a href="http://www.php.net/system">system</a><span class="src-sym">-&gt;</span><span class="src-id">listMethods</span><span class="src-sym">(</span><span class="src-sym">)</span><span class="src-sym">-&gt;</span><span class="src-id">bind</span><span class="src-sym">(</span><span class="src-var">$methods</span><span class="src-sym">)</span><span class="src-sym">,</span></div></li>
-<li><div class="src-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="src-var">$client</span><span class="src-sym">-&gt;</span><span class="src-id">getFoo</span><span class="src-sym">(</span><span class="src-sym">)</span><span class="src-sym">-&gt;</span><span class="src-id">bind</span><span class="src-sym">(</span><span class="src-var">$foo</span><span class="src-sym">)</span></div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="src-id"><a href="../Ripcord/ripcord.html">ripcord</a></span><span class="src-sym">::</span><a href="../Ripcord/ripcord.html#methodencodeCall">encodeCall</a><span class="src-sym">(</span><span class="src-str">'system.listMethods'</span><span class="src-sym">)</span><span class="src-sym">-&gt;</span><span class="src-id">bind</span><span class="src-sym">(</span><span class="src-var">$methods</span><span class="src-sym">)</span><span class="src-sym">,</span></div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="src-id"><a href="../Ripcord/ripcord.html">ripcord</a></span><span class="src-sym">::</span><a href="../Ripcord/ripcord.html#methodencodeCall">encodeCall</a><span class="src-sym">(</span><span class="src-str">'getFoo'</span><span class="src-sym">)</span><span class="src-sym">-&gt;</span><span class="src-id">bind</span><span class="src-sym">(</span><span class="src-var">$foo</span><span class="src-sym">)</span></div></li>
+<li><div class="src-line">&nbsp;<span class="src-sym">)</span><span class="src-sym">;</span></div></li>
 <li><div class="src-line">&nbsp;<span class="src-php">?&gt;</span></div></li>
 </ol></div></p><p>The soap client can only handle the basic php types and doesn't understand xml namespaces. Use PHP's SoapClient  for complex soap calls. This client cannot parse wsdl.</p></p>
 	<ul class="tags">
 				<li><span class="field">link:</span> <a href="http://wiki.moviemeter.nl/index.php/API">Moviemeter API documentation</a></li>
 			</ul>
 		<p class="notes">
-			Located in <a class="field" href="_ripcord_client.php.html">/ripcord_client.php</a> (line <span class="field">41</span>)
+			Located in <a class="field" href="_ripcord_client.php.html">/ripcord_client.php</a> (line <span class="field">42</span>)
 		</p>
 		
 				
@@ -133,7 +134,7 @@
 		<span class="var-title">
 			<span class="var-type">mixed</span>
 			<span class="var-name">$_autoDecode</span>
-			 = <span class="var-default"> true</span>			(line <span class="line-number">101</span>)
+			 = <span class="var-default"> true</span>			(line <span class="line-number">102</span>)
 		</span>
 	</div>
 
@@ -155,7 +156,7 @@
 		<span class="var-title">
 			<span class="var-type">mixed</span>
 			<span class="var-name">$_request</span>
-			 = <span class="var-default"> ''</span>			(line <span class="line-number">90</span>)
+			 = <span class="var-default"> ''</span>			(line <span class="line-number">91</span>)
 		</span>
 	</div>
 
@@ -177,7 +178,7 @@
 		<span class="var-title">
 			<span class="var-type">mixed</span>
 			<span class="var-name">$_response</span>
-			 = <span class="var-default"> ''</span>			(line <span class="line-number">85</span>)
+			 = <span class="var-default"> ''</span>			(line <span class="line-number">86</span>)
 		</span>
 	</div>
 
@@ -199,7 +200,7 @@
 		<span class="var-title">
 			<span class="var-type">mixed</span>
 			<span class="var-name">$_throwExceptions</span>
-			 = <span class="var-default"> false</span>			(line <span class="line-number">95</span>)
+			 = <span class="var-default"> false</span>			(line <span class="line-number">96</span>)
 		</span>
 	</div>
 
@@ -234,13 +235,13 @@
 <div class="evenrow">
 	
 	<div class="method-header">
-		<span class="method-title">Constructor __construct</span> (line <span class="line-number">110</span>)
+		<span class="method-title">Constructor __construct</span> (line <span class="line-number">111</span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
 <p class="short-description">The constructor for the RPC client.</p>
 	<ul class="tags">
-				<li><span class="field">throws:</span> Ripcord_Exception (ripcord::xmlrpcNotInstalled) when the xmlrpc extension is not available.</li>
+				<li><span class="field">throws:</span> Ripcord_ConfigurationException (ripcord::xmlrpcNotInstalled) when the xmlrpc extension is not available.</li>
 				<li><span class="field">access:</span> public</li>
 			</ul>
 	
@@ -270,7 +271,7 @@
 <div class="oddrow">
 	
 	<div class="method-header">
-		<span class="method-title">__call</span> (line <span class="line-number">148</span>)
+		<span class="method-title">__call</span> (line <span class="line-number">150</span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -304,7 +305,7 @@
 <div class="evenrow">
 	
 	<div class="method-header">
-		<span class="method-title">__get</span> (line <span class="line-number">252</span>)
+		<span class="method-title">__get</span> (line <span class="line-number">251</span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -336,7 +337,7 @@
 
 
 	<p class="notes" id="credit">
-		Documentation generated on Thu, 11 Mar 2010 12:09:26 +0100 by <a href="http://www.phpdoc.org" target="_blank">phpDocumentor 1.4.3</a>
+		Documentation generated on Fri, 12 Mar 2010 16:37:02 +0100 by <a href="http://www.phpdoc.org" target="_blank">phpDocumentor 1.4.3</a>
 	</p>
 	</div></body>
 </html>

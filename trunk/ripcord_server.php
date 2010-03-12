@@ -24,12 +24,11 @@ require_once(dirname(__FILE__).'/ripcord.php');
  * ?>
  * </code>
  * 
- * An example with namespaces in the method names.
+ * An example with namespaces in the method names and a static class as rpc service.
  * <code>
  * <?php
  *   $myObject = new MyClass();
- *   $myOtherObject = new MyOtherClass();
- *   $server = new Ripcord_Server( array( 'namespace1' => $myObject, 'namespace2' => $myOtherObject ) );
+ *   $server = new Ripcord_Server( array( 'namespace1' => $myObject, 'namespace2' => 'myOtherClass' ) );
  *   $server->run();
  * ?>
  * </code>
@@ -80,13 +79,14 @@ class Ripcord_Server
 	 * In addition you can set any of the outputOptions for the xmlrpc server.
 	 * @see Ripcord_Server::setOutputOption()
 	 * @throws Ripcord_InvalidArgumentException (ripcord::unknownServiceType) when passed an incorrect service
-	 * @throws Ripcord_Exception (ripcord::xmlrpcNotInstalled) when the xmlrpc extension in not available.
+	 * @throws Ripcord_ConfigurationException (ripcord::xmlrpcNotInstalled) when the xmlrpc extension in not available.
 	 */
 	function __construct($services = null, $options = null) 
 	{
 		if ( !function_exists( 'xmlrpc_server_create' ) )
 		{
-			throw new Ripcord_Exception('PHP XMLRPC library is not installed', ripcord::xmlrpcNotInstalled );
+			throw new Ripcord_ConfigurationException('PHP XMLRPC library is not installed', 
+				ripcord::xmlrpcNotInstalled );
 		}
 		$this->xmlrpc = xmlrpc_server_create();
 		if (isset($services)) 
@@ -117,11 +117,13 @@ class Ripcord_Server
 					unset( $options[$key] );
 				}
 			}
-			$docOptions['version'] = $options['version'] ? $options['version'] : $this->outputOptions['version'];
+			$docOptions['version'] = $options['version'] ? 
+				$options['version'] : $this->outputOptions['version'];
 			ripcord::load('Ripcord_Documentor'); // no autoload needed this way
 			$this->documentor = new Ripcord_Documentor( $docOptions );
 		}
-		xmlrpc_server_register_introspection_callback( $this->xmlrpc, array( $this->documentor, 'getIntrospectionXML') );
+		xmlrpc_server_register_introspection_callback( $this->xmlrpc, 
+			array( $this->documentor, 'getIntrospectionXML') );
 		if ( isset($options) ) 
 		{
 			$this->outputOptions = array_merge($this->outputOptions, $options);
@@ -147,7 +149,8 @@ class Ripcord_Server
 		} else if (is_string($service) && class_exists($service)) {
 			$reflection = new ReflectionClass($service);
 		} else {
-			throw new Ripcord_InvalidArgumentException('Unknown service type '.$serviceName, ripcord::unknownServiceType );
+			throw new Ripcord_InvalidArgumentException('Unknown service type '.$serviceName, 
+				ripcord::unknownServiceType );
 		}
 		$methods = $reflection->getMethods();
 		if (is_array($methods)) 
@@ -190,7 +193,8 @@ class Ripcord_Server
 		$request_xml = file_get_contents('php://input');
 		if (!$request_xml) 
 		{
-			if ( ( $query = $_SERVER['QUERY_STRING'] ) && isset($this->wsdl[$query]) && $this->wsdl[$query] )
+			if ( ( $query = $_SERVER['QUERY_STRING'] ) 
+				&& isset($this->wsdl[$query]) && $this->wsdl[$query] )
 			{
 				echo $this->wsdl[$query];
 			}
@@ -220,7 +224,31 @@ class Ripcord_Server
 	 */
 	public function handle($request_xml) 
 	{
+		$method = null;
+		$xml = @simplexml_load_string($request_xml); //we must check if its valid XML because xmlrpc_decode has no decent error handling
+		if (!$xml && !$xml->getNamespaces()) { //simplexml in combination with namespaces (soap) lets $xml evaluate to false
+			return  xmlrpc_encode_request( 
+				null, 
+				ripcord::fault( -3, 'Invalid Method Call - Ripcord Server accepts only XML-RPC, SimpleRPC or SOAP 1.1 calls'), 
+				$this->outputOptions
+			);
+		} else {
+			// prevent segmentation fault on incorrect xmlrpc request (without methodName)
+			$methodCall = $xml->xpath('//methodCall'); 
+			if ($methodCall) { //xml-rpc
+				$methodName = $xml->xpath('//methodName');
+				if (!$methodName) {
+					return xmlrpc_encode_request(
+						null,
+						ripcord::fault( -3, 'Invalid Method Call - No methodName given'),
+						$this->outputOptions
+					);
+				}
+			}
+		}
+		ob_start(); // xmlrpc_decode echo expat errors if the xml is not valid, can't stop it.
 		$params = xmlrpc_decode_request($request_xml, $method);
+		ob_end_clean(); // clean up any xml errors
 		if ( $method == 'system.multiCall' ) {
 			// php's xml-rpc server (xmlrpc-epi) crashes on multicall, so handle it ourselves...
 			if ( $params && is_array( $params ) ) 
@@ -267,7 +295,7 @@ class Ripcord_Server
 	 * @param array $args The arguments to this method
 	 * @return mixed
 	 * @throws Ripcord_InvalidArgumentException (ripcord::cannotRecurse) when passed a recursive multiCall
- 	 * @throws Ripcord_Exception (ripcord::methodNotFound) when the requested method isn't available.
+ 	 * @throws Ripcord_BadMethodCallException (ripcord::methodNotFound) when the requested method isn't available.
 	 */
 	public function call( $method, $args = null ) 
 	{
@@ -279,15 +307,18 @@ class Ripcord_Server
 			if ( substr( $method, 0, 7 ) == 'system.' ) 
 			{
 				if ( $method == 'system.multiCall' ) {
-					throw new Ripcord_InvalidArgumentException( 'Cannot recurse system.multiCall', ripcord::cannotRecurse );
+					throw new Ripcord_InvalidArgumentException( 
+						'Cannot recurse system.multiCall', ripcord::cannotRecurse );
 				}
 				// system methods are handled internally by the xmlrpc server, so we've got to create a makebelieve request, 
 				// there is no other way because of a badly designed API 
 				$req = xmlrpc_encode_request( $method, $args, $this->outputOptions );
-				$result = xmlrpc_server_call_method( $this->xmlrpc, $req, null, $this->outputOptions);
+				$result = xmlrpc_server_call_method( $this->xmlrpc, $req, null, 
+					$this->outputOptions);
 				return xmlrpc_decode( $result );
 			} else {
-				throw new Ripcord_Exception( 'Method '.$method.' not found.', ripcord::methodNotFound );
+				throw new Ripcord_BadMethodCallException( 'Method '.$method.' not found.', 
+					ripcord::methodNotFound );
 			}
 		}
 	}

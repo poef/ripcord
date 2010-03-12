@@ -238,11 +238,21 @@ class ripcord
 }
 
 /**
- * This class is the base class for all exceptions thrown by Ripcord. Possible exceptions thrown are:
+ * This interface is implemented by all exceptions thrown by Ripcord.
+ */
+interface Ripcord_Exception {}
+
+/**
+ * This class is used whenever an when a method passed to the server is invalid.
  * - ripcord::methodNotFound (-1) Method {method} not found. - Thrown by the ripcord server when a requested method isn't found.
+ */
+class Ripcord_BadMethodCallException extends BadMethodCallException implements Ripcord_Exception { }
+ 
+/**
+ * This class is used whenever prerequisite requirements are not met.
  * - ripcord::xmlrpcNotInstalled (-5) PHP XMLRPC library is not installed - Thrown by the ripcord server and client when the xmlrpc library is not installed.
  */
-class Ripcord_Exception extends Exception { }
+class Ripcord_ConfigurationException extends Exception implements Ripcord_Exception { }
 
 /**
  * This class is used whenever an argument passed to a Ripcord method is invalid for any reason. Possible exceptions thrown are:
@@ -252,19 +262,19 @@ class Ripcord_Exception extends Exception { }
  * - ripcord::notBase64 (-7) Variable is not of type base64 - Thrown by the ripcord binary method.
  * - ripcord::unknownServiceType (-8) Variable is not a classname or an object - Thrown by the ripcord server.
  */
-class Ripcord_InvalidArgumentException extends Ripcord_Exception { }
+class Ripcord_InvalidArgumentException extends InvalidArgumentException implements Ripcord_Exception { }
 
 /**
  * This class is used whenever something goes wrong in sending / receiving data. Possible exceptions thrown are:
  * - ripcord::cannotAccessURL (-4) Could not access {url} - Thrown by the transport object when unable to access the given url.
  */
-class Ripcord_TransportException extends Ripcord_Exception { }
+class Ripcord_TransportException extends RuntimeException implements Ripcord_Exception { }
 
 /**
  * This class is used for exceptions generated from xmlrpc faults returned by the server. The code and message correspond
  * to the code and message from the xmlrpc fault.
  */
-class Ripcord_RemoteException extends Ripcord_Exception { }
+class Ripcord_RemoteException extends Exception implements Ripcord_Exception { }
 
 if (function_exists('spl_autoload_register')) {
 	spl_autoload_register('ripcord::load');

@@ -9,151 +9,35 @@
 		</head>
 		<body>
 			<div class="page-body">			
-<h2 class="class-name">Class Ripcord_Exception</h2>
+<h2 class="class-name">Interface Ripcord_Exception</h2>
 
 <a name="sec-description"></a>
 <div class="info-box">
 	<div class="info-box-title">Description</div>
 	<div class="nav-bar">
-					<span class="disabled">Description</span> |
-							<a href="#sec-descendents">Descendents</a>
-			|											<a href="#sec-vars">Vars</a>
-						|											<a href="#sec-methods">Methods</a>
-						
-					</div>
+											</div>
 	<div class="info-box-body">
         		<!-- ========== Info from phpDoc block ========= -->
-<p class="short-description">This class is the base class for all exceptions thrown by Ripcord. Possible exceptions thrown are: <ul><li>ripcord::methodNotFound (-1) Method {method} not found. - Thrown by the ripcord server when a requested method isn't found.</li></ul></p>
-<p class="description"><p><ul><li>ripcord::xmlrpcNotInstalled (-5) PHP XMLRPC library is not installed - Thrown by the ripcord server and client when the xmlrpc library is not installed.</li></ul></p></p>
+<p class="short-description">This interface is implemented by all exceptions thrown by Ripcord.</p>
 		<p class="notes">
-			Located in <a class="field" href="_ripcord.php.html">/ripcord.php</a> (line <span class="field">245</span>)
+			Located in <a class="field" href="_ripcord.php.html">/ripcord.php</a> (line <span class="field">243</span>)
 		</p>
 		
 				
-		<pre>Exception
-   |
-   --Ripcord_Exception</pre>
+		<pre></pre>
 	
 			</div>
 </div>
 
-	<a name="sec-descendents"></a>
-	<div class="info-box">
-		<div class="info-box-title">Direct descendents</div>
-		<div class="nav-bar">
-			<a href="#sec-description">Description</a> |
-			<span class="disabled">Descendents</span>
-			|												<a href="#sec-vars">Vars</a>
-								|															<a href="#sec-methods">Methods</a>
-							
-								</div>
-		<div class="info-box-body">
-			<table cellpadding="2" cellspacing="0" class="class-table">
-				<tr>
-					<th class="class-table-header">Class</th>
-					<th class="class-table-header">Description</th>
-				</tr>
-								<tr>
-					<td style="padding-right: 2em"><a href="../Ripcord/Ripcord_InvalidArgumentException.html">Ripcord_InvalidArgumentException</a></td>
-					<td>
-											This class is used whenever an argument passed to a Ripcord method is invalid for any reason. Possible exceptions thrown are: <ul><li>ripcord::notRipcordCall (-2) Argument {index} is not a valid Ripcord call - Thrown by the client when passing incorrect arguments to system.multiCall.</li></ul>
-										</td>
-				</tr>
-								<tr>
-					<td style="padding-right: 2em"><a href="../Ripcord/Ripcord_TransportException.html">Ripcord_TransportException</a></td>
-					<td>
-											This class is used whenever something goes wrong in sending / receiving data. Possible exceptions thrown are: <ul><li>ripcord::cannotAccessURL (-4) Could not access {url} - Thrown by the transport object when unable to access the given url.</li></ul>
-										</td>
-				</tr>
-								<tr>
-					<td style="padding-right: 2em"><a href="../Ripcord/Ripcord_RemoteException.html">Ripcord_RemoteException</a></td>
-					<td>
-											This class is used for exceptions generated from xmlrpc faults returned by the server. The code and message correspond  to the code and message from the xmlrpc fault.
-										</td>
-				</tr>
-							</table>
-		</div>
-	</div>
 
 
 
 
-	<a name="sec-vars"></a>
-	<div class="info-box">
-		<div class="info-box-title">Variables</div>
-		<div class="nav-bar">
-			<a href="#sec-description">Description</a> |
-							<a href="#sec-descendents">Descendents</a> |
-										<span class="disabled">Vars</span>
-						
-			
-										| 
-									<a href="#sec-methods">Methods</a>
-							
-					</div>
-		<div class="info-box-body">
-										<h4>Inherited Variables</h4>
-				<A NAME='inherited_vars'><!-- --></A>
-									<p>Inherited from <span class="classname">Exception (Internal Class)</span></p>
-					<blockquote>
-													<span class="var-title">
-								<span class="var-name">$code</span><br>
-							</span>
-													<span class="var-title">
-								<span class="var-name">$file</span><br>
-							</span>
-													<span class="var-title">
-								<span class="var-name">$line</span><br>
-							</span>
-													<span class="var-title">
-								<span class="var-name">$message</span><br>
-							</span>
-													<span class="var-title">
-								<span class="var-name">$string</span><br>
-							</span>
-													<span class="var-title">
-								<span class="var-name">$trace</span><br>
-							</span>
-											</blockquote> 
-										
-		</div>
-	</div>
 	
-	<a name="sec-methods"></a>
-	<div class="info-box">
-		<div class="info-box-title">Methods</div>
-		<div class="nav-bar">
-			<a href="#sec-description">Description</a> |
-							<a href="#sec-descendents">Descendents</a> |
-															<a href="#sec-vars">Vars</a>
-																	<span class="disabled">Methods</span>
-						
-		</div>
-		<div class="info-box-body">
-			<A NAME='method_detail'></A>
-
-							<h4>Inherited Methods</h4>
-				<a name='inherited_methods'><!-- --></a>	
-									<!-- =========== Summary =========== -->
-					<p>Inherited From <span class="classname">Exception (Internal Class)</span></p>
-					<blockquote>
-													<span class="method-name">constructor __construct ( [$message = ], [$code = ] )</span><br>
-													<span class="method-name">getCode (  )</span><br>
-													<span class="method-name">getFile (  )</span><br>
-													<span class="method-name">getLine (  )</span><br>
-													<span class="method-name">getMessage (  )</span><br>
-													<span class="method-name">getTrace (  )</span><br>
-													<span class="method-name">getTraceAsString (  )</span><br>
-													<span class="method-name">__clone (  )</span><br>
-													<span class="method-name">__toString (  )</span><br>
-											</blockquote>
-										
-		</div>
-	</div>
 
 
 	<p class="notes" id="credit">
-		Documentation generated on Thu, 11 Mar 2010 12:09:26 +0100 by <a href="http://www.phpdoc.org" target="_blank">phpDocumentor 1.4.3</a>
+		Documentation generated on Fri, 12 Mar 2010 16:37:02 +0100 by <a href="http://www.phpdoc.org" target="_blank">phpDocumentor 1.4.3</a>
 	</p>
 	</div></body>
 </html>
