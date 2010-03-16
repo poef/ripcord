@@ -18,7 +18,7 @@ require_once(dirname(__FILE__).'/ripcord.php');
  *  E.g.
  *  <code>
  *  <?php
- *    $client = new Ripcord_Client( 'http://www.moviemeter.nl/ws' );
+ *    $client = ripcord::client( 'http://www.moviemeter.nl/ws' );
  *    $score = $client->film->getScore( 'e3dee9d19a8c3af7c92f9067d2945b59', 500 );
  *  ?>
  *  </code>
@@ -26,7 +26,7 @@ require_once(dirname(__FILE__).'/ripcord.php');
  * The client has a simple interface for the system.multiCall method:  
  * <code>
  * <?php
- *  $client = new Ripcord_Client( 'http://ripcord.muze.nl/ripcord.php' );
+ *  $client = ripcord::client( 'http://ripcord.muze.nl/ripcord.php' );
  *  $client->system->multiCall(
  *     ripcord::encodeCall('system.listMethods')->bind($methods),
  *     ripcord::encodeCall('getFoo')->bind($foo)
@@ -36,6 +36,7 @@ require_once(dirname(__FILE__).'/ripcord.php');
  * 
  * The soap client can only handle the basic php types and doesn't understand xml namespaces. Use PHP's SoapClient 
  * for complex soap calls. This client cannot parse wsdl.
+ * If you want to skip the ripcord::client factory method, you _must_ provide a transport object explicitly.
  *
  * @link  http://wiki.moviemeter.nl/index.php/API Moviemeter API documentation
  */
@@ -108,7 +109,7 @@ class Ripcord_Client
 	 * @param object $rootClient Optional. Used internally when using namespaces.
 	 * @throws Ripcord_ConfigurationException (ripcord::xmlrpcNotInstalled) when the xmlrpc extension is not available.
 	 */
-	public function __construct( $url, array $options = null, $rootClient = null) 
+	public function __construct( $url, array $options = null, $rootClient = null, $transport = null ) 
 	{
 		if ( !isset($rootClient) ) {
 			$rootClient = $this;
@@ -122,16 +123,7 @@ class Ripcord_Client
 				$this->_namespace = $options['namespace'];
 				unset( $options['namespace'] );
 			}
-			if ( isset($options['transport']) ) 
-			{
-				$this->_transport = $options['transport'];
-				unset( $options['transport'] );
-			}
 			$this->_outputOptions = $options;
-		}
-		if ( !isset($this->_transport) ) 
-		{
-			$this->_transport = new Ripcord_Transport_Stream();
 		}
 		if ( !function_exists( 'xmlrpc_encode_request' ) )
 		{

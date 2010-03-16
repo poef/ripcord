@@ -19,7 +19,7 @@ require_once(dirname(__FILE__).'/ripcord.php');
  * <code>
  * <?php
  *   $myObject = new MyClass();
- *   $server = new Ripcord_Server( $myObject );
+ *   $server = ripcord::server( $myObject );
  *   $server->run();
  * ?>
  * </code>
@@ -28,7 +28,7 @@ require_once(dirname(__FILE__).'/ripcord.php');
  * <code>
  * <?php
  *   $myObject = new MyClass();
- *   $server = new Ripcord_Server( array( 'namespace1' => $myObject, 'namespace2' => 'myOtherClass' ) );
+ *   $server = ripcord::server(  array( 'namespace1' => $myObject, 'namespace2' => 'myOtherClass'  )  );
  *   $server->run();
  * ?>
  * </code>
@@ -81,7 +81,7 @@ class Ripcord_Server
 	 * @throws Ripcord_InvalidArgumentException (ripcord::unknownServiceType) when passed an incorrect service
 	 * @throws Ripcord_ConfigurationException (ripcord::xmlrpcNotInstalled) when the xmlrpc extension in not available.
 	 */
-	function __construct($services = null, $options = null) 
+	function __construct($services = null, $options = null, $documentor = null) 
 	{
 		if ( !function_exists( 'xmlrpc_server_create' ) )
 		{
@@ -101,29 +101,11 @@ class Ripcord_Server
 				$this->addService($services);
 			}
 		}
-		if ( isset($options['documentor']) )
-		{
-			$this->documentor = $options['documentor'];
+		if ( isset($documentor) && is_object($documentor) ) {
+			$this->documentor = $documentor;
+			xmlrpc_server_register_introspection_callback( $this->xmlrpc, 
+				array( $this->documentor, 'getIntrospectionXML') );
 		}
-		else 
-		{
-			$doc = array('name', 'css', 'wsdl', 'wsdl2');
-			$docOptions = array();
-			foreach ( $doc as $key ) 
-			{
-				if ( isset($options[$key]) ) 
-				{
-					$docOptions[$key] = $options[$key];
-					unset( $options[$key] );
-				}
-			}
-			$docOptions['version'] = $options['version'] ? 
-				$options['version'] : $this->outputOptions['version'];
-			ripcord::load('Ripcord_Documentor'); // no autoload needed this way
-			$this->documentor = new Ripcord_Documentor( $docOptions );
-		}
-		xmlrpc_server_register_introspection_callback( $this->xmlrpc, 
-			array( $this->documentor, 'getIntrospectionXML') );
 		if ( isset($options) ) 
 		{
 			$this->outputOptions = array_merge($this->outputOptions, $options);
@@ -218,15 +200,13 @@ class Ripcord_Server
 	}
 	
 	/**
-	 * Handles the given request xml
-	 * @param string $request_xml The incoming request.
-	 * @return string
+	 * This method wraps around xmlrpc_decode_request, since it is borken in many ways. This wraps
+	 * around all the ugliness needed to make it not dump core and not print expat warnings.
 	 */
-	public function handle($request_xml) 
-	{
-		$method = null;
-		$xml = @simplexml_load_string($request_xml); //we must check if its valid XML because xmlrpc_decode has no decent error handling
-		if (!$xml && !$xml->getNamespaces()) { //simplexml in combination with namespaces (soap) lets $xml evaluate to false
+	private function parseRequest( $request_xml ) {
+		$xml = @simplexml_load_string($request_xml);
+		if (!$xml && !$xml->getNamespaces()) { 
+			//simplexml in combination with namespaces (soap) lets $xml evaluate to false
 			return  xmlrpc_encode_request( 
 				null, 
 				ripcord::fault( -3, 'Invalid Method Call - Ripcord Server accepts only XML-RPC, SimpleRPC or SOAP 1.1 calls'), 
@@ -246,33 +226,63 @@ class Ripcord_Server
 				}
 			}
 		}
+		$method = null;
 		ob_start(); // xmlrpc_decode echo expat errors if the xml is not valid, can't stop it.
 		$params = xmlrpc_decode_request($request_xml, $method);
 		ob_end_clean(); // clean up any xml errors
+		return array( 'methodName' => $method, 'params' => $params );
+	}
+	
+	/**
+	 * This method implements the system.multiCall method without dumping core. The built-in method from the
+	 * xmlrpc library dumps core when you have registered any php methods, at least on php 5.3.1 and php 5.2.8
+	 */
+	private function multiCall( $params = null ) {
+		if ( $params && is_array( $params ) ) 
+		{
+			$result = array();
+			$params = $params[0];
+			foreach ( $params as $param ) {
+				$method = $param['methodName'];
+				$args = $param['params'];
+				try {
+					// XML-RPC specification says that non-fault results must be in a single item array
+					$result[] = array( $this->call($method, $args) );
+				} catch( Exception $e) {
+					$result[] = ripcord::fault( $e->getCode(), $e->getMessage() );
+				}
+			}
+			$result = xmlrpc_encode_request( null, $result, $this->outputOptions );
+		} else {
+			$result = xmlrpc_encode_request( 
+				null, 
+				ripcord::fault( -2, 'Illegal or no params set for system.multiCall'), 
+				$this->outputOptions
+			);
+		}	
+		return $result;
+	}
+	
+	/**
+	 * Handles the given request xml
+	 * @param string $request_xml The incoming request.
+	 * @return string
+	 */
+	public function handle($request_xml) 
+	{
+		$result = $this->parseRequest( $request_xml );
+		if (!$result || ripcord::isFault( $result ) )
+		{
+			return $result;
+		}
+		else
+		{
+			$method = $result['methodName'];
+			$params = $result['params'];
+		}
 		if ( $method == 'system.multiCall' ) {
 			// php's xml-rpc server (xmlrpc-epi) crashes on multicall, so handle it ourselves...
-			if ( $params && is_array( $params ) ) 
-			{
-				$result = array();
-				$params = $params[0];
-				foreach ( $params as $param ) {
-					$method = $param['methodName'];
-					$args = $param['params'];
-					try {
-						// XML-RPC specification says that non-fault results must be in a single item array
-						$result[] = array( $this->call($method, $args) );
-					} catch( Exception $e) {
-						$result[] = ripcord::fault( $e->getCode(), $e->getMessage() );
-					}
-				}
-				$result = xmlrpc_encode_request( null, $result, $this->outputOptions );
-			} else {
-				$result = xmlrpc_encode_request( 
-					null, 
-					ripcord::fault( -2, 'Illegal or no params set for system.multiCall'), 
-					$this->outputOptions
-				);
-			}
+			$result = $this->multiCall( $params );
 		} else {
 			try {
 				$result = xmlrpc_server_call_method(

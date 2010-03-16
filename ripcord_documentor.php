@@ -11,10 +11,11 @@
 /**
  * This interface defines the minimum methods any documentor needs to implement.
  */
-interface Ripcord_Documentor_Interface {
+interface Ripcord_Documentor_Interface 
+{
 	public function __construct( $options = null );
 	public function setMethodData( $methods );
-	public function handle ( $rpcServer );
+	public function handle( $rpcServer );
 	public function getIntrospectionXML();
 }
 
