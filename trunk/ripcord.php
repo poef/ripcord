@@ -43,10 +43,28 @@ class ripcord
 	 * @param array $options Optional. An array of options to set for the Ripcord server. 
 	 * @see Ripcord_Server
 	 */
-	public static function server($services = null, $options = null) 
+	public static function server($services = null, $options = null, $documentor = null) 
 	{
 		self::load('Ripcord_Server');
-		return new Ripcord_Server($services, $options);
+		if ( !isset($documentor) )
+		{
+			self::load('Ripcord_Documentor');
+			$doc = array('name', 'css', 'wsdl', 'wsdl2');
+			$docOptions = array();
+			foreach ( $doc as $key ) 
+			{
+				if ( isset($options[$key]) ) 
+				{
+					$docOptions[$key] = $options[$key];
+					unset( $options[$key] );
+				}
+			}
+			$docOptions['version'] = $options['version'] ? 
+				$options['version'] : $this->outputOptions['version'];
+			ripcord::load('Ripcord_Documentor'); // no autoload needed this way
+			$documentor = new Ripcord_Documentor( $docOptions );
+		}
+		return new Ripcord_Server($services, $options, $documentor);
 	}
 	
 	/**
@@ -56,10 +74,14 @@ class ripcord
 	 * @param array $options Optional. An array of options to set for the Ripcord client.
 	 * @see Ripcord_Client
 	 */
-	public static function client($url, $options = null) 
+	public static function client($url, $options = null, $transport = null ) 
 	{
 		self::load('Ripcord_Client');
-		return new Ripcord_Client($url, $options);
+		if ( !isset($transport) ) 
+		{
+			$transport = new Ripcord_Transport_Stream();
+		}
+		return new Ripcord_Client($url, $options, $transport);
 	}
 	
 	/**
