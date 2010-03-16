@@ -50,7 +50,7 @@ class Ripcord_Documentor implements Ripcord_Documentor_Interface
 	/**
 	 * Which version of the XML vocabulary the server implements. Either 'xmlrpc', 'soap 1.1', 'simple' or 'auto'.
 	 */
-	public $version  = false;
+	public $version  = 'auto';
 	
 	/**
 	 * The root URL of the rpc server.
@@ -169,7 +169,7 @@ class Ripcord_Documentor implements Ripcord_Documentor_Interface
 				if ( is_array( $methodData['call'] ) )
 				{
 					$reflection = new ReflectionMethod( 
-						get_class( $methodData['call'][0] ), 
+						$methodData['call'][0], 
 						$methodData['call'][1] 
 					);
 				}

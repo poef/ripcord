@@ -60,8 +60,7 @@ class ripcord
 					unset( $options[$key] );
 				}
 			}
-			$docOptions['version'] = $options['version'] ? 
-				$options['version'] : $this->outputOptions['version'];
+			$docOptions['version'] = $options['version'];
 			ripcord::load('Ripcord_Documentor'); // no autoload needed this way
 			$documentor = new Ripcord_Documentor( $docOptions );
 		}
