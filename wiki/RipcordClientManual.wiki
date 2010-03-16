@@ -56,7 +56,7 @@ The Ripcord RPC Client uses PHP streams to connect to the remote server. In some
 <?php
     
     $transport = new Ripcord_Transport_CURL();
-    $client = ripcord::xmlrpcClient( $url, array( "transport" => $transport ) );
+    $client = ripcord::xmlrpcClient( $url, null, $transport );
 
 ?>
 }}}
