@@ -113,7 +113,7 @@ class Ripcord_Client
 	 * @param object $rootClient Optional. Used internally when using namespaces.
 	 * @throws Ripcord_ConfigurationException (ripcord::xmlrpcNotInstalled) when the xmlrpc extension is not available.
 	 */
-	public function __construct( $url, array $options = null, $rootClient = null, $transport = null ) 
+	public function __construct( $url, array $options = null, $transport = null, $rootClient = null ) 
 	{
 		if ( !isset($rootClient) ) {
 			$rootClient = $this;
@@ -128,6 +128,9 @@ class Ripcord_Client
 				unset( $options['namespace'] );
 			}
 			$this->_outputOptions = $options;
+		}
+		if ( isset($transport) ) {
+			$this->_transport = $transport;
 		}
 		if ( !function_exists( 'xmlrpc_encode_request' ) )
 		{
@@ -253,9 +256,9 @@ class Ripcord_Client
 				$this->_url, 
 				array_merge($this->_outputOptions, array( 
 					'namespace' => $this->_namespace ? 
-						$this->_namespace . '.' . $name : $name, 
-					'transport' => $this->_transport)
-				),
+						$this->_namespace . '.' . $name : $name
+				) ),
+				$this->_transport,
 				$this->_rootClient
 			);
 			$this->{$name} = $result;
