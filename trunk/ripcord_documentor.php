@@ -10,6 +10,7 @@
 
 /**
  * This interface defines the minimum methods any documentor needs to implement.
+ * @package Ripcord
  */
 interface Ripcord_Documentor_Interface 
 {
@@ -22,6 +23,7 @@ interface Ripcord_Documentor_Interface
 /**
  * This class implements the default documentor for the ripcord server. Any request to the server
  * without a request_xml is handled by the documentor.
+ * @package Ripcord
  */
 class Ripcord_Documentor implements Ripcord_Documentor_Interface
 {

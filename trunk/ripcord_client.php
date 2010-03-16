@@ -7,7 +7,10 @@
  * @license http://opensource.org/licenses/gpl-3.0.html GNU Public License
  * @version Ripcord 0.3 - PHP 5.0
  */
-
+ 
+/**
+ * Includes the static ripcord factory class and exceptions
+ */
 require_once(dirname(__FILE__).'/ripcord.php');
 
 /**
@@ -39,6 +42,7 @@ require_once(dirname(__FILE__).'/ripcord.php');
  * If you want to skip the ripcord::client factory method, you _must_ provide a transport object explicitly.
  *
  * @link  http://wiki.moviemeter.nl/index.php/API Moviemeter API documentation
+ * @package Ripcord
  */
 class Ripcord_Client 
 {
@@ -265,6 +269,7 @@ class Ripcord_Client
  *  a Ripcord_Client_Call  object is created with all the information needed to call the method using the multicall parameters. The call object is
  *  returned immediately and is used as input parameter for the multiCall call. The result of the call can be bound to a php variable. This
  *  variable will be filled with the result of the call when it is available.
+ * @package Ripcord
  */
 class Ripcord_Client_Call 
 {
@@ -328,6 +333,7 @@ class Ripcord_Client_Call
 /**
  * This interface describes the minimum interface needed for the transport object used by the
  * Ripcord_Client
+ * @package Ripcord
  */
 interface Ripcord_Transport 
 {
@@ -342,6 +348,7 @@ interface Ripcord_Transport
 
 /**
  * This class implements the Ripcord_Transport interface using PHP streams.
+ * @package Ripcord
  */
 class  Ripcord_Transport_Stream implements Ripcord_Transport 
 {
@@ -400,6 +407,7 @@ class  Ripcord_Transport_Stream implements Ripcord_Transport
 
 /**
  * This class implements the Ripcord_Transport interface using CURL.
+ * @package Ripcord
  */
 class Ripcord_Transport_CURL implements Ripcord_Transport 
 {

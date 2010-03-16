@@ -24,22 +24,22 @@
         		<!-- ========== Info from phpDoc block ========= -->
 <p class="short-description">This class implements a simple RPC client, for XML-RPC, (simplified) SOAP 1.1 or Simple RPC. The client abstracts  the entire RPC process behind native PHP methods. Any method defined by the rpc server can be called as if it was  a native method of the rpc client.</p>
 <p class="description"><p>E.g.   <div class="src-code"><ol><li><div class="src-line">&nbsp;&nbsp;<span class="src-php">&lt;?php</span></div></li>
-<li><div class="src-line">&nbsp;&nbsp;&nbsp;&nbsp;<span class="src-var">$client&nbsp;</span>=&nbsp;<span class="src-key">new&nbsp;</span><span class="src-id"><a href="../Ripcord/Ripcord_Client.html">Ripcord_Client</a></span><span class="src-sym">(&nbsp;</span><span class="src-str">'http://www.moviemeter.nl/ws'&nbsp;</span><span class="src-sym">)</span><span class="src-sym">;</span></div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;&nbsp;<span class="src-var">$client&nbsp;</span>=&nbsp;<span class="src-id"><a href="../Ripcord/ripcord.html">ripcord</a></span><span class="src-sym">::</span><a href="../Ripcord/ripcord.html#methodclient">client</a><span class="src-sym">(&nbsp;</span><span class="src-str">'http://www.moviemeter.nl/ws'&nbsp;</span><span class="src-sym">)</span><span class="src-sym">;</span></div></li>
 <li><div class="src-line">&nbsp;&nbsp;&nbsp;&nbsp;<span class="src-var">$score&nbsp;</span>=&nbsp;<span class="src-var">$client</span><span class="src-sym">-&gt;</span><span class="src-id">film</span><span class="src-sym">-&gt;</span><span class="src-id">getScore</span><span class="src-sym">(&nbsp;</span><span class="src-str">'e3dee9d19a8c3af7c92f9067d2945b59'</span><span class="src-sym">,&nbsp;</span><span class="src-num">500&nbsp;</span><span class="src-sym">)</span><span class="src-sym">;</span></div></li>
 <li><div class="src-line">&nbsp;&nbsp;<span class="src-php">?&gt;</span></div></li>
 </ol></div></p><p>The client has a simple interface for the system.multiCall method:  <div class="src-code"><ol><li><div class="src-line">&nbsp;<span class="src-php">&lt;?php</span></div></li>
-<li><div class="src-line">&nbsp;&nbsp;<span class="src-var">$client&nbsp;</span>=&nbsp;<span class="src-key">new&nbsp;</span><span class="src-id"><a href="../Ripcord/Ripcord_Client.html">Ripcord_Client</a></span><span class="src-sym">(&nbsp;</span><span class="src-str">'http://ripcord.muze.nl/ripcord.php'&nbsp;</span><span class="src-sym">)</span><span class="src-sym">;</span></div></li>
+<li><div class="src-line">&nbsp;&nbsp;<span class="src-var">$client&nbsp;</span>=&nbsp;<span class="src-id"><a href="../Ripcord/ripcord.html">ripcord</a></span><span class="src-sym">::</span><a href="../Ripcord/ripcord.html#methodclient">client</a><span class="src-sym">(&nbsp;</span><span class="src-str">'http://ripcord.muze.nl/ripcord.php'&nbsp;</span><span class="src-sym">)</span><span class="src-sym">;</span></div></li>
 <li><div class="src-line">&nbsp;&nbsp;<span class="src-var">$client</span><span class="src-sym">-&gt;</span><a href="http://www.php.net/system">system</a><span class="src-sym">-&gt;</span><span class="src-id">multiCall</span><span class="src-sym">(</span></div></li>
 <li><div class="src-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="src-id"><a href="../Ripcord/ripcord.html">ripcord</a></span><span class="src-sym">::</span><a href="../Ripcord/ripcord.html#methodencodeCall">encodeCall</a><span class="src-sym">(</span><span class="src-str">'system.listMethods'</span><span class="src-sym">)</span><span class="src-sym">-&gt;</span><span class="src-id">bind</span><span class="src-sym">(</span><span class="src-var">$methods</span><span class="src-sym">)</span><span class="src-sym">,</span></div></li>
 <li><div class="src-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="src-id"><a href="../Ripcord/ripcord.html">ripcord</a></span><span class="src-sym">::</span><a href="../Ripcord/ripcord.html#methodencodeCall">encodeCall</a><span class="src-sym">(</span><span class="src-str">'getFoo'</span><span class="src-sym">)</span><span class="src-sym">-&gt;</span><span class="src-id">bind</span><span class="src-sym">(</span><span class="src-var">$foo</span><span class="src-sym">)</span></div></li>
 <li><div class="src-line">&nbsp;<span class="src-sym">)</span><span class="src-sym">;</span></div></li>
 <li><div class="src-line">&nbsp;<span class="src-php">?&gt;</span></div></li>
-</ol></div></p><p>The soap client can only handle the basic php types and doesn't understand xml namespaces. Use PHP's SoapClient  for complex soap calls. This client cannot parse wsdl.</p></p>
+</ol></div></p><p>The soap client can only handle the basic php types and doesn't understand xml namespaces. Use PHP's SoapClient  for complex soap calls. This client cannot parse wsdl.  If you want to skip the ripcord::client factory method, you _must_ provide a transport object explicitly.</p></p>
 	<ul class="tags">
 				<li><span class="field">link:</span> <a href="http://wiki.moviemeter.nl/index.php/API">Moviemeter API documentation</a></li>
 			</ul>
 		<p class="notes">
-			Located in <a class="field" href="_ripcord_client.php.html">/ripcord_client.php</a> (line <span class="field">42</span>)
+			Located in <a class="field" href="_ripcord_client.php.html">/ripcord_client.php</a> (line <span class="field">47</span>)
 		</p>
 		
 				
@@ -98,7 +98,7 @@
 												<div class="method-definition">
 											<span class="method-result">Ripcord_Client</span>
 										<a href="#__construct" title="details" class="method-name">__construct</a>
-											(<span class="var-type">string</span>&nbsp;<span class="var-name">$url</span>, [<span class="var-type"></span>&nbsp;<span class="var-name">$options</span> = <span class="var-default">null</span>], [<span class="var-type">object</span>&nbsp;<span class="var-name">$rootClient</span> = <span class="var-default">null</span>])
+											(<span class="var-type">string</span>&nbsp;<span class="var-name">$url</span>, [<span class="var-type"></span>&nbsp;<span class="var-name">$options</span> = <span class="var-default">null</span>], [<span class="var-type">object</span>&nbsp;<span class="var-name">$rootClient</span> = <span class="var-default">null</span>], [<span class="var-type"></span>&nbsp;<span class="var-name">$transport</span> = <span class="var-default">null</span>])
 									</div>
 																<div class="method-definition">
 											<span class="method-result">void</span>
@@ -134,7 +134,7 @@
 		<span class="var-title">
 			<span class="var-type">mixed</span>
 			<span class="var-name">$_autoDecode</span>
-			 = <span class="var-default"> true</span>			(line <span class="line-number">102</span>)
+			 = <span class="var-default"> true</span>			(line <span class="line-number">107</span>)
 		</span>
 	</div>
 
@@ -156,7 +156,7 @@
 		<span class="var-title">
 			<span class="var-type">mixed</span>
 			<span class="var-name">$_request</span>
-			 = <span class="var-default"> ''</span>			(line <span class="line-number">91</span>)
+			 = <span class="var-default"> ''</span>			(line <span class="line-number">96</span>)
 		</span>
 	</div>
 
@@ -178,7 +178,7 @@
 		<span class="var-title">
 			<span class="var-type">mixed</span>
 			<span class="var-name">$_response</span>
-			 = <span class="var-default"> ''</span>			(line <span class="line-number">86</span>)
+			 = <span class="var-default"> ''</span>			(line <span class="line-number">91</span>)
 		</span>
 	</div>
 
@@ -200,7 +200,7 @@
 		<span class="var-title">
 			<span class="var-type">mixed</span>
 			<span class="var-name">$_throwExceptions</span>
-			 = <span class="var-default"> false</span>			(line <span class="line-number">96</span>)
+			 = <span class="var-default"> false</span>			(line <span class="line-number">101</span>)
 		</span>
 	</div>
 
@@ -235,7 +235,7 @@
 <div class="evenrow">
 	
 	<div class="method-header">
-		<span class="method-title">Constructor __construct</span> (line <span class="line-number">111</span>)
+		<span class="method-title">Constructor __construct</span> (line <span class="line-number">116</span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -250,7 +250,7 @@
 		<span class="method-name">
 			__construct
 		</span>
-					(<span class="var-type">string</span>&nbsp;<span class="var-name">$url</span>, [<span class="var-type"></span>&nbsp;<span class="var-name">$options</span> = <span class="var-default">null</span>], [<span class="var-type">object</span>&nbsp;<span class="var-name">$rootClient</span> = <span class="var-default">null</span>])
+					(<span class="var-type">string</span>&nbsp;<span class="var-name">$url</span>, [<span class="var-type"></span>&nbsp;<span class="var-name">$options</span> = <span class="var-default">null</span>], [<span class="var-type">object</span>&nbsp;<span class="var-name">$rootClient</span> = <span class="var-default">null</span>], [<span class="var-type"></span>&nbsp;<span class="var-name">$transport</span> = <span class="var-default">null</span>])
 			</div>
 	
 			<ul class="parameters">
@@ -263,6 +263,9 @@
 					<li>
 				<span class="var-type">object</span>
 				<span class="var-name">$rootClient</span><span class="var-description">: Optional. Used internally when using namespaces.</span>			</li>
+					<li>
+				<span class="var-type"></span>
+				<span class="var-name">$transport</span>			</li>
 				</ul>
 		
 			
@@ -271,7 +274,7 @@
 <div class="oddrow">
 	
 	<div class="method-header">
-		<span class="method-title">__call</span> (line <span class="line-number">150</span>)
+		<span class="method-title">__call</span> (line <span class="line-number">146</span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -305,7 +308,7 @@
 <div class="evenrow">
 	
 	<div class="method-header">
-		<span class="method-title">__get</span> (line <span class="line-number">251</span>)
+		<span class="method-title">__get</span> (line <span class="line-number">247</span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -337,7 +340,7 @@
 
 
 	<p class="notes" id="credit">
-		Documentation generated on Fri, 12 Mar 2010 16:37:02 +0100 by <a href="http://www.phpdoc.org" target="_blank">phpDocumentor 1.4.3</a>
+		Documentation generated on Tue, 16 Mar 2010 12:46:03 +0100 by <a href="http://www.phpdoc.org" target="_blank">phpDocumentor 1.4.3</a>
 	</p>
 	</div></body>
 </html>

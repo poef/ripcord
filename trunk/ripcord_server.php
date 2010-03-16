@@ -8,6 +8,9 @@
  * @version Ripcord 0.3 - PHP 5.0
  */
  
+/**
+ * Includes the static ripcord factory class and exceptions
+ */
 require_once(dirname(__FILE__).'/ripcord.php');
  
 /**
@@ -32,7 +35,8 @@ require_once(dirname(__FILE__).'/ripcord.php');
  *   $server->run();
  * ?>
  * </code>
- */
+  * @package Ripcord
+*/
 class Ripcord_Server 
 {
 	/**

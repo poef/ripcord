@@ -11,6 +11,7 @@
 /**
  * The ripcord class contains a number of useful static methods. This makes it a bit easier to create a server or client, convert types 
  * and check for errors.
+ * @package Ripcord
  */
 class ripcord
 {
@@ -261,18 +262,21 @@ class ripcord
 
 /**
  * This interface is implemented by all exceptions thrown by Ripcord.
+ * @package Ripcord
  */
 interface Ripcord_Exception {}
 
 /**
  * This class is used whenever an when a method passed to the server is invalid.
  * - ripcord::methodNotFound (-1) Method {method} not found. - Thrown by the ripcord server when a requested method isn't found.
+ * @package Ripcord
  */
 class Ripcord_BadMethodCallException extends BadMethodCallException implements Ripcord_Exception { }
  
 /**
  * This class is used whenever prerequisite requirements are not met.
  * - ripcord::xmlrpcNotInstalled (-5) PHP XMLRPC library is not installed - Thrown by the ripcord server and client when the xmlrpc library is not installed.
+ * @package Ripcord
  */
 class Ripcord_ConfigurationException extends Exception implements Ripcord_Exception { }
 
@@ -283,18 +287,21 @@ class Ripcord_ConfigurationException extends Exception implements Ripcord_Except
  * - ripcord::notDateTime (-6) Variable is not of type datetime - Thrown by the ripcord timestamp method.
  * - ripcord::notBase64 (-7) Variable is not of type base64 - Thrown by the ripcord binary method.
  * - ripcord::unknownServiceType (-8) Variable is not a classname or an object - Thrown by the ripcord server.
+ * @package Ripcord
  */
 class Ripcord_InvalidArgumentException extends InvalidArgumentException implements Ripcord_Exception { }
 
 /**
  * This class is used whenever something goes wrong in sending / receiving data. Possible exceptions thrown are:
  * - ripcord::cannotAccessURL (-4) Could not access {url} - Thrown by the transport object when unable to access the given url.
+ * @package Ripcord
  */
 class Ripcord_TransportException extends RuntimeException implements Ripcord_Exception { }
 
 /**
  * This class is used for exceptions generated from xmlrpc faults returned by the server. The code and message correspond
  * to the code and message from the xmlrpc fault.
+ * @package Ripcord
  */
 class Ripcord_RemoteException extends Exception implements Ripcord_Exception { }
 
