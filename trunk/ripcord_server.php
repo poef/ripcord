@@ -124,32 +124,44 @@ class Ripcord_Server
 	 */
 	public function addService($service, $serviceName = 0) 
 	{
-		if ($serviceName && !is_numeric($serviceName)) 
+		if ( is_object( $service ) ) 
 		{
-			$serviceName .= '.';
-		} else {
-			$serviceName = '';
-		}
-		if (is_object($service)) {
-			$reflection = new ReflectionObject($service);
-		} else if (is_string($service) && class_exists($service)) {
-			$reflection = new ReflectionClass($service);
-		} else {
-			throw new Ripcord_InvalidArgumentException('Unknown service type '.$serviceName, 
+			$reflection = new ReflectionObject( $service );
+		} 
+		else if ( is_string( $service ) && class_exists( $service ) ) 
+		{
+			$reflection = new ReflectionClass( $service );
+		} 
+		else if ( is_callable( $service ) ) // method passed directly
+		{ 
+			$this->addMethod( $serviceName, $service );
+			return;
+		} 
+		else 
+		{
+			throw new Ripcord_InvalidArgumentException( 'Unknown service type ' . $serviceName, 
 				ripcord::unknownServiceType );
 		}
-		$methods = $reflection->getMethods();
-		if (is_array($methods)) 
+		if ( $serviceName && !is_numeric( $serviceName ) ) 
 		{
-			foreach($methods as $method) 
+			$serviceName .= '.';
+		} 
+		else 
+		{
+			$serviceName = '';
+		}
+		$methods = $reflection->getMethods();
+		if ( is_array( $methods ) ) 
+		{
+			foreach( $methods as $method ) 
 			{
-				if ( substr($method->name, 0, 1) != '_'
+				if ( substr( $method->name, 0, 1 ) != '_'
 					&& !$method->isPrivate() && !$method->isProtected()) 
 				{
-					$rpcMethodName = $serviceName.$method->name;
+					$rpcMethodName = $serviceName . $method->name;
 					$this->addMethod( 
 						$rpcMethodName, 
-						array( $service, $method->name)
+						array( $service, $method->name )
 					);
 				}
 			}
@@ -167,7 +179,7 @@ class Ripcord_Server
 			'name' => $name,
 			'call' => $method
 		);
-		xmlrpc_server_register_method($this->xmlrpc, $name, array($this, 'call') );
+		xmlrpc_server_register_method( $this->xmlrpc, $name, array( $this, 'call' ) );
 	}
 	
 	/**
@@ -175,9 +187,11 @@ class Ripcord_Server
 	 */
 	public function run() 
 	{
-		$this->documentor->setMethodData( $this->methods );
-		$request_xml = file_get_contents('php://input');
-		if (!$request_xml) 
+		if ($this->documentor) {
+			$this->documentor->setMethodData( $this->methods );
+		}
+		$request_xml = file_get_contents( 'php://input' );
+		if ( !$request_xml ) 
 		{
 			if ( ( $query = $_SERVER['QUERY_STRING'] ) 
 				&& isset($this->wsdl[$query]) && $this->wsdl[$query] )
