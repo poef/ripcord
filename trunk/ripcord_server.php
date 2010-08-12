@@ -196,6 +196,7 @@ class Ripcord_Server
 			if ( ( $query = $_SERVER['QUERY_STRING'] ) 
 				&& isset($this->wsdl[$query]) && $this->wsdl[$query] )
 			{
+				header('Content-type: text/xml');
 				echo $this->wsdl[$query];
 			}
 			else if ( $this->documentor )
@@ -204,6 +205,7 @@ class Ripcord_Server
 			}
 			else
 			{
+				header('Content-type: text/xml');
 				echo xmlrpc_encode_request(
 					null,  
 					ripcord::fault( -1, 'No request xml found.' ),
@@ -213,6 +215,7 @@ class Ripcord_Server
 		}
 		else 
 		{
+			header('Content-type: text/xml');
 			echo $this->handle( $request_xml );
 		}
 	}
