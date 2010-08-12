@@ -118,7 +118,7 @@ class Ripcord_Server
 	
 	/**
 	 * Allows you to add a service to the server after construction.
-	 * @param object $service The object whose public methods must be added to the rpc server
+	 * @param object $service The object or class whose public methods must be added to the rpc server. May also be a function or method.
 	 * @param string $serviceName Optional. The namespace for the methods.
 	 * @throws Ripcord_InvalidArgumentException (ripcord::unknownServiceType) when passed an incorrect service
 	 */
