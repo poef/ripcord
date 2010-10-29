@@ -41,10 +41,10 @@ The Ripcord client has a very simple way to access namespaced (or prefixed) meth
 
 The Ripcord client has another simple trick, it supports the system.multiCall method many xml-rpc servers implement in a very simple and readable syntax:
 {{{
-  $client->system->multiCall(
-    $client->doOneCall()->bind($resultOne),
-    $client->doAnotherCall()->bind($resultTwo)
-  );
+  $client->system->multiCall()->start();
+  $client->doOneCall()->bind($resultOne),
+  $client->doAnotherCall()->bind($resultTwo)
+  $client->system->multiCall()->execute();
 }}}
 
 ==When XML_RPC2 is better==
