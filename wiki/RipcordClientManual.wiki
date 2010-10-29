@@ -23,10 +23,11 @@ Some XML-RPC servers support 'system.multiCall'. This allows you to call multipl
 {{{
 <?php
 
-    $client->system->multiCall(
-        ripcord::encodeCall('film.getScore', 'e3dee9d19a8c3af7c92f9067d2945b59', 500 )->bind($score),
-        ripcord::encodeCall('system.listMethods')->bind($methods)
-    );
+    $client->system->multiCall()->start();
+    ripcord::bind($score, 
+        $client->film->getScore('e3dee9d19a8c3af7c92f9067d2945b59', 500) );
+    ripcord::bind($methods, $client->system->listMethods() );
+    $client->system->multiCall()->execute();
 
 ?>
 }}}
@@ -38,15 +39,15 @@ An alternative syntax, without binding variables to the results automatically is
 {{{
 <?php
 
-    $result = $client->system->multiCall( array(
-        "score" => ripcord::encodeCall('film.getScore', 'e3dee9d19a8c3af7c92f9067d2945b59', 500 ),
-        "methods" => ripcord::encodeCall('system.listMethods')
-    ) );
+    $client->system->multiCall()->start();
+    $client->film->getScore('e3dee9d19a8c3af7c92f9067d2945b59', 500 );
+    $client->system->listMethods();
+    $result = $client->system->multiCall()->execute();
 
 ?>
 }}}
 
-After which $result is an array containing the results of each call linked to the key used in the array.
+After which $result is an array containing the results of each call, in order.
 
 ==Using a different transport layer==
 
@@ -61,7 +62,7 @@ The Ripcord RPC Client uses PHP streams to connect to the remote server. In some
 ?>
 }}}
 
-Any CURL options can be passed through the constructor of Ripcord_Transport_CURL as an array.
+Any options can be passed through the constructor of a Ripcord_Transport class as an array.
 
 You can also use this method to add custom headers or cookies to the rpc request, e.g.:
 
