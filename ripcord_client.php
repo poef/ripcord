@@ -5,7 +5,7 @@
  * @author Auke van Slooten <auke@muze.nl>
  * @copyright Copyright (C) 2010, Muze <www.muze.nl>
  * @license http://opensource.org/licenses/gpl-3.0.html GNU Public License
- * @version Ripcord 0.3 - PHP 5.0
+ * @version Ripcord 0.9 - PHP 5
  */
  
 /**
@@ -30,10 +30,10 @@ require_once(dirname(__FILE__).'/ripcord.php');
  * <code>
  * <?php
  *  $client = ripcord::client( 'http://ripcord.muze.nl/ripcord.php' );
- *  $client->system->multiCall(
- *     ripcord::encodeCall('system.listMethods')->bind($methods),
- *     ripcord::encodeCall('getFoo')->bind($foo)
- * );
+ *  $client->system->multiCall()->start();
+ *  ripcord::bind( $methods, $client->system->listMethods() );
+ *  ripcord::bind( $foo, $client->getFoo() );
+ *  $client->system->multiCall()->execute();
  * ?>
  * </code>
  * 
@@ -78,13 +78,17 @@ class Ripcord_Client
 	 * find the _response and _request data in the root client.
 	 */
 	private $_rootClient = null;
+	
+	/**
+	 * A flag to indicate if we are in a multiCall block. Start this with $client->system->multiCall()->start()
+	 */
+	protected $_multiCall = false;
 
 	/**
-	 * A counter to keep track of the scope of method calls. If this variable is non zero, we're in the system
-	 * namespace, so calls to non-system methods must be deferred for later use with system.multiCall.
+	 * A list of deferred encoded calls.
 	 */
-	private static $_multicall = 0;
-
+	protected $_multiCallArgs = array();
+	
 	/**
 	  * The exact response from the rpc server. For debugging purposes.
 	 */
@@ -155,12 +159,17 @@ class Ripcord_Client
 
 		if ( $name === 'system.multiCall' ) 
 		{
-			if ( is_array( $args ) && (count( $args ) == 1) && 
+			if ( !$args || ( is_array($args) && count($args)==0 ) ) 
+			{
+				// multiCall is called without arguments, so return the fetch interface object
+				return new Ripcord_Client_MultiCall( $this->_rootClient );
+			} else if ( is_array( $args ) && (count( $args ) == 1) && 
 				is_array( $args[0] )  && !isset( $args[0]['methodName'] ) ) 
 			{ 
 				// multicall is called with a simple array of calls.
 				$args = $args[0];
 			}
+			$this->_rootClient->_multiCall = false;
 			$params = array();
 			$bound = array();
 			foreach ( $args as $key => $arg ) 
@@ -189,8 +198,13 @@ class Ripcord_Client
 				$bound[$key] = $arg;
 			}
 			$args = array( $params );
+			$this->_rootClient->_multiCallArgs = array();
 		}
-
+		if ( $this->_rootClient->_multiCall ) {
+			$call = new Ripcord_Client_Call( $name, $args );
+			$this->_rootClient->_multiCallArgs[] = $call;
+			return $call;
+		}
 		$request  = xmlrpc_encode_request( $name, $args, $this->_outputOptions );
 		$response = $this->_transport->post( $this->_url, $request );
 		$result   = xmlrpc_decode( $response );
@@ -265,6 +279,52 @@ class Ripcord_Client
 		}
 		return $result;
 	}
+}
+
+/**
+ * This class provides the fetch interface for system.multiCall. It is returned
+ * when calling $client->system->multiCall() with no arguments. Upon construction
+ * it puts the originating client into multiCall deferred mode. The client will
+ * gather the requested method calls instead of executing them immediately. It
+ * will them execute all of them, in order, when calling
+ * $client->system->multiCall()->fetch().
+ * This class extends Ripcord_Client only so it has access to its protected _multiCall
+ * property.
+ */
+class Ripcord_Client_MultiCall extends Ripcord_Client 
+{
+	
+	/*
+	 * The reference to the originating client to put into multiCall mode.
+	 */
+	private $client = null;
+	
+	/*
+	 * This method creates a new multiCall fetch api object.
+	 */
+	public function __construct( $client ) 
+	{
+		$this->client = $client;
+	}
+
+	/*
+	 * This method puts the client into multiCall mode. While in this mode all 
+	 * method calls are collected as deferred calls (Ripcord_Client_Call).
+	 */
+	public function start() 
+	{	
+		$this->client->_multiCall = true;
+	}
+	
+	/*
+	 * This method finally calls the clients multiCall method with all deferred
+	 * method calls since multiCall mode was enabled.
+	 */
+	public function execute() 
+	{
+		return $this->client->system->multiCall( $this->client->_multiCallArgs );
+	}
+	
 }
 
 /**
