@@ -51,6 +51,20 @@
 							<div class="index-item-description">Whether or not to decode the XML-RPC datetime and base64 types to unix timestamp and binary string  respectively.</div>
 					</dd>
 			<dt class="field">
+						<span class="var-title">$_multiCall</span>
+					</dt>
+		<dd class="index-item-body">
+			<div class="index-item-details"><a href="Ripcord/Ripcord_Client.html#var$_multiCall">Ripcord_Client::$_multiCall</a> in ripcord_client.php</div>
+							<div class="index-item-description">A flag to indicate if we are in a multiCall block. Start this with $client-&gt;system-&gt;multiCall()-&gt;start()</div>
+					</dd>
+			<dt class="field">
+						<span class="var-title">$_multiCallArgs</span>
+					</dt>
+		<dd class="index-item-body">
+			<div class="index-item-details"><a href="Ripcord/Ripcord_Client.html#var$_multiCallArgs">Ripcord_Client::$_multiCallArgs</a> in ripcord_client.php</div>
+							<div class="index-item-description">A list of deferred encoded calls.</div>
+					</dd>
+			<dt class="field">
 						<span class="var-title">$_request</span>
 					</dt>
 		<dd class="index-item-body">
@@ -95,6 +109,13 @@
 						<span class="method-title">__construct</span>
 					</dt>
 		<dd class="index-item-body">
+			<div class="index-item-details"><a href="Ripcord/Ripcord_Server.html#method__construct">Ripcord_Server::__construct()</a> in ripcord_server.php</div>
+							<div class="index-item-description">Creates a new instance of the Ripcord server.</div>
+					</dd>
+			<dt class="field">
+						<span class="method-title">__construct</span>
+					</dt>
+		<dd class="index-item-body">
 			<div class="index-item-details"><a href="Ripcord/Ripcord_Transport_Stream.html#method__construct">Ripcord_Transport_Stream::__construct()</a> in ripcord_client.php</div>
 							<div class="index-item-description">This is the constructor for the Ripcord_Transport_Stream class.</div>
 					</dd>
@@ -109,13 +130,6 @@
 						<span class="method-title">__construct</span>
 					</dt>
 		<dd class="index-item-body">
-			<div class="index-item-details"><a href="Ripcord/Ripcord_Client.html#method__construct">Ripcord_Client::__construct()</a> in ripcord_client.php</div>
-							<div class="index-item-description">The constructor for the RPC client.</div>
-					</dd>
-			<dt class="field">
-						<span class="method-title">__construct</span>
-					</dt>
-		<dd class="index-item-body">
 			<div class="index-item-details"><a href="Ripcord/Ripcord_Client_Call.html#method__construct">Ripcord_Client_Call::__construct()</a> in ripcord_client.php</div>
 							<div class="index-item-description">The constructor for the Ripcord_Client_Call class.</div>
 					</dd>
@@ -123,8 +137,14 @@
 						<span class="method-title">__construct</span>
 					</dt>
 		<dd class="index-item-body">
-			<div class="index-item-details"><a href="Ripcord/Ripcord_Server.html#method__construct">Ripcord_Server::__construct()</a> in ripcord_server.php</div>
-							<div class="index-item-description">Creates a new instance of the Ripcord server.</div>
+			<div class="index-item-details"><a href="Ripcord/Ripcord_Client_MultiCall.html#method__construct">Ripcord_Client_MultiCall::__construct()</a> in ripcord_client.php</div>
+					</dd>
+			<dt class="field">
+						<span class="method-title">__construct</span>
+					</dt>
+		<dd class="index-item-body">
+			<div class="index-item-details"><a href="Ripcord/Ripcord_Client.html#method__construct">Ripcord_Client::__construct()</a> in ripcord_client.php</div>
+							<div class="index-item-description">The constructor for the RPC client.</div>
 					</dd>
 			<dt class="field">
 						<span class="method-title">__get</span>
@@ -190,6 +210,12 @@
 		<dd class="index-item-body">
 			<div class="index-item-details"><a href="Ripcord/Ripcord_Client_Call.html#methodbind">Ripcord_Client_Call::bind()</a> in ripcord_client.php</div>
 							<div class="index-item-description">This method allows you to bind a php variable to the result of this method call.</div>
+					</dd>
+			<dt class="field">
+						<span class="method-title">bind</span>
+					</dt>
+		<dd class="index-item-body">
+			<div class="index-item-details"><a href="Ripcord/ripcord.html#methodbind">ripcord::bind()</a> in ripcord.php</div>
 					</dd>
 		</dl>
 	<a name="c"></a>
@@ -270,6 +296,12 @@
 		<dd class="index-item-body">
 			<div class="index-item-details"><a href="Ripcord/ripcord.html#methodencodeCall">ripcord::encodeCall()</a> in ripcord.php</div>
 							<div class="index-item-description">This method creates a new Ripcord_Client_Call object, which encodes the information needed for  a method call to an rpc server. This is mostly used for the system.multiCall method.</div>
+					</dd>
+			<dt class="field">
+						<span class="method-title">execute</span>
+					</dt>
+		<dd class="index-item-body">
+			<div class="index-item-details"><a href="Ripcord/Ripcord_Client_MultiCall.html#methodexecute">Ripcord_Client_MultiCall::execute()</a> in ripcord_client.php</div>
 					</dd>
 		</dl>
 	<a name="f"></a>
@@ -543,6 +575,13 @@
 							<div class="index-item-description">This class is used with the Ripcord_Client when calling system.multiCall. Instead of immediately calling the method on the rpc server,   a Ripcord_Client_Call  object is created with all the information needed to call the method using the multicall parameters. The call object is   returned immediately and is used as input parameter for the multiCall call. The result of the call can be bound to a php variable. This   variable will be filled with the result of the call when it is available.</div>
 					</dd>
 			<dt class="field">
+						Ripcord_Client_MultiCall
+					</dt>
+		<dd class="index-item-body">
+			<div class="index-item-details"><a href="Ripcord/Ripcord_Client_MultiCall.html">Ripcord_Client_MultiCall</a> in ripcord_client.php</div>
+							<div class="index-item-description">This class provides the fetch interface for system.multiCall. It is returned</div>
+					</dd>
+			<dt class="field">
 						Ripcord_ConfigurationException
 					</dt>
 		<dd class="index-item-body">
@@ -686,6 +725,12 @@
 		<dd class="index-item-body">
 			<div class="index-item-details"><a href="Ripcord/ripcord.html#methodsoapClient">ripcord::soapClient()</a> in ripcord.php</div>
 							<div class="index-item-description">This method returns a new Ripcord client, configured to access a SOAP 1.1 server.</div>
+					</dd>
+			<dt class="field">
+						<span class="method-title">start</span>
+					</dt>
+		<dd class="index-item-body">
+			<div class="index-item-details"><a href="Ripcord/Ripcord_Client_MultiCall.html#methodstart">Ripcord_Client_MultiCall::start()</a> in ripcord_client.php</div>
 					</dd>
 		</dl>
 	<a name="t"></a>
