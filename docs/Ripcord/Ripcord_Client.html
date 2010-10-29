@@ -16,7 +16,8 @@
 	<div class="info-box-title">Description</div>
 	<div class="nav-bar">
 					<span class="disabled">Description</span> |
-													<a href="#sec-var-summary">Vars</a> (<a href="#sec-vars">details</a>)
+							<a href="#sec-descendents">Descendents</a>
+			|											<a href="#sec-var-summary">Vars</a> (<a href="#sec-vars">details</a>)
 						|											<a href="#sec-method-summary">Methods</a> (<a href="#sec-methods">details</a>)
 						
 					</div>
@@ -29,10 +30,10 @@
 <li><div class="src-line">&nbsp;&nbsp;<span class="src-php">?&gt;</span></div></li>
 </ol></div></p><p>The client has a simple interface for the system.multiCall method:  <div class="src-code"><ol><li><div class="src-line">&nbsp;<span class="src-php">&lt;?php</span></div></li>
 <li><div class="src-line">&nbsp;&nbsp;<span class="src-var">$client&nbsp;</span>=&nbsp;<span class="src-id"><a href="../Ripcord/ripcord.html">ripcord</a></span><span class="src-sym">::</span><a href="../Ripcord/ripcord.html#methodclient">client</a><span class="src-sym">(&nbsp;</span><span class="src-str">'http://ripcord.muze.nl/ripcord.php'&nbsp;</span><span class="src-sym">)</span><span class="src-sym">;</span></div></li>
-<li><div class="src-line">&nbsp;&nbsp;<span class="src-var">$client</span><span class="src-sym">-&gt;</span><a href="http://www.php.net/system">system</a><span class="src-sym">-&gt;</span><span class="src-id">multiCall</span><span class="src-sym">(</span></div></li>
-<li><div class="src-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="src-id"><a href="../Ripcord/ripcord.html">ripcord</a></span><span class="src-sym">::</span><a href="../Ripcord/ripcord.html#methodencodeCall">encodeCall</a><span class="src-sym">(</span><span class="src-str">'system.listMethods'</span><span class="src-sym">)</span><span class="src-sym">-&gt;</span><span class="src-id">bind</span><span class="src-sym">(</span><span class="src-var">$methods</span><span class="src-sym">)</span><span class="src-sym">,</span></div></li>
-<li><div class="src-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="src-id"><a href="../Ripcord/ripcord.html">ripcord</a></span><span class="src-sym">::</span><a href="../Ripcord/ripcord.html#methodencodeCall">encodeCall</a><span class="src-sym">(</span><span class="src-str">'getFoo'</span><span class="src-sym">)</span><span class="src-sym">-&gt;</span><span class="src-id">bind</span><span class="src-sym">(</span><span class="src-var">$foo</span><span class="src-sym">)</span></div></li>
-<li><div class="src-line">&nbsp;<span class="src-sym">)</span><span class="src-sym">;</span></div></li>
+<li><div class="src-line">&nbsp;&nbsp;<span class="src-var">$client</span><span class="src-sym">-&gt;</span><a href="http://www.php.net/system">system</a><span class="src-sym">-&gt;</span><span class="src-id">multiCall</span><span class="src-sym">(</span><span class="src-sym">)</span><span class="src-sym">-&gt;</span><span class="src-id">start</span><span class="src-sym">(</span><span class="src-sym">)</span><span class="src-sym">;</span></div></li>
+<li><div class="src-line">&nbsp;&nbsp;<span class="src-id"><a href="../Ripcord/ripcord.html">ripcord</a></span><span class="src-sym">::</span><a href="../Ripcord/ripcord.html#methodbind">bind</a><span class="src-sym">(&nbsp;</span><span class="src-var">$methods</span><span class="src-sym">,&nbsp;</span><span class="src-var">$client</span><span class="src-sym">-&gt;</span><a href="http://www.php.net/system">system</a><span class="src-sym">-&gt;</span><span class="src-id">listMethods</span><span class="src-sym">(</span><span class="src-sym">)&nbsp;)</span><span class="src-sym">;</span></div></li>
+<li><div class="src-line">&nbsp;&nbsp;<span class="src-id"><a href="../Ripcord/ripcord.html">ripcord</a></span><span class="src-sym">::</span><a href="../Ripcord/ripcord.html#methodbind">bind</a><span class="src-sym">(&nbsp;</span><span class="src-var">$foo</span><span class="src-sym">,&nbsp;</span><span class="src-var">$client</span><span class="src-sym">-&gt;</span><span class="src-id">getFoo</span><span class="src-sym">(</span><span class="src-sym">)&nbsp;)</span><span class="src-sym">;</span></div></li>
+<li><div class="src-line">&nbsp;&nbsp;<span class="src-var">$client</span><span class="src-sym">-&gt;</span><a href="http://www.php.net/system">system</a><span class="src-sym">-&gt;</span><span class="src-id">multiCall</span><span class="src-sym">(</span><span class="src-sym">)</span><span class="src-sym">-&gt;</span><span class="src-id">execute</span><span class="src-sym">(</span><span class="src-sym">)</span><span class="src-sym">;</span></div></li>
 <li><div class="src-line">&nbsp;<span class="src-php">?&gt;</span></div></li>
 </ol></div></p><p>The soap client can only handle the basic php types and doesn't understand xml namespaces. Use PHP's SoapClient  for complex soap calls. This client cannot parse wsdl.  If you want to skip the ripcord::client factory method, you _must_ provide a transport object explicitly.</p></p>
 	<ul class="tags">
@@ -48,6 +49,31 @@
 			</div>
 </div>
 
+	<a name="sec-descendents"></a>
+	<div class="info-box">
+		<div class="info-box-title">Direct descendents</div>
+		<div class="nav-bar">
+			<a href="#sec-description">Description</a> |
+			<span class="disabled">Descendents</span>
+			|												<a href="#sec-var-summary">Vars</a> (<a href="#sec-vars">details</a>)
+								|															<a href="#sec-method-summary">Methods</a> (<a href="#sec-methods">details</a>)
+							
+								</div>
+		<div class="info-box-body">
+			<table cellpadding="2" cellspacing="0" class="class-table">
+				<tr>
+					<th class="class-table-header">Class</th>
+					<th class="class-table-header">Description</th>
+				</tr>
+								<tr>
+					<td style="padding-right: 2em"><a href="../Ripcord/Ripcord_Client_MultiCall.html">Ripcord_Client_MultiCall</a></td>
+					<td>
+											This class provides the fetch interface for system.multiCall. It is returned
+										</td>
+				</tr>
+							</table>
+		</div>
+	</div>
 
 
 	<a name="sec-var-summary"></a>
@@ -55,6 +81,7 @@
 		<div class="info-box-title">Variable Summary</span></div>
 		<div class="nav-bar">
 			<a href="#sec-description">Description</a> |
+							<a href="#sec-descendents">Descendents</a> |
 						<span class="disabled">Vars</span> (<a href="#sec-vars">details</a>)
 							| 
 									<a href="#sec-method-summary">Methods</a> (<a href="#sec-methods">details</a>)
@@ -62,9 +89,17 @@
 								</div>
 		<div class="info-box-body">
 			<div class="var-summary">
-																																																<div class="var-title">
+																																																																<div class="var-title">
 					<span class="var-type">mixed</span>
 					<a href="#$_autoDecode" title="details" class="var-name">$_autoDecode</a>
+				</div>
+																<div class="var-title">
+					<span class="var-type">mixed</span>
+					<a href="#$_multiCall" title="details" class="var-name">$_multiCall</a>
+				</div>
+																<div class="var-title">
+					<span class="var-type">mixed</span>
+					<a href="#$_multiCallArgs" title="details" class="var-name">$_multiCallArgs</a>
 				</div>
 																<div class="var-title">
 					<span class="var-type">mixed</span>
@@ -87,6 +122,7 @@
 		<div class="info-box-title">Method Summary</span></div>
 		<div class="nav-bar">
 			<a href="#sec-description">Description</a> |
+							<a href="#sec-descendents">Descendents</a> |
 																		<a href="#sec-var-summary">Vars</a> (<a href="#sec-vars">details</a>)
 				 
 				|
@@ -119,6 +155,7 @@
 		<div class="info-box-title">Variables</div>
 		<div class="nav-bar">
 			<a href="#sec-description">Description</a> |
+							<a href="#sec-descendents">Descendents</a> |
 										<a href="#sec-var-summary">Vars</a> (<span class="disabled">details</span>)
 						
 			
@@ -128,13 +165,13 @@
 					</div>
 		<div class="info-box-body">
 			<a name="var$_autoDecode" id="$_autoDecode"><!-- --></A>
-<div class="evenrow">
+<div class="oddrow">
 
 	<div class="var-header">
 		<span class="var-title">
 			<span class="var-type">mixed</span>
 			<span class="var-name">$_autoDecode</span>
-			 = <span class="var-default"> true</span>			(line <span class="line-number">107</span>)
+			 = <span class="var-default"> true</span>			(line <span class="line-number">111</span>)
 		</span>
 	</div>
 
@@ -149,14 +186,58 @@
 		
 
 </div>
-<a name="var$_request" id="$_request"><!-- --></A>
+<a name="var$_multiCall" id="$_multiCall"><!-- --></A>
+<div class="evenrow">
+
+	<div class="var-header">
+		<span class="var-title">
+			<span class="var-type">mixed</span>
+			<span class="var-name">$_multiCall</span>
+			 = <span class="var-default"> false</span>			(line <span class="line-number">85</span>)
+		</span>
+	</div>
+
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">A flag to indicate if we are in a multiCall block. Start this with $client-&gt;system-&gt;multiCall()-&gt;start()</p>
+	<ul class="tags">
+				<li><span class="field">access:</span> protected</li>
+			</ul>
+	
+	
+		
+		
+
+</div>
+<a name="var$_multiCallArgs" id="$_multiCallArgs"><!-- --></A>
 <div class="oddrow">
 
 	<div class="var-header">
 		<span class="var-title">
 			<span class="var-type">mixed</span>
+			<span class="var-name">$_multiCallArgs</span>
+			 = <span class="var-default">array()</span>			(line <span class="line-number">90</span>)
+		</span>
+	</div>
+
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">A list of deferred encoded calls.</p>
+	<ul class="tags">
+				<li><span class="field">access:</span> protected</li>
+			</ul>
+	
+	
+		
+		
+
+</div>
+<a name="var$_request" id="$_request"><!-- --></A>
+<div class="evenrow">
+
+	<div class="var-header">
+		<span class="var-title">
+			<span class="var-type">mixed</span>
 			<span class="var-name">$_request</span>
-			 = <span class="var-default"> ''</span>			(line <span class="line-number">96</span>)
+			 = <span class="var-default"> ''</span>			(line <span class="line-number">100</span>)
 		</span>
 	</div>
 
@@ -172,13 +253,13 @@
 
 </div>
 <a name="var$_response" id="$_response"><!-- --></A>
-<div class="evenrow">
+<div class="oddrow">
 
 	<div class="var-header">
 		<span class="var-title">
 			<span class="var-type">mixed</span>
 			<span class="var-name">$_response</span>
-			 = <span class="var-default"> ''</span>			(line <span class="line-number">91</span>)
+			 = <span class="var-default"> ''</span>			(line <span class="line-number">95</span>)
 		</span>
 	</div>
 
@@ -194,13 +275,13 @@
 
 </div>
 <a name="var$_throwExceptions" id="$_throwExceptions"><!-- --></A>
-<div class="oddrow">
+<div class="evenrow">
 
 	<div class="var-header">
 		<span class="var-title">
 			<span class="var-type">mixed</span>
 			<span class="var-name">$_throwExceptions</span>
-			 = <span class="var-default"> false</span>			(line <span class="line-number">101</span>)
+			 = <span class="var-default"> false</span>			(line <span class="line-number">105</span>)
 		</span>
 	</div>
 
@@ -224,6 +305,7 @@
 		<div class="info-box-title">Methods</div>
 		<div class="nav-bar">
 			<a href="#sec-description">Description</a> |
+							<a href="#sec-descendents">Descendents</a> |
 															<a href="#sec-var-summary">Vars</a> (<a href="#sec-vars">details</a>)
 																	<a href="#sec-method-summary">Methods</a> (<span class="disabled">details</span>)
 						
@@ -232,10 +314,10 @@
 			<A NAME='method_detail'></A>
 
 <a name="method__construct" id="__construct"><!-- --></a>
-<div class="evenrow">
+<div class="oddrow">
 	
 	<div class="method-header">
-		<span class="method-title">Constructor __construct</span> (line <span class="line-number">116</span>)
+		<span class="method-title">Constructor __construct</span> (line <span class="line-number">120</span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -269,12 +351,19 @@
 				</ul>
 		
 			
+			<hr class="separator" />
+		<div class="notes">Redefined in descendants as:</div>
+		<ul class="redefinitions">
+					<li>
+				<a href="../Ripcord/Ripcord_Client_MultiCall.html#method__construct">Ripcord_Client_MultiCall::__construct()</a>
+							</li>
+				</ul>
 	</div>
 <a name="method__call" id="__call"><!-- --></a>
-<div class="oddrow">
+<div class="evenrow">
 	
 	<div class="method-header">
-		<span class="method-title">__call</span> (line <span class="line-number">149</span>)
+		<span class="method-title">__call</span> (line <span class="line-number">153</span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -305,10 +394,10 @@
 			
 	</div>
 <a name="method__get" id="__get"><!-- --></a>
-<div class="evenrow">
+<div class="oddrow">
 	
 	<div class="method-header">
-		<span class="method-title">__get</span> (line <span class="line-number">250</span>)
+		<span class="method-title">__get</span> (line <span class="line-number">264</span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -340,7 +429,7 @@
 
 
 	<p class="notes" id="credit">
-		Documentation generated on Thu, 12 Aug 2010 13:16:20 +0200 by <a href="http://www.phpdoc.org" target="_blank">phpDocumentor 1.4.3</a>
+		Documentation generated on Fri, 29 Oct 2010 12:55:01 +0200 by <a href="http://www.phpdoc.org" target="_blank">phpDocumentor 1.4.3</a>
 	</p>
 	</div></body>
 </html>

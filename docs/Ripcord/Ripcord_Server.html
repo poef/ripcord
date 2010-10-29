@@ -29,12 +29,17 @@
 <li><div class="src-line">&nbsp;<span class="src-php">?&gt;</span></div></li>
 </ol></div></p><p>An example with namespaces in the method names and a static class as rpc service.  <div class="src-code"><ol><li><div class="src-line">&nbsp;<span class="src-php">&lt;?php</span></div></li>
 <li><div class="src-line">&nbsp;&nbsp;&nbsp;<span class="src-var">$myObject&nbsp;</span>=&nbsp;<span class="src-key">new&nbsp;</span><span class="src-id">MyClass</span><span class="src-sym">(</span><span class="src-sym">)</span><span class="src-sym">;</span></div></li>
-<li><div class="src-line">&nbsp;&nbsp;&nbsp;<span class="src-var">$server&nbsp;</span>=&nbsp;<span class="src-id"><a href="../Ripcord/ripcord.html">ripcord</a></span><span class="src-sym">::</span><a href="../Ripcord/ripcord.html#methodserver">server</a><span class="src-sym">(&nbsp;&nbsp;</span><span class="src-key">array</span><span class="src-sym">(&nbsp;</span><span class="src-str">'namespace1'&nbsp;</span>=&gt;&nbsp;<span class="src-var">$myObject</span><span class="src-sym">,&nbsp;</span><span class="src-str">'namespace2'&nbsp;</span>=&gt;&nbsp;<span class="src-str">'myOtherClass'&nbsp;&nbsp;</span><span class="src-sym">)&nbsp;&nbsp;)</span><span class="src-sym">;</span></div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;<span class="src-var">$server&nbsp;</span>=&nbsp;<span class="src-id"><a href="../Ripcord/ripcord.html">ripcord</a></span><span class="src-sym">::</span><a href="../Ripcord/ripcord.html#methodserver">server</a><span class="src-sym">(</span></div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="src-key">array</span><span class="src-sym">(</span></div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="src-str">'namespace1'&nbsp;</span>=&gt;&nbsp;<span class="src-var">$myObject</span><span class="src-sym">,</span></div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="src-str">'namespace2'&nbsp;</span>=&gt;&nbsp;<span class="src-str">'myOtherClass'</span></div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="src-sym">)</span></div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;<span class="src-sym">)</span><span class="src-sym">;</span></div></li>
 <li><div class="src-line">&nbsp;&nbsp;&nbsp;<span class="src-var">$server</span><span class="src-sym">-&gt;</span><a href="../Ripcord/Ripcord_Server.html#methodrun">run</a><span class="src-sym">(</span><span class="src-sym">)</span><span class="src-sym">;</span></div></li>
 <li><div class="src-line">&nbsp;<span class="src-php">?&gt;</span></div></li>
-</ol></div></p></p>
+</ol></div></p><p>You don't need to instantiate a class to use it with Ripcord, in the above example 'myOtherClass' is the  name of a PHP class to use. In addition you may also specify functions or methods directly, in any format  that matches PHP's is_callable() criteria.</p></p>
 		<p class="notes">
-			Located in <a class="field" href="_ripcord_server.php.html">/ripcord_server.php</a> (line <span class="field">40</span>)
+			Located in <a class="field" href="_ripcord_server.php.html">/ripcord_server.php</a> (line <span class="field">49</span>)
 		</p>
 		
 				
@@ -111,7 +116,7 @@
 <div class="evenrow">
 	
 	<div class="method-header">
-		<span class="method-title">Constructor __construct</span> (line <span class="line-number">88</span>)
+		<span class="method-title">Constructor __construct</span> (line <span class="line-number">97</span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -154,7 +159,7 @@
 <div class="oddrow">
 	
 	<div class="method-header">
-		<span class="method-title">addMethod</span> (line <span class="line-number">176</span>)
+		<span class="method-title">addMethod</span> (line <span class="line-number">185</span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -186,7 +191,7 @@
 <div class="evenrow">
 	
 	<div class="method-header">
-		<span class="method-title">addService</span> (line <span class="line-number">125</span>)
+		<span class="method-title">addService</span> (line <span class="line-number">134</span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -219,7 +224,7 @@
 <div class="oddrow">
 	
 	<div class="method-header">
-		<span class="method-title">call</span> (line <span class="line-number">331</span>)
+		<span class="method-title">call</span> (line <span class="line-number">340</span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -253,7 +258,7 @@
 <div class="evenrow">
 	
 	<div class="method-header">
-		<span class="method-title">handle</span> (line <span class="line-number">292</span>)
+		<span class="method-title">handle</span> (line <span class="line-number">301</span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -282,7 +287,7 @@
 <div class="oddrow">
 	
 	<div class="method-header">
-		<span class="method-title">run</span> (line <span class="line-number">188</span>)
+		<span class="method-title">run</span> (line <span class="line-number">197</span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -306,7 +311,7 @@
 <div class="evenrow">
 	
 	<div class="method-header">
-		<span class="method-title">setOutputOption</span> (line <span class="line-number">373</span>)
+		<span class="method-title">setOutputOption</span> (line <span class="line-number">382</span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -345,7 +350,7 @@
 
 
 	<p class="notes" id="credit">
-		Documentation generated on Thu, 12 Aug 2010 13:16:20 +0200 by <a href="http://www.phpdoc.org" target="_blank">phpDocumentor 1.4.3</a>
+		Documentation generated on Fri, 29 Oct 2010 12:55:02 +0200 by <a href="http://www.phpdoc.org" target="_blank">phpDocumentor 1.4.3</a>
 	</p>
 	</div></body>
 </html>
