@@ -5,7 +5,7 @@
  * @author Auke van Slooten <auke@muze.nl>
  * @copyright Copyright (C) 2010, Muze <www.muze.nl>
  * @license http://opensource.org/licenses/gpl-3.0.html GNU Public License
- * @version Ripcord 0.3 - PHP 5.0
+ * @version Ripcord 0.9 - PHP 5
  */
 
 /**
@@ -118,7 +118,8 @@ class ripcord
 	 * @param string $binary
 	 * @return object
 	 */
-	public static function base64($binary) {
+	public static function base64($binary) 
+	{
 		xmlrpc_set_type($binary, 'base64');
 		return $binary;
 	}
@@ -130,7 +131,8 @@ class ripcord
 	 * @param object $base64
 	 * @return string
 	 */
-	public static function binary($base64) {
+	public static function binary($base64) 
+	{
 		if (xmlrpc_get_type($base64)=='base64')
 		{
 			return $base64->scalar;
@@ -145,7 +147,8 @@ class ripcord
 	 * @param mixed $param
 	 * @return string
 	 */
-	public static function getType($param) {
+	public static function getType($param) 
+	{
 		return xmlrpc_get_type($param);
 	}
 
@@ -192,15 +195,19 @@ class ripcord
 	 * @param string $class The name of the class to load.
 	 * @return boolean
 	 */
-	public static function load($class) {
-		if (substr($class, 0, 8)=='Ripcord_') {
+	public static function load($class) 
+	{
+		if (substr($class, 0, 8)=='Ripcord_') 
+		{
 			$root = dirname(__FILE__).'/ripcord_';
 			$class = substr($class, 8);
 			$file = str_replace('.', '', $class);
 			$file = str_replace('_', '/', $file);
 			$file = strtolower($file);
-			while ($file && $file!='.') {
-				if ( file_exists($root.$file.'.php') ) {
+			while ($file && $file!='.') 
+			{
+				if ( file_exists($root.$file.'.php') ) 
+				{
 					require_once($root.$file.'.php');
 					return true;
 				} else {
@@ -218,11 +225,32 @@ class ripcord
 	 * @param mixed $args,... The remainder of the arguments are encoded as parameters to the call
 	 * @return object
 	 */
-	public static function encodeCall() {
+	public static function encodeCall() 
+	{
 		self::load('Ripcord_Client');
 		$params = func_get_args();
 		$method = array_shift($params);
 		return new Ripcord_Client_Call( $method, $params );
+	}
+	
+	/* 
+	 * This method binds the first parameter to the output of a Ripcord client call. If
+	 * the second argument is a Ripcord_Client_Call object, it binds the parameter to it,
+	 * if not it simply assigns the second parameter to the first parameter.
+	 * This means that doing: 
+	 * > ripcord::bind( $result, $client->someMethod() )
+	 * will always result in $result eventually containing the return value of $client->someMethod().
+	 * Whether multiCall mode has been enabled or not.
+	 */
+	public function bind(&$bound, $call) 
+	{
+		if ( is_a( $call, 'Ripcord_Client_Call' ) ) 
+		{
+			$call->bound =& $bound;
+		} else {
+			$bound = $call;
+		}
+		return null;
 	}
 	
 	/**

@@ -5,7 +5,7 @@
  * @author Auke van Slooten <auke@muze.nl>
  * @copyright Copyright (C) 2010, Muze <www.muze.nl>
  * @license http://opensource.org/licenses/gpl-3.0.html GNU Public License
- * @version Ripcord 0.3 - PHP 5.0
+ * @version Ripcord 0.9 - PHP 5
  */
  
 /**
@@ -31,11 +31,20 @@ require_once(dirname(__FILE__).'/ripcord.php');
  * <code>
  * <?php
  *   $myObject = new MyClass();
- *   $server = ripcord::server(  array( 'namespace1' => $myObject, 'namespace2' => 'myOtherClass'  )  );
+ *   $server = ripcord::server( 
+ *     array( 
+ *       'namespace1' => $myObject,
+ *       'namespace2' => 'myOtherClass'
+ *     )
+ *   );
  *   $server->run();
  * ?>
  * </code>
-  * @package Ripcord
+ * 
+ * You don't need to instantiate a class to use it with Ripcord, in the above example 'myOtherClass' is the
+ * name of a PHP class to use. In addition you may also specify functions or methods directly, in any format
+ * that matches PHP's is_callable() criteria.
+ * @package Ripcord
 */
 class Ripcord_Server 
 {
