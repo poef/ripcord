@@ -506,16 +506,14 @@ class Ripcord_Transport_CURL implements Ripcord_Transport
 	public function post( $url, $request) 
 	{
 		$curl = curl_init();
-		curl_setopt_array( $curl, array_merge(
-			array(
-				CURLOPT_RETURNTRANSFER => 1,
-				CURLOPT_URL            => $url,
-				CURLOPT_POST           => true,
-				CURLOPT_POSTFIELDS     => $request,
-				CURLOPT_HEADER         => true
-			),
-			$this->options
-		) );
+		$options = (array) $this->options + array(
+			CURLOPT_RETURNTRANSFER => 1,
+			CURLOPT_URL            => $url,
+			CURLOPT_POST           => true,
+			CURLOPT_POSTFIELDS     => $request,
+			CURLOPT_HEADER         => true
+		);
+		curl_setopt_array( $curl, $options );
 		$contents = curl_exec( $curl );
 		$headerSize = curl_getinfo( $curl, CURLINFO_HEADER_SIZE );
 		$this->responseHeaders = substr( $contents, 0, $headerSize );
@@ -526,10 +524,19 @@ class Ripcord_Transport_CURL implements Ripcord_Transport
 			$errorNumber = curl_errno( $curl );
 			$errorMessage = curl_error( $curl );
 			curl_close( $curl );
-			throw new Ripcord_TransportException( 'Could not access ' . $url, 
-				ripcord::cannotAccessURL, 
-				new Exception( $errorMessage, $errorNumber ) 
-			);
+			$version = explode('.', phpversion() );
+			if ( ( (0 + $version[0]) > 5) || ( 0 + $version[1]) >= 3 ) { // previousException supported in php >= 5.3
+				$exception = new Ripcord_TransportException( 'Could not access ' . $url, 
+					ripcord::cannotAccessURL
+					, new Exception( $errorMessage, $errorNumber ) 
+				);
+			} else {
+				$exception = new Ripcord_TransportException( 'Could not access ' . $url 
+					. ' ( original CURL error: ' . $errorMessage . ' ) ',
+					ripcord::cannotAccessURL
+				);
+			}
+			throw $exception;
 		}
 		curl_close($curl);
 		return $contents;
