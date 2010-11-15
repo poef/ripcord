@@ -157,12 +157,12 @@ class Ripcord_Client
 			$name = $this->_namespace . '.' . $name;
 		}
 
-		if ( $name === 'system.multiCall' ) 
+		if ( $name === 'system.multiCall' || $name == 'system.multicall' ) 
 		{
 			if ( !$args || ( is_array($args) && count($args)==0 ) ) 
 			{
 				// multiCall is called without arguments, so return the fetch interface object
-				return new Ripcord_Client_MultiCall( $this->_rootClient );
+				return new Ripcord_Client_MultiCall( $this->_rootClient, $name );
 			} else if ( is_array( $args ) && (count( $args ) == 1) && 
 				is_array( $args[0] )  && !isset( $args[0]['methodName'] ) ) 
 			{ 
@@ -302,9 +302,10 @@ class Ripcord_Client_MultiCall extends Ripcord_Client
 	/*
 	 * This method creates a new multiCall fetch api object.
 	 */
-	public function __construct( $client ) 
+	public function __construct( $client, $methodName = 'system.multiCall' ) 
 	{
 		$this->client = $client;
+		$this->methodName = $methodName;
 	}
 
 	/*
@@ -322,7 +323,11 @@ class Ripcord_Client_MultiCall extends Ripcord_Client
 	 */
 	public function execute() 
 	{
-		return $this->client->system->multiCall( $this->client->_multiCallArgs );
+		if ($this->methodName=='system.multiCall') {
+			return $this->client->system->multiCall( $this->client->_multiCallArgs );
+		} else { // system.multicall
+			return $this->client->system->multicall( $this->client->_multiCallArgs );
+		}
 	}
 	
 }

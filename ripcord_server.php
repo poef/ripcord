@@ -310,7 +310,7 @@ class Ripcord_Server
 			$method = $result['methodName'];
 			$params = $result['params'];
 		}
-		if ( $method == 'system.multiCall' ) {
+		if ( $method == 'system.multiCall' || $method == 'system.multicall' ) {
 			// php's xml-rpc server (xmlrpc-epi) crashes on multicall, so handle it ourselves...
 			$result = $this->multiCall( $params );
 		} else {
