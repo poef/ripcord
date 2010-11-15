@@ -72,6 +72,20 @@ You can also use this method to add custom headers or cookies to the rpc request
     $transport = new Ripcord_Transport_Stream( array(
         'header' => "Cookie: foo=bar\r\n"
     ) );
+    $client = ripcord::xmlrpcClient( $url, null, $transport );
+
+?>
+}}}
+
+One usefull thing is to change the default timeout to something less than the default. Usually you will not want your script to hang for 30 seconds if it cannot connect to the XML-RPC server (should work as of PHP 5.2.1):
+
+{{{
+<?php
+
+    $transport = new Ripcord_Transport_Stream( array(
+        'timeout' => 2 // in seconds.
+    ) );
+    $client = ripcord::xmlrpcClient( $url, null, $transport );
 
 ?>
 }}}
@@ -105,6 +119,18 @@ But checking each and every one of your RPC calls can be a pain, so with a simpl
         $errorMessage = $e->getMessage();
         $errorCode = $e->getCode();
     }
+
+?>
+}}}
+
+If you cannot get a correct response from an XML-RPC server, you can check the exact XML-RPC request and response like this:
+
+{{{
+<?php
+
+    $result = $client->someMethod();
+    echo '<pre>' . $client->_request . '</pre>';
+    echo '<pre>' . $client->_response . '</pre>';
 
 ?>
 }}}
