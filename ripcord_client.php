@@ -80,6 +80,12 @@ class Ripcord_Client
 	private $_rootClient = null;
 	
 	/**
+	 * A flag to indicate whether or not to preemptively clone objects passed as arguments to methods, see
+	 * php bug #50282. Only correctly set in the rootClient.
+	 */
+	private $_cloneObjects = false;
+	
+	/**
 	 * A flag to indicate if we are in a multiCall block. Start this with $client->system->multiCall()->start()
 	 */
 	protected $_multiCall = false;
@@ -121,6 +127,17 @@ class Ripcord_Client
 	{
 		if ( !isset($rootClient) ) {
 			$rootClient = $this;
+			if ( !function_exists( 'xmlrpc_encode_request' ) )
+			{
+				throw new Ripcord_ConfigurationException('PHP XMLRPC library is not installed', 
+					ripcord::xmlrpcNotInstalled);
+			}
+			$version = explode('.', phpversion() );
+			if ( (0 + $version[0]) == 5) {
+				if ( ( 0 + $version[1]) < 2 ) { 
+					$this->_cloneObjects = true; // workaround for bug #50282
+				}
+			}
 		}
 		$this->_rootClient = $rootClient;
 		$this->_url = $url;
@@ -135,11 +152,6 @@ class Ripcord_Client
 		}
 		if ( isset($transport) ) {
 			$this->_transport = $transport;
-		}
-		if ( !function_exists( 'xmlrpc_encode_request' ) )
-		{
-			throw new Ripcord_ConfigurationException('PHP XMLRPC library is not installed', 
-				ripcord::xmlrpcNotInstalled);
 		}
 	}
 
@@ -204,6 +216,13 @@ class Ripcord_Client
 			$call = new Ripcord_Client_Call( $name, $args );
 			$this->_rootClient->_multiCallArgs[] = $call;
 			return $call;
+		}
+		if ($this->_rootClient->_cloneObjects) { //workaround for php bug 50282
+			foreach( $args as $key => $arg) {
+				if (is_object($arg)) {
+					$args[$key] = clone $arg;
+				}
+			}
 		}
 		$request  = xmlrpc_encode_request( $name, $args, $this->_outputOptions );
 		$response = $this->_transport->post( $this->_url, $request );
@@ -485,6 +504,11 @@ class Ripcord_Transport_CURL implements Ripcord_Transport
 	private $options = array();
 	
 	/**
+	 * A flag that indicates whether or not we can safely pass the previous exception to a new exception.
+	 */
+	private $skipPreviousException = false;
+	
+	/**
 	 * Contains the headers sent by the server.
 	 */
 	public $responseHeaders = null;
@@ -499,6 +523,10 @@ class Ripcord_Transport_CURL implements Ripcord_Transport
 		{
 			$this->options = $curlOptions;
 		}
+		$version = explode('.', phpversion() );
+		if ( ( (0 + $version[0]) == 5) && ( 0 + $version[1]) < 3 ) { // previousException supported in php >= 5.3
+			$this->_skipPreviousException = true;
+		}			
 	}
 
 	/**
@@ -530,9 +558,9 @@ class Ripcord_Transport_CURL implements Ripcord_Transport
 			$errorMessage = curl_error( $curl );
 			curl_close( $curl );
 			$version = explode('.', phpversion() );
-			if ( ( (0 + $version[0]) > 5) || ( 0 + $version[1]) >= 3 ) { // previousException supported in php >= 5.3
-				$exception = new Ripcord_TransportException( 'Could not access ' . $url, 
-					ripcord::cannotAccessURL
+			if (!$this->_skipPreviousException) { // previousException supported in php >= 5.3
+				$exception = new Ripcord_TransportException( 'Could not access ' . $url
+					, ripcord::cannotAccessURL
 					, new Exception( $errorMessage, $errorNumber ) 
 				);
 			} else {
