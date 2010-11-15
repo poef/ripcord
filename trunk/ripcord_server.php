@@ -265,7 +265,7 @@ class Ripcord_Server
 	
 	/**
 	 * This method implements the system.multiCall method without dumping core. The built-in method from the
-	 * xmlrpc library dumps core when you have registered any php methods, at least on php 5.3.1 and php 5.2.8
+	 * xmlrpc library dumps core when you have registered any php methods, fixed in php 5.3.2
 	 */
 	private function multiCall( $params = null ) {
 		if ( $params && is_array( $params ) ) 
@@ -311,7 +311,7 @@ class Ripcord_Server
 			$params = $result['params'];
 		}
 		if ( $method == 'system.multiCall' || $method == 'system.multicall' ) {
-			// php's xml-rpc server (xmlrpc-epi) crashes on multicall, so handle it ourselves...
+			// php's xml-rpc server (xmlrpc-epi) crashes on multicall, so handle it ourselves... fixed in php 5.3.2
 			$result = $this->multiCall( $params );
 		} else {
 			try {
