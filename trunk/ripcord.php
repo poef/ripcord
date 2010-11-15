@@ -22,7 +22,11 @@ class ripcord
 	 */
 	public static function isFault($fault) 
 	{
-		return ( !isset($fault) || xmlrpc_is_fault($fault) );
+		if ( isset($fault) && is_array($fault) ) {
+			return xmlrpc_is_fault($fault);
+		} else {
+			return false;
+		}
 	}
 
 	/**
