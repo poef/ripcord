@@ -3,13 +3,13 @@
   <html xmlns="http://www.w3.org/1999/xhtml">
 		<head>
 			<!-- template designed by Marco Von Ballmoos -->
-			<title>Docs For Class Ripcord_Transport</title>
+			<title>Docs For Class Ripcord_Documentor_Parser_phpdoc</title>
 			<link rel="stylesheet" href="../media/stylesheet.css" />
 			<meta http-equiv='Content-Type' content='text/html; charset=iso-8859-1'/>
 		</head>
 		<body>
 			<div class="page-body">			
-<h2 class="class-name">Interface Ripcord_Transport</h2>
+<h2 class="class-name">Class Ripcord_Documentor_Parser_phpdoc</h2>
 
 <a name="sec-description"></a>
 <div class="info-box">
@@ -20,11 +20,15 @@
 						
 					</div>
 	<div class="info-box-body">
+                <p class="implements">
+            Implements interfaces:
+            <ul>
+                <li><a href="../Ripcord/Ripcord_Documentor_Parser.html">Ripcord_Documentor_Parser</a></li>            </ul>
+        </p>
         		<!-- ========== Info from phpDoc block ========= -->
-<p class="short-description">This interface describes the minimum interface needed for the transport object used by the</p>
-<p class="description"><p>Ripcord_Client</p></p>
+<p class="short-description">This class implements the Ripcord_Documentor_Parser interface, parsing the docComment  as a phpdoc style docComment.</p>
 		<p class="notes">
-			Located in <a class="field" href="_ripcord_client.php.html">/ripcord_client.php</a> (line <span class="field">425</span>)
+			Located in <a class="field" href="_ripcord_documentor.php.html">/ripcord_documentor.php</a> (line <span class="field">504</span>)
 		</p>
 		
 				
@@ -47,9 +51,9 @@
 			<div class="method-summary">
 												
 												<div class="method-definition">
-											<span class="method-result">string</span>
-										<a href="#post" title="details" class="method-name">post</a>
-											(<span class="var-type">string</span>&nbsp;<span class="var-name">$url</span>, <span class="var-type">string</span>&nbsp;<span class="var-name">$request</span>)
+											<span class="method-result">array</span>
+										<a href="#parse" title="details" class="method-name">parse</a>
+											(<span class="var-type">string</span>&nbsp;<span class="var-name">$commentBlock</span>)
 									</div>
 								</div>
 		</div>
@@ -67,37 +71,40 @@
 		<div class="info-box-body">
 			<A NAME='method_detail'></A>
 
-<a name="methodpost" id="post"><!-- --></a>
-<div class="oddrow">
+<a name="methodparse" id="parse"><!-- --></a>
+<div class="evenrow">
 	
 	<div class="method-header">
-		<span class="method-title">post</span> (line <span class="line-number">433</span>)
+		<span class="method-title">parse</span> (line <span class="line-number">512</span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
-<p class="short-description">This method must post the request to the given url and return the results.</p>
+<p class="short-description">This method parses a given docComment block and returns an array with information.</p>
 	<ul class="tags">
-				<li><span class="field">return:</span> The server response</li>
+				<li><span class="field">return:</span> The parsed information.</li>
 				<li><span class="field">access:</span> public</li>
 			</ul>
 	
 	<div class="method-signature">
-		<span class="method-result">string</span>
+		<span class="method-result">array</span>
 		<span class="method-name">
-			post
+			parse
 		</span>
-					(<span class="var-type">string</span>&nbsp;<span class="var-name">$url</span>, <span class="var-type">string</span>&nbsp;<span class="var-name">$request</span>)
+					(<span class="var-type">string</span>&nbsp;<span class="var-name">$commentBlock</span>)
 			</div>
 	
 			<ul class="parameters">
 					<li>
 				<span class="var-type">string</span>
-				<span class="var-name">$url</span><span class="var-description">: The url to post to.</span>			</li>
-					<li>
-				<span class="var-type">string</span>
-				<span class="var-name">$request</span><span class="var-description">: The request to post.</span>			</li>
+				<span class="var-name">$commentBlock</span><span class="var-description">: The docComment block.</span>			</li>
 				</ul>
 		
+				<hr class="separator" />
+		<div class="notes">Implementation of:</div>
+			<dl>
+			<dt><a href="../Ripcord/Ripcord_Documentor_Parser.html#methodparse">Ripcord_Documentor_Parser::parse()</a></dt>
+						<dd>This method parses a given docComment block and returns an array with information.</dd>
+					</dl>
 			
 	</div>
 						
@@ -106,7 +113,7 @@
 
 
 	<p class="notes" id="credit">
-		Documentation generated on Tue, 16 Nov 2010 16:20:18 +0100 by <a href="http://www.phpdoc.org" target="_blank">phpDocumentor 1.4.3</a>
+		Documentation generated on Tue, 16 Nov 2010 16:20:19 +0100 by <a href="http://www.phpdoc.org" target="_blank">phpDocumentor 1.4.3</a>
 	</p>
 	</div></body>
 </html>
