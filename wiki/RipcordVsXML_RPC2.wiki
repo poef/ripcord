@@ -18,6 +18,11 @@ Introspection refers to [http://xmlrpc-c.sourceforge.net/introspection.html XML-
 
 For most purposes you are probably just as well served with the PEAR XML_RPC2 class. However Ripcord has a few differences which make it more flexible and simple in use.
 
+===Auto generated service documentation===
+
+Ripcord automatically generates a webpage with documentation on which methods the
+server provides and how to call them. This documentation is generated using PHP's introspection capabilities and will use information from phpDocumentor styled docComments as well.
+
 ===Dependency Injection===
 
 Ripcord allows you to inject the objects it depends on. The server has an autodocument feature, just like XML_RPC2, but you can substitute your own documentor object for the default one. This allows you to generate your own auto documentation in whatever form you wish.
