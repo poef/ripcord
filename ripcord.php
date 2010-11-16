@@ -53,7 +53,6 @@ class ripcord
 		self::load('Ripcord_Server');
 		if ( !isset($documentor) )
 		{
-			self::load('Ripcord_Documentor');
 			$doc = array('name', 'css', 'wsdl', 'wsdl2');
 			$docOptions = array();
 			foreach ( $doc as $key ) 
@@ -65,8 +64,7 @@ class ripcord
 				}
 			}
 			$docOptions['version'] = $options['version'];
-			ripcord::load('Ripcord_Documentor'); // no autoload needed this way
-			$documentor = new Ripcord_Documentor( $docOptions );
+			$documentor = self::documentor( $docOptions );
 		}
 		return new Ripcord_Server($services, $options, $documentor);
 	}
@@ -86,6 +84,22 @@ class ripcord
 			$transport = new Ripcord_Transport_Stream();
 		}
 		return new Ripcord_Client($url, $options, $transport);
+	}
+	
+	/**
+	 * This method returns a new Ripcord documentor object.
+	 * @param array $options Optional. An array of options to set for the Ripcord documentor.
+	 * @param object docCommentParser Optional. An object that parses a docComment block. Must
+	 * implement the Ripcord_Documentor_CommentParser interface.
+	 * @see Ripcord_Client
+	 */
+	public static function documentor( $options = null, $docCommentParser = null ) 
+	{
+		self::load('Ripcord_Documentor');
+		if (!$docCommentParser) {
+			$docCommentParser = new Ripcord_Documentor_Parser_phpdoc();
+		}
+		return new Ripcord_Documentor( $options, $docCommentParser );
 	}
 	
 	/**
