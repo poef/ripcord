@@ -230,7 +230,7 @@
 					</dt>
 		<dd class="index-item-body">
 			<div class="index-item-details"><a href="Ripcord/Ripcord_Documentor.html#var$css">Ripcord_Documentor::$css</a> in ripcord_documentor.php</div>
-							<div class="index-item-description">A url to an optional css file.</div>
+							<div class="index-item-description">A url to an optional css file or a css string for an inline stylesheet.</div>
 					</dd>
 			<dt class="field">
 						<span class="method-title">call</span>
@@ -275,6 +275,13 @@
 			<div class="index-item-details"><a href="Ripcord/ripcord.html#methoddatetime">ripcord::datetime()</a> in ripcord.php</div>
 							<div class="index-item-description">This method returns an XML-RPC datetime object from a given unix timestamp.</div>
 					</dd>
+			<dt class="field">
+						<span class="method-title">documentor</span>
+					</dt>
+		<dd class="index-item-body">
+			<div class="index-item-details"><a href="Ripcord/ripcord.html#methoddocumentor">ripcord::documentor()</a> in ripcord.php</div>
+							<div class="index-item-description">This method returns a new Ripcord documentor object.</div>
+					</dd>
 		</dl>
 	<a name="e"></a>
 	<div class="index-letter-section">
@@ -312,6 +319,13 @@
 	</div>
 	<dl>
 			<dt class="field">
+						<span class="var-title">$footer</span>
+					</dt>
+		<dd class="index-item-body">
+			<div class="index-item-details"><a href="Ripcord/Ripcord_Documentor.html#var$footer">Ripcord_Documentor::$footer</a> in ripcord_documentor.php</div>
+							<div class="index-item-description">Optional footer text for the online documentation.</div>
+					</dd>
+			<dt class="field">
 						<span class="method-title">fault</span>
 					</dt>
 		<dd class="index-item-body">
@@ -337,7 +351,7 @@
 					</dt>
 		<dd class="index-item-body">
 			<div class="index-item-details"><a href="Ripcord/Ripcord_Documentor.html#methodgetIntrospectionXML">Ripcord_Documentor::getIntrospectionXML()</a> in ripcord_documentor.php</div>
-							<div class="index-item-description">This method returns an XML document in the introspection format expected by xmlrpc_server_register_introspection_callback  It uses the php Reflection classes to gather information from the registered methods. Descriptions are added from phpdoc docblocks if found.</div>
+							<div class="index-item-description">This method returns an XML document in the introspection format expected by  xmlrpc_server_register_introspection_callback. It uses the php Reflection  classes to gather information from the registered methods.</div>
 					</dd>
 			<dt class="field">
 						<span class="method-title">getType</span>
@@ -355,6 +369,13 @@
 	</div>
 	<dl>
 			<dt class="field">
+						<span class="var-title">$header</span>
+					</dt>
+		<dd class="index-item-body">
+			<div class="index-item-details"><a href="Ripcord/Ripcord_Documentor.html#var$header">Ripcord_Documentor::$header</a> in ripcord_documentor.php</div>
+							<div class="index-item-description">Optional header text for the online documentation.</div>
+					</dd>
+			<dt class="field">
 						<span class="method-title">handle</span>
 					</dt>
 		<dd class="index-item-body">
@@ -365,14 +386,14 @@
 						<span class="method-title">handle</span>
 					</dt>
 		<dd class="index-item-body">
-			<div class="index-item-details"><a href="Ripcord/Ripcord_Documentor_Interface.html#methodhandle">Ripcord_Documentor_Interface::handle()</a> in ripcord_documentor.php</div>
+			<div class="index-item-details"><a href="Ripcord/Ripcord_Documentor.html#methodhandle">Ripcord_Documentor::handle()</a> in ripcord_documentor.php</div>
+							<div class="index-item-description">This method handles any request which isn't a valid rpc request.</div>
 					</dd>
 			<dt class="field">
 						<span class="method-title">handle</span>
 					</dt>
 		<dd class="index-item-body">
-			<div class="index-item-details"><a href="Ripcord/Ripcord_Documentor.html#methodhandle">Ripcord_Documentor::handle()</a> in ripcord_documentor.php</div>
-							<div class="index-item-description">This method handles any request which isn't a valid rpc request.</div>
+			<div class="index-item-details"><a href="Ripcord/Ripcord_Documentor_Interface.html#methodhandle">Ripcord_Documentor_Interface::handle()</a> in ripcord_documentor.php</div>
 					</dd>
 		</dl>
 	<a name="i"></a>
@@ -485,11 +506,25 @@
 							<div class="index-item-description">The arguments to pass on to the method.</div>
 					</dd>
 			<dt class="field">
+						<span class="method-title">parse</span>
+					</dt>
+		<dd class="index-item-body">
+			<div class="index-item-details"><a href="Ripcord/Ripcord_Documentor_Parser_phpdoc.html#methodparse">Ripcord_Documentor_Parser_phpdoc::parse()</a> in ripcord_documentor.php</div>
+							<div class="index-item-description">This method parses a given docComment block and returns an array with information.</div>
+					</dd>
+			<dt class="field">
+						<span class="method-title">parse</span>
+					</dt>
+		<dd class="index-item-body">
+			<div class="index-item-details"><a href="Ripcord/Ripcord_Documentor_Parser.html#methodparse">Ripcord_Documentor_Parser::parse()</a> in ripcord_documentor.php</div>
+							<div class="index-item-description">This method parses a given docComment block and returns an array with information.</div>
+					</dd>
+			<dt class="field">
 						<span class="method-title">post</span>
 					</dt>
 		<dd class="index-item-body">
-			<div class="index-item-details"><a href="Ripcord/Ripcord_Transport_Stream.html#methodpost">Ripcord_Transport_Stream::post()</a> in ripcord_client.php</div>
-							<div class="index-item-description">This method posts the request to the given url.</div>
+			<div class="index-item-details"><a href="Ripcord/Ripcord_Transport_CURL.html#methodpost">Ripcord_Transport_CURL::post()</a> in ripcord_client.php</div>
+							<div class="index-item-description">This method posts the request to the given url</div>
 					</dd>
 			<dt class="field">
 						<span class="method-title">post</span>
@@ -502,8 +537,8 @@
 						<span class="method-title">post</span>
 					</dt>
 		<dd class="index-item-body">
-			<div class="index-item-details"><a href="Ripcord/Ripcord_Transport_CURL.html#methodpost">Ripcord_Transport_CURL::post()</a> in ripcord_client.php</div>
-							<div class="index-item-description">This method posts the request to the given url</div>
+			<div class="index-item-details"><a href="Ripcord/Ripcord_Transport_Stream.html#methodpost">Ripcord_Transport_Stream::post()</a> in ripcord_client.php</div>
+							<div class="index-item-description">This method posts the request to the given url.</div>
 					</dd>
 		</dl>
 	<a name="r"></a>
@@ -607,6 +642,20 @@
 		<dd class="index-item-body">
 			<div class="index-item-details"><a href="Ripcord/Ripcord_Documentor_Interface.html">Ripcord_Documentor_Interface</a> in ripcord_documentor.php</div>
 							<div class="index-item-description">This interface defines the minimum methods any documentor needs to implement.</div>
+					</dd>
+			<dt class="field">
+						Ripcord_Documentor_Parser
+					</dt>
+		<dd class="index-item-body">
+			<div class="index-item-details"><a href="Ripcord/Ripcord_Documentor_Parser.html">Ripcord_Documentor_Parser</a> in ripcord_documentor.php</div>
+							<div class="index-item-description">This interface describes the minimum interface needed for a comment parser object used by the</div>
+					</dd>
+			<dt class="field">
+						Ripcord_Documentor_Parser_phpdoc
+					</dt>
+		<dd class="index-item-body">
+			<div class="index-item-details"><a href="Ripcord/Ripcord_Documentor_Parser_phpdoc.html">Ripcord_Documentor_Parser_phpdoc</a> in ripcord_documentor.php</div>
+							<div class="index-item-description">This class implements the Ripcord_Documentor_Parser interface, parsing the docComment  as a phpdoc style docComment.</div>
 					</dd>
 			<dt class="field">
 						Ripcord_Exception

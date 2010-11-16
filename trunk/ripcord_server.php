@@ -210,6 +210,7 @@ class Ripcord_Server
 			}
 			else if ( $this->documentor )
 			{
+				header('Content-type: text/html; charset=' . $this->outputOptions['encoding']);
 				$this->documentor->handle( $this, $this->methods );
 			}
 			else

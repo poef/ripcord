@@ -219,7 +219,7 @@ class Ripcord_Documentor implements Ripcord_Documentor_Interface
 	public function handle( $rpcServer ) 
 	{
 		$methods = $rpcServer->call('system.listMethods');
-		echo '<!doctype html>';
+		echo '<!DOCTYPE html>';
 		echo '<html><head><title>' . $this->name . '</title>';
 		if ( isset($this->css) ) 
 		{
@@ -356,7 +356,7 @@ class Ripcord_Documentor implements Ripcord_Documentor_Interface
 				echo '<div class="notes"><h3>Notes</h3><ol>';
 				foreach ( $method['notes'] as $note ) 
 				{
-					echo '<li><span>' . $note. '<span></li>';
+					echo '<li><span>' . $note. '</span></li>';
 				}
 				echo '</ol></div>';
 			}
