@@ -21,7 +21,7 @@ For most purposes you are probably just as well served with the PEAR XML_RPC2 cl
 ===Auto generated service documentation===
 
 Ripcord automatically generates a webpage with documentation on which methods the
-server provides and how to call them. This documentation is generated using PHP's introspection capabilities and will use information from phpDocumentor styled docComments as well.
+server provides and how to call them. This documentation is generated using PHP's introspection capabilities and will use information from phpDocumentor styled docComments as well. Ripcord allows you to simply override this with your own documentor class or just change the css, title, header and footer text.
 
 ===Dependency Injection===
 
