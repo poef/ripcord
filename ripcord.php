@@ -176,10 +176,10 @@ class ripcord
 	 * @param array $options Optional.
 	 * @see Ripcord_Client
 	 */
-	public static function soapClient($url, $options = null) 
+	public static function soapClient($url, $options = null, $transport = null) 
 	{
 		$options['version'] = 'soap 1.1';
-		return self::client($url, $options);
+		return self::client($url, $options, $transport);
 	}
 	
 	/**
@@ -189,10 +189,10 @@ class ripcord
 	 * @return object
 	 * @see Ripcord_Client
 	 */
-	public static function xmlrpcClient($url, $options = null) 
+	public static function xmlrpcClient($url, $options = null, $transport = null) 
 	{
 		$options['version'] = 'xmlrpc';
-		return self::client($url, $options);
+		return self::client($url, $options, $transport);
 	}
 	
 	/**
@@ -202,10 +202,10 @@ class ripcord
 	 * @return object
 	 * @see Ripcord_Client
 	 */
-	public static function simpleClient($url, $options = null) 
+	public static function simpleClient($url, $options = null, $transport = null) 
 	{
 		$options['version'] = 'simple';
-		return self::client($url, $options);
+		return self::client($url, $options, $transport);
 	}
 
 	/**
