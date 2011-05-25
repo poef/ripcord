@@ -14,7 +14,6 @@
  */
 interface Ripcord_Documentor_Interface 
 {
-	public function __construct( $options = null );
 	public function setMethodData( $methods );
 	public function handle( $rpcServer );
 	public function getIntrospectionXML();
