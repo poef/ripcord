@@ -46,6 +46,15 @@ require_once(dirname(__FILE__).'/ripcord.php');
  * that matches PHP's is_callable() criteria.
  * @package Ripcord
 */
+
+/*
+	TODO:
+	- create seperate interface for encoding / decoding requests
+	- create xmlrpc-epi class using xmlrpc_encode/decode for xml-rpc, simple-rpc and for now soap
+	- add json-rpc class (http://json-rpc.org/wiki/specification)
+	- pass list of protocol parsers/generators in the constructor of the server
+	- protocol must know how to handle the system.* methods
+*/
 class Ripcord_Server 
 {
 	/**
@@ -206,6 +215,7 @@ class Ripcord_Server
 				&& isset($this->wsdl[$query]) && $this->wsdl[$query] )
 			{
 				header('Content-type: text/xml');
+				header('Access-Control-Allow-Origin: *');
 				echo $this->wsdl[$query];
 			}
 			else if ( $this->documentor )
@@ -215,7 +225,9 @@ class Ripcord_Server
 			}
 			else
 			{
+				// FIXME: add check for json-rpc protocol, if set and none of the xml protocols are set, use that
 				header('Content-type: text/xml');
+				header('Access-Control-Allow-Origin: *');
 				echo xmlrpc_encode_request(
 					null,  
 					ripcord::fault( -1, 'No request xml found.' ),
@@ -225,7 +237,9 @@ class Ripcord_Server
 		}
 		else 
 		{
+			// FIXME: add check for the protocol of the request, could be json-rpc, then check if it is supported.
 			header('Content-type: text/xml');
+			header('Access-Control-Allow-Origin: *');
 			echo $this->handle( $request_xml );
 		}
 	}
@@ -237,6 +251,7 @@ class Ripcord_Server
 	private function parseRequest( $request_xml ) {
 		$xml = @simplexml_load_string($request_xml);
 		if (!$xml && !$xml->getNamespaces()) { 
+			// FIXME: check for protocol json-rpc
 			//simplexml in combination with namespaces (soap) lets $xml evaluate to false
 			return  xmlrpc_encode_request( 
 				null, 
