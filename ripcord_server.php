@@ -355,7 +355,7 @@ class Ripcord_Server
 	 */
 	public function call( $method, $args = null ) 
 	{
-		if ( $this->methods[$method] ) 
+		if ( isset( $this->methods[$method] ) ) 
 		{
 			$call = $this->methods[$method]['call'];
 			return call_user_func_array( $call, $args);
