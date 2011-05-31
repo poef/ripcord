@@ -271,7 +271,7 @@ class Ripcord_Documentor implements Ripcord_Documentor_Interface
 		$allFunctions = array();
 		foreach( $methods['methodList'] as $index => $method ) 
 		{
-			if ( strpos( $method, '.' ) !== false ) 
+			if ( strpos( $method['name'], '.' ) !== false ) 
 			{
 				$allMethods[ $method['name'] ] = $index;
 			} else {
@@ -290,6 +290,7 @@ class Ripcord_Documentor implements Ripcord_Documentor_Interface
 		echo '</ul></div>';
 		
 		$currentClass = '';
+		$class = '';
 		echo '<div class="functions">';
 		foreach ( $allMethods as $methodName => $methodIndex ) 
 		{
@@ -306,7 +307,7 @@ class Ripcord_Documentor implements Ripcord_Documentor_Interface
 				$currentClass = $class;
 			}
 			echo '<h2 id="method_'.$methodIndex.'">' . $method['name'] . '</h2>';
-			if ( $method['signatures'] ) 
+			if ( isset( $method['signatures'] ) ) 
 			{
 				
 				foreach ( $method['signatures'] as $signature ) 
@@ -350,7 +351,7 @@ class Ripcord_Documentor implements Ripcord_Documentor_Interface
 				echo '<div class="purpose">' . $method['purpose'] . '</div>';
 			}
 			
-			if ( is_array( $method['notes'] ) ) 
+			if ( isset( $method['notes'] ) && is_array( $method['notes'] ) ) 
 			{
 				echo '<div class="notes"><h3>Notes</h3><ol>';
 				foreach ( $method['notes'] as $note ) 
@@ -360,7 +361,7 @@ class Ripcord_Documentor implements Ripcord_Documentor_Interface
 				echo '</ol></div>';
 			}
 			
-			if ( is_array( $method['see'] ) ) 
+			if ( isset( $method['see'] ) && is_array( $method['see'] ) ) 
 			{
 				echo '<div class="see">';
 				echo '<h3>See</h3>';
@@ -447,10 +448,10 @@ class Ripcord_Documentor implements Ripcord_Documentor_Interface
 				}
 				$xml .= '<methodDescription name="' . $method . '"><purpose><![CDATA[' 
 					. $description . ']]></purpose>';
-				if ( is_array( $data ) && ( $data['arguments'] || $data['return'] ) ) 
+				if ( is_array( $data ) && ( isset( $data['arguments'] ) || isset( $data['return'] ) ) ) 
 				{
 					$xml .= '<signatures><signature>';
-					if ( is_array($data['arguments']) ) 
+					if ( isset( $data['arguments'] ) && is_array($data['arguments']) ) 
 					{
 						$xml .= '<params>';
 						foreach ( $data['arguments'] as $name => $argument ) 
@@ -465,7 +466,7 @@ class Ripcord_Documentor implements Ripcord_Documentor_Interface
 						}
 						$xml .= '</params>';
 					}
-					if ( is_array( $data['return'] ) ) 
+					if ( isset( $data['return'] ) && is_array( $data['return'] ) ) 
 					{
 						$xml .= '<returns><value type="' . htmlspecialchars($data['return']['type']) 
 						. '"><![CDATA[' . $data['return']['description'] . ']]></value></returns>';
@@ -535,6 +536,12 @@ class Ripcord_Documentor_Parser_phpdoc implements Ripcord_Documentor_Parser
 				case 'param' :
 					if ( preg_match('/^\s*([[:alpha:]|]+)\s([[:alnum:]$_]+)(.*)$/i', $line, $matches) ) 
 					{
+						if ( !isset($info['arguments']) ) {
+							$info['arguments'] = array();
+						}
+						if ( !isset($info['arguments'][$matches[2]]) ) {
+							$info['arguments'][$matches[2]] = array('description' => '');
+						}
 						$info['arguments'][$matches[2]]['type'] = $matches[1];
 						$info['arguments'][$matches[2]]['description'] .= $this->parseDescription($matches[3]);
 					}
@@ -543,6 +550,9 @@ class Ripcord_Documentor_Parser_phpdoc implements Ripcord_Documentor_Parser
 				case 'return' :
 					if ( preg_match('/^\s*([[:alpha:]|]+)\s(.*)$/i', $line, $matches) ) 
 					{
+						if ( !isset($info['return']) ) {
+							$info['return'] = array( 'description' => '' );
+						}
 						$info['return']['type'] = $matches[1];
 						$info['return']['description'] .= $this->parseDescription($matches[2]);
 					}
@@ -554,9 +564,15 @@ class Ripcord_Documentor_Parser_phpdoc implements Ripcord_Documentor_Parser
 			switch( $this->currentTag) {
 				case 'param' :
 				case 'return' :
+					if ( !isset( $info[$this->currentTag] ) ) {
+						$info[$this->currentTag] = array();
+					}
 					$info[$this->currentTag]['description'] .= $this->parseDescription($line);
 				break;
 				default:
+					if ( !isset( $info[$this->currentTag] ) ) {
+						$info[$this->currentTag] = '';
+					}
 					$info[$this->currentTag] .= $this->parseDescription($line);
 				break;
 			}
