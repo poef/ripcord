@@ -110,6 +110,7 @@ class Ripcord_Server
 			throw new Ripcord_ConfigurationException('PHP XMLRPC library is not installed', 
 				ripcord::xmlrpcNotInstalled );
 		}
+		libxml_disable_entity_loader(); // prevents XXE attacks
 		$this->xmlrpc = xmlrpc_server_create();
 		if (isset($services)) 
 		{
@@ -216,7 +217,9 @@ class Ripcord_Server
 			{
 				header('Content-type: text/xml');
 				header('Access-Control-Allow-Origin: *');
-				echo $this->wsdl[$query];
+				$wsdl = $this->wsdl[$query];
+				header('Content-Length: '.strlen($wsdl) );
+				echo $wsdl;
 			}
 			else if ( $this->documentor )
 			{
@@ -228,11 +231,13 @@ class Ripcord_Server
 				// FIXME: add check for json-rpc protocol, if set and none of the xml protocols are set, use that
 				header('Content-type: text/xml');
 				header('Access-Control-Allow-Origin: *');
-				echo xmlrpc_encode_request(
+				$result = xmlrpc_encode_request(
 					null,  
 					ripcord::fault( -1, 'No request xml found.' ),
 					$this->outputOptions
 				);
+				header('Content-Length: '.strlen( $result ) );
+				echo $result;
 			}
 		}
 		else 
@@ -240,7 +245,9 @@ class Ripcord_Server
 			// FIXME: add check for the protocol of the request, could be json-rpc, then check if it is supported.
 			header('Content-type: text/xml');
 			header('Access-Control-Allow-Origin: *');
-			echo $this->handle( $request_xml );
+			$result = $this->handle( $request_xml );
+			header('Content-Length: '.strlen($result) );
+			echo $result;
 		}
 	}
 	
